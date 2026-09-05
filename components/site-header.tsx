@@ -1,5 +1,5 @@
 import Link from '@/components/static-link';
-import { ArrowUpRight, CodeXml, Layers3 } from 'lucide-react';
+import { ArrowUpRight, CodeXml, Layers3, Search, BookOpen } from 'lucide-react';
 
 export function SiteHeader() {
   return (
@@ -13,6 +13,16 @@ export function SiteHeader() {
             Qwen <span className="brand-light">MM Plugins</span>
           </span>
         </Link>
+        <search className="header-doc-search">
+          <form action={(process.env.NEXT_PUBLIC_BASE_PATH || '') + '/'}>
+            <Search size={16} />
+            <input
+              name="q"
+              aria-label="Search plugin documentation"
+              placeholder="Search plugins, Skills, tools…"
+            />
+          </form>
+        </search>
         <nav aria-label="Main navigation">
           <Link className="nav-active" href="/">
             Plugins
@@ -28,6 +38,11 @@ export function SiteHeader() {
             <span>GitHub</span>
           </a>
         </nav>
+      </div>
+      <div className="documentation-bar">
+        <BookOpen size={16} />
+        <Link href="/">Qwen MM Plugins documentation</Link>
+        <span>main</span>
       </div>
     </header>
   );

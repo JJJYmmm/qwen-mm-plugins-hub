@@ -58,6 +58,11 @@ export default async function PluginPage({
     <PluginDetail
       plugin={plugin as unknown as Plugin}
       contributors={catalog.contributors}
+      navigation={catalog.plugins.map(({ id, title, category }) => ({
+        id,
+        title,
+        category,
+      }))}
       skillPreview={renderMarkdown(skillExcerpt(plugin.skill.markdown).text)}
       skillFullPreview={renderMarkdown(plugin.skill.markdown)}
       prerequisitesPreview={

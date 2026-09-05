@@ -41,6 +41,23 @@ for (const file of [
   const html = await readFile(path.join(root, file), 'utf8');
   if (html.includes('id="__next_error__"'))
     throw new Error(`Error page exported: ${file}`);
+  if (!html.includes(`action="${prefix}/"`))
+    throw new Error(`Documentation search has the wrong destination: ${file}`);
+  if (file.startsWith('plugins/')) {
+    if (
+      !html.includes('aria-label="Plugin documentation"') ||
+      !html.includes('aria-label="On this page"')
+    )
+      throw new Error(`Documentation navigation missing: ${file}`);
+    for (const plugin of plugins) {
+      if (!html.includes(`href="${prefix}/plugins/${plugin.id}/"`))
+        throw new Error(
+          `Plugin navigation link missing in ${file}: ${plugin.id}`,
+        );
+    }
+    if (!html.includes('id="skill"'))
+      throw new Error(`Skill permalink target missing: ${file}`);
+  }
   for (const [, url] of html.matchAll(
     /(?:src|href)="([^"?#]+\.(?:js|css|woff2))"/g,
   )) {
@@ -51,5 +68,5 @@ for (const file of [
   }
 }
 console.log(
-  `Verified ${plugins.length + 1} static pages and their script, style, and font assets.`,
+  `Verified ${plugins.length + 1} static pages, documentation navigation, search destinations, and script, style, and font assets.`,
 );
