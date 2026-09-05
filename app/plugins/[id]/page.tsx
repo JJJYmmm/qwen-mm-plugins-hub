@@ -1,0 +1,64 @@
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import ReactMarkdown, { defaultUrlTransform } from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import catalog from '@/data/catalog.json';
+import { PluginDetail } from '@/components/plugin-detail';
+import type { Plugin } from '@/lib/catalog';
+
+export function generateStaticParams() {
+  return catalog.plugins.map((p) => ({ id: p.id }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const plugin = catalog.plugins.find((p) => p.id === id);
+  return {
+    title: plugin ? `${plugin.title} — Qwen MM Plugins` : 'Plugin not found',
+    description: plugin?.description,
+  };
+}
+
+export default async function PluginPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const plugin = catalog.plugins.find((p) => p.id === id);
+  if (!plugin) notFound();
+  // Resolve bundled relative references against the exact documented commit.
+  const skillDirectory = plugin.skill.sourceUrl.replace(/SKILL\.md$/, '');
+  const preview = (
+    <article className="markdown-content">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        urlTransform={(url, key) => {
+          const safe = defaultUrlTransform(url);
+          if (!safe || safe.startsWith('#')) return safe;
+          if (/^https?:\/\//.test(safe) || safe.startsWith('mailto:'))
+            return safe;
+          const resolved = new URL(safe, skillDirectory).href;
+          return key === 'src'
+            ? resolved
+                .replace('github.com/', 'raw.githubusercontent.com/')
+                .replace('/blob/', '/')
+            : resolved;
+        }}
+      >
+        {plugin.skill.markdown}
+      </ReactMarkdown>
+    </article>
+  );
+  return (
+    <PluginDetail
+      plugin={plugin as unknown as Plugin}
+      contributors={catalog.contributors}
+      skillPreview={preview}
+    />
+  );
+}

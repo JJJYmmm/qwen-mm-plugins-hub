@@ -1,0 +1,97 @@
+{
+  "repository": "https://github.com/QwenLM/Qwen-MM-Plugins",
+  "contributors": {
+    "qwen-team": { "name": "Qwen Team", "url": "https://github.com/QwenLM" }
+  },
+  "defaults": { "contributors": ["qwen-team"] },
+  "categories": [
+    "Understanding",
+    "Generation",
+    "Search & memory",
+    "3D & design",
+    "Computer use"
+  ],
+  "plugins": {
+    "core": {
+      "title": "Core",
+      "category": "Understanding",
+      "tags": ["image", "video", "documents", "local"],
+      "icon": "scan",
+      "color": "purple",
+      "order": 1
+    },
+    "api": {
+      "title": "Vision & audio APIs",
+      "category": "Understanding",
+      "tags": ["vision", "audio", "OCR", "grounding"],
+      "icon": "waves",
+      "color": "blue",
+      "order": 2
+    },
+    "search": {
+      "title": "Search",
+      "category": "Search & memory",
+      "tags": ["web search", "reverse image", "extraction"],
+      "icon": "search",
+      "color": "green",
+      "order": 3
+    },
+    "video-memory": {
+      "title": "Video Memory",
+      "category": "Search & memory",
+      "tags": ["video", "memory", "retrieval"],
+      "icon": "network",
+      "color": "orange",
+      "order": 4
+    },
+    "omni-memory": {
+      "title": "Omni Memory",
+      "category": "Search & memory",
+      "tags": ["video", "audio", "memory", "retrieval"],
+      "icon": "brain",
+      "color": "pink",
+      "order": 5
+    },
+    "video-edit": {
+      "title": "Video Edit",
+      "category": "Generation",
+      "tags": ["video", "image", "audio", "editing"],
+      "icon": "film",
+      "color": "purple",
+      "order": 6
+    },
+    "blender": {
+      "title": "Blender",
+      "category": "3D & design",
+      "tags": ["3D", "rendering", "modeling"],
+      "icon": "box",
+      "color": "orange",
+      "order": 7
+    },
+    "freecad": {
+      "title": "FreeCAD",
+      "category": "3D & design",
+      "tags": ["CAD", "3D", "engineering"],
+      "icon": "ruler",
+      "color": "blue",
+      "order": 8
+    },
+    "edu-agent": {
+      "title": "Education Agent",
+      "category": "Generation",
+      "tags": ["education", "animation", "interactive"],
+      "icon": "graduation",
+      "color": "green",
+      "order": 9
+    },
+    "cua": {
+      "title": "Computer Use",
+      "category": "Computer use",
+      "tags": ["desktop", "automation", "accessibility"],
+      "icon": "monitor",
+      "color": "pink",
+      "order": 10,
+      "channel": "Development"
+    }
+  }
+}
