@@ -2,6 +2,7 @@
 
 import type { CSSProperties, ReactNode } from 'react';
 import Link from '@/components/static-link';
+import { ArrowUpRight } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -21,9 +22,11 @@ export type DocNavPlugin = { id: string; title: string; category: string };
 function DocumentationNavigation({
   plugins,
   current,
+  cookbookUrl,
 }: {
   plugins: DocNavPlugin[];
   current: string;
+  cookbookUrl: string;
 }) {
   const { setOpenMobile } = useSidebar();
   const categories = [...new Set(plugins.map((p) => p.category))];
@@ -54,6 +57,18 @@ function DocumentationNavigation({
                   onClick={() => setOpenMobile(false)}
                 >
                   Installation
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  render={
+                    <a href={cookbookUrl} aria-label="Cookbook on GitHub" />
+                  }
+                  onClick={() => setOpenMobile(false)}
+                  className="docs-cookbook-link"
+                >
+                  <span>Cookbook</span>
+                  <ArrowUpRight size={14} />
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
@@ -93,17 +108,23 @@ export function DocsShell({
   children,
   plugins,
   current,
+  cookbookUrl,
 }: {
   children: ReactNode;
   plugins: DocNavPlugin[];
   current: string;
+  cookbookUrl: string;
 }) {
   return (
     <SidebarProvider
       className="docs-provider"
       style={{ '--sidebar-width': '270px' } as CSSProperties}
     >
-      <DocumentationNavigation plugins={plugins} current={current} />
+      <DocumentationNavigation
+        plugins={plugins}
+        current={current}
+        cookbookUrl={cookbookUrl}
+      />
       <div className="docs-workspace">
         <div className="docs-mobile-navigation">
           <SidebarTrigger />

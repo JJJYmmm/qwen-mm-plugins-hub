@@ -602,6 +602,256 @@
     padding: 20px;
   }
 }
+/* A consistent icon rhythm across navigation, document controls, and files. */
+:is(.site-header, .site-footer, .docs-provider, .catalog-shell) svg.lucide {
+  flex-shrink: 0;
+  vertical-align: middle;
+  stroke-width: 1.75;
+}
+.site-header nav > a,
+.site-footer > a,
+.documentation-link,
+.section-link-heading > a,
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--icon-gap);
+  line-height: 1.5;
+}
+.site-header nav > a {
+  min-height: 36px;
+}
+.site-footer {
+  flex-wrap: wrap;
+  gap: 12px 24px;
+}
+.documentation-bar > a {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.documentation-bar > span {
+  flex-shrink: 0;
+}
+.doc-detail .plugin-hero {
+  flex-wrap: wrap;
+  column-gap: 20px;
+  row-gap: 16px;
+}
+.doc-detail .plugin-hero-title {
+  min-width: 0;
+  flex: 1 1 260px;
+}
+.doc-detail .plugin-hero h1 {
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 8px;
+}
+.plugin-resource-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+.plugin-resource-actions > a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--icon-gap);
+  min-height: 34px;
+  padding: 6px 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 7px;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  transition:
+    background-color 120ms,
+    border-color 120ms;
+}
+.doc-detail .plugin-resource-actions .source-button {
+  padding: 6px 10px;
+  border: 1px solid #e5e7eb;
+  margin: 0;
+  background: #fff;
+}
+.plugin-resource-actions .cookbook-button {
+  color: #1d4ed8;
+  background: #eff6ff;
+  border-color: #dbeafe;
+}
+.plugin-resource-actions .cookbook-button:hover {
+  background: #dbeafe;
+  border-color: #bfdbfe;
+}
+.doc-detail .plugin-resource-actions .source-button:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+.docs-navigation .docs-cookbook-link,
+[data-mobile='true'] .docs-cookbook-link {
+  display: flex;
+  align-items: center;
+  gap: var(--icon-gap);
+}
+.docs-cookbook-link > svg {
+  margin-left: auto;
+  color: #9ca3af;
+}
+.doc-detail .detail-tabs {
+  gap: 24px !important;
+}
+.doc-detail .detail-tabs > [data-slot='tabs-trigger'] {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--icon-gap);
+  padding: 10px 2px;
+  line-height: 1.4;
+}
+.detail-tabs .tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 5px;
+  line-height: 1;
+}
+.doc-detail .skill-file-bar {
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  padding: 10px 12px;
+}
+.skill-file-bar > span {
+  gap: var(--icon-gap);
+  font-size: 0.8125rem;
+  min-height: var(--control-height);
+}
+.skill-bar-actions {
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.skill-bar-actions .view-switch {
+  height: var(--control-height) !important;
+  padding: 3px !important;
+  background: #fff;
+  border-radius: 6px;
+}
+.skill-bar-actions .view-switch > [data-slot='tabs-trigger'] {
+  padding: 2px 9px;
+  font-size: 0.875rem;
+}
+.copy-button,
+.skill-bar-actions > .section-permalink,
+.skill-source-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--icon-gap);
+  min-height: var(--control-height);
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: #6b7280;
+}
+.skill-source-link {
+  width: var(--control-height);
+  padding: 0;
+  flex-shrink: 0;
+}
+.copy-button:hover,
+.skill-bar-actions > a:hover {
+  background: #eef0f3;
+  color: #374151;
+}
+.skill-expand-button {
+  gap: var(--icon-gap);
+  min-height: 34px;
+}
+.tool-definition > summary {
+  gap: 10px;
+  align-items: center;
+}
+.tool-definition > summary > code {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.tool-actions {
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  font-size: 0.875rem;
+}
+.tool-actions > a {
+  gap: var(--icon-gap);
+  min-height: var(--control-height);
+}
+.resource-link {
+  gap: var(--icon-gap);
+  min-height: var(--control-height);
+  padding: 5px 0;
+  line-height: 1.5;
+}
+.resource-link > svg:last-child {
+  margin-left: auto;
+}
+.skill-file-link {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) 14px;
+  align-items: center;
+  gap: var(--icon-gap);
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.skill-file-link > svg:last-child {
+  color: #9ca3af;
+}
+.skill-directory-trigger {
+  width: 100%;
+  gap: var(--icon-gap);
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.section-link-heading {
+  row-gap: 12px;
+}
+.card-bottom > .card-content-link {
+  gap: 7px;
+  min-height: 28px;
+}
+.doc-detail
+  :is(
+    .plugin-resource-actions > a,
+    .copy-button,
+    .skill-source-link,
+    .section-permalink,
+    .skill-file-link,
+    .skill-directory-trigger
+  ):focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 3px;
+}
+@media (max-width: 600px) {
+  .skill-bar-actions {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 6px;
+  }
+  .doc-detail .detail-tabs {
+    gap: 20px !important;
+  }
+  .tool-actions .copy-button {
+    margin-left: 0;
+  }
+  .doc-detail .plugin-hero-title {
+    flex-basis: 100%;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

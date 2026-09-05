@@ -57,6 +57,12 @@ for (const file of [
     }
     if (!html.includes('id="skill"'))
       throw new Error(`Skill permalink target missing: ${file}`);
+    const current = plugins.find((p) => file === `plugins/${p.id}/index.html`);
+    const cookbookButton = html.match(
+      /<a\b[^>]*class="cookbook-button"[^>]*>/,
+    )?.[0];
+    if (!cookbookButton?.includes(`href="${current.cookbookUrl}"`))
+      throw new Error(`Prominent Cookbook link missing or incorrect: ${file}`);
   }
   for (const [, url] of html.matchAll(
     /(?:src|href)="([^"?#]+\.(?:js|css|woff2))"/g,

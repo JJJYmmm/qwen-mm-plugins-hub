@@ -37,6 +37,8 @@
   --muted-foreground: #6b7280;
   --border: #e5e7eb;
   --radius: 0.6rem;
+  --icon-gap: 0.5rem;
+  --control-height: 2rem;
 }
 .dark {
   --background: #181821;

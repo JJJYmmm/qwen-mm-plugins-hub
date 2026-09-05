@@ -27,7 +27,7 @@ export function CopyButton({
       aria-live="polite"
     >
       {status === 'Copied' ? <Check size={14} /> : <Copy size={14} />}
-      {status || label}
+      <span>{status || label}</span>
     </button>
   );
 }

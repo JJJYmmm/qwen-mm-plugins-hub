@@ -28,6 +28,8 @@ The exporter imports registry modules but never calls handlers, starts an MCP se
 
 Skill previews initially show 50 source lines (Markdown body in Preview; front matter included in Raw), with the full document available on expansion. Copy Skill always copies the complete source. The file browser includes tracked files only, preserves nested directories, and links each file to the immutable documentation snapshot. Directory cards link directly to `#skill` and `#tools`; individual definitions have `#tool-<name>` permalinks, and `#files` opens the Skill directory.
 
+Cookbooks remain in the upstream repository. Each plugin exposes a prominent Cookbook action beside its title and in the documentation navigation, linking to `cookbooks/<cap>/usage.md` at the same commit as its Skill and tools. The website does not maintain a second copy of cookbook prose.
+
 The release target comes from the upstream version catalog at build time. It is not a live latest-release lookup or an end-to-end installation certification. The install page explicitly distinguishes this target from the main snapshot and the shared Python distribution version. Newer installers can select newer releases.
 
 ## Development

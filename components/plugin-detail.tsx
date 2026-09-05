@@ -205,7 +205,11 @@ export function PluginDetail({
         Skip to plugin content
       </a>
       <SiteHeader />
-      <DocsShell plugins={navigation} current={p.id}>
+      <DocsShell
+        plugins={navigation}
+        current={p.id}
+        cookbookUrl={p.cookbookUrl}
+      >
         <main className="detail-shell doc-detail">
           <div className="detail-layout">
             <div className="docs-article">
@@ -240,14 +244,28 @@ export function PluginDetail({
                   </h1>
                   <p className="package-name">{p.name}</p>
                 </div>
-                <a
-                  className="source-button"
-                  href={p.source.url + p.source.path}
+                <div
+                  className="plugin-resource-actions"
+                  aria-label="Plugin resources"
                 >
-                  <CodeXml size={16} />
-                  Source
-                  <ArrowUpRight size={14} />
-                </a>
+                  <a
+                    className="cookbook-button"
+                    href={p.cookbookUrl}
+                    title={`${p.title}: setup and usage examples on GitHub`}
+                  >
+                    <BookOpen size={16} />
+                    <span>Cookbook</span>
+                    <ArrowUpRight size={14} />
+                  </a>
+                  <a
+                    className="source-button"
+                    href={p.source.url + p.source.path}
+                  >
+                    <CodeXml size={16} />
+                    <span>Source</span>
+                    <ArrowUpRight size={14} />
+                  </a>
+                </div>
               </div>
               <p className="plugin-description">
                 {p.description.replace(/^Qwen-MM-Plugins\s+[^—]+—\s*/i, '')}
@@ -290,15 +308,16 @@ export function PluginDetail({
                   <TabsList variant="line" className="detail-tabs">
                     <TabsTrigger value="skill">
                       <BookOpen size={16} />
-                      Skill
+                      <span>Skill</span>
                     </TabsTrigger>
                     <TabsTrigger value="tools">
                       <Braces size={16} />
-                      Tools<span className="tab-count">{p.tools.length}</span>
+                      <span>Tools</span>
+                      <span className="tab-count">{p.tools.length}</span>
                     </TabsTrigger>
                     <TabsTrigger value="install">
                       <Terminal size={16} />
-                      Install
+                      <span>Install</span>
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value="skill" id="skill">
@@ -322,7 +341,9 @@ export function PluginDetail({
                         </Tabs>
                         <CopyButton text={p.skill.raw} label="Copy Skill" />
                         <a
+                          className="skill-source-link"
                           aria-label="View Skill on GitHub"
+                          title="View Skill on GitHub"
                           href={p.skill.sourceUrl}
                         >
                           <ArrowUpRight size={17} />
