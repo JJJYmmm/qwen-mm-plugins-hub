@@ -16,7 +16,55 @@ export type Tool = {
   description: string;
   inputSchema: Schema;
   sourceUrl: string;
+  sourcePath: string;
 };
+export type SkillFile = { path: string; sourceUrl: string };
+export type SkillDirectory = {
+  name: string;
+  path: string;
+  children: SkillDirectory[];
+  file?: SkillFile;
+};
+
+export function skillFileTree(files: SkillFile[]): SkillDirectory[] {
+  const roots: SkillDirectory[] = [];
+  for (const file of files) {
+    let siblings = roots;
+    const parts = file.path.split('/');
+    for (const [index, name] of parts.entries()) {
+      let node = siblings.find((entry) => entry.name === name);
+      if (!node) {
+        node = {
+          name,
+          path: parts.slice(0, index + 1).join('/'),
+          children: [],
+        };
+        siblings.push(node);
+      }
+      if (index === parts.length - 1) node.file = file;
+      siblings = node.children;
+    }
+  }
+  function sort(nodes: SkillDirectory[]): SkillDirectory[] {
+    return nodes
+      .sort(
+        (a, b) =>
+          Number(Boolean(a.file)) - Number(Boolean(b.file)) ||
+          a.name.localeCompare(b.name),
+      )
+      .map((node) => ({ ...node, children: sort(node.children) }));
+  }
+  return sort(roots);
+}
+
+export function skillExcerpt(text: string, limit = 50) {
+  const lines = text.trimEnd().split('\n');
+  return {
+    text: lines.slice(0, limit).join('\n'),
+    lineCount: lines.length,
+    truncated: lines.length > limit,
+  };
+}
 export type Plugin = Omit<PluginSummary, 'toolCount' | 'toolNames'> & {
   skill: {
     name: string;
@@ -25,10 +73,13 @@ export type Plugin = Omit<PluginSummary, 'toolCount' | 'toolNames'> & {
     raw: string;
     path: string;
     sourceUrl: string;
+    directoryUrl: string;
+    files: SkillFile[];
+    prerequisites: string;
   };
   tools: Tool[];
   moduleDocstring: string;
-  requirements: string[];
+  requirements: { label: string; tools: string[]; hint: string }[];
 };
 
 export function schemaType(schema: Schema): string {
@@ -43,6 +94,7 @@ export type PluginSummary = {
   name: string;
   title: string;
   version: string;
+  release: { version: string; tag: string; url: string } | null;
   description: string;
   contributors: string[];
   category: string;

@@ -8,21 +8,27 @@ The website is maintained independently of the plugin distribution. Every publis
 
 ## Content maintenance
 
-| Content                                               | Source of truth                                                 |
-| ----------------------------------------------------- | --------------------------------------------------------------- |
-| Included plugins                                      | Upstream `plugin-versions.json`                                 |
-| Version, package description, Skill/MCP presence      | Capability `.codex-plugin/plugin.json`                          |
-| Skill preview and raw text                            | Capability `skill/SKILL.md`                                     |
-| Tool name and description                             | The actual MCP registry (`SPECS`, from `TOOL`)                  |
-| Parameters, defaults, required fields, nested schemas | Pydantic argument models, through the framework's `tool_schema` |
-| Requirements                                          | Server `SYSTEM_DEPS` labels                                     |
-| Contributors, categories, tags, display titles        | `catalog.config.json` in this repository                        |
+| Content                                               | Source of truth                                                       |
+| ----------------------------------------------------- | --------------------------------------------------------------------- |
+| Included plugins                                      | Upstream `plugin-versions.json`                                       |
+| Version, package description, Skill/MCP presence      | Capability `.codex-plugin/plugin.json`                                |
+| Skill preview and raw text                            | Capability `skill/SKILL.md`                                           |
+| Tool name and description                             | The actual MCP registry (`SPECS`, from `TOOL`)                        |
+| Parameters, defaults, required fields, nested schemas | Pydantic argument models, through the framework's `tool_schema`       |
+| Default release target                                | Upstream `plugin-versions.json` version and tag format                |
+| Skill file hierarchy                                  | Git-tracked files under capability `skill/` at the source commit      |
+| Requirements                                          | Server `SYSTEM_DEPS` tool names/hints and Skill prerequisite sections |
+| Contributors, categories, tags, display titles        | `catalog.config.json` in this repository                              |
 
 Do not duplicate tool descriptions into website-specific docstrings. Maintain `TOOL.description` and `Field(description=...)` where the agent-facing definitions already live. Module docstrings are also exported as supplementary metadata. A later upstream change to derive `TOOL.description` from docstrings would automatically flow through the existing registry exporter.
 
 To add a contributor, add a record to `contributors`, then put that ID in the plugin's `contributors` list in `catalog.config.json`. The default is Qwen Team. Tags and categories are curated discovery metadata; they are independent of API documentation. New plugins on upstream main appear automatically with fallback display metadata, even before a curated entry is added.
 
 The exporter imports registry modules but never calls handlers, starts an MCP server, or invokes startup hooks. It disables the local Qwen config file and exports an explicit allowlist of public fields. Import failures stop the build instead of silently omitting tools. Only use trusted source checkouts.
+
+Skill previews initially show 50 source lines (Markdown body in Preview; front matter included in Raw), with the full document available on expansion. Copy Skill always copies the complete source. The file browser includes tracked files only, preserves nested directories, and links each file to the immutable documentation snapshot. Directory cards link directly to `#skill` and `#tools`; individual definitions have `#tool-<name>` permalinks, and `#files` opens the Skill directory.
+
+The release target comes from the upstream version catalog at build time. It is not a live latest-release lookup or an end-to-end installation certification. The install page explicitly distinguishes this target from the main snapshot and the shared Python distribution version. Newer installers can select newer releases.
 
 ## Development
 

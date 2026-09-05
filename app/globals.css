@@ -1330,6 +1330,183 @@ h1 {
   color: #374151;
   overflow-wrap: anywhere;
 }
+.card-bottom > .card-content-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 0;
+  color: #6b7280;
+}
+.card-content-link:hover,
+.section-permalink:hover {
+  color: #2563eb;
+}
+.version-context {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 18px 0 24px;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+.version-context a,
+.section-link-heading a,
+.install-version-note a {
+  color: #2563eb;
+}
+.section-permalink {
+  font-size: 0.875rem;
+}
+.skill-preview-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 0;
+  border-top: 1px solid #e5e7eb;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+.skill-expand-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #f9fafb;
+  padding: 6px 12px;
+  color: #374151;
+  cursor: pointer;
+}
+.skill-expand-button[data-panel-open] svg {
+  transform: rotate(180deg);
+}
+.skill-files {
+  margin-top: 30px;
+  scroll-margin-top: 20px;
+}
+.section-link-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+.section-link-heading h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #374151;
+}
+.section-link-heading h2 span {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #6b7280;
+  margin-left: 5px;
+}
+.section-link-heading a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875rem;
+}
+.skill-files > p {
+  margin: 10px 0 16px;
+  color: #6b7280;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.skill-files nav {
+  border: 1px solid #e5e7eb;
+  border-radius: 7px;
+  padding: 10px;
+  overflow: auto;
+  max-height: 520px;
+}
+.skill-files ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.skill-files ul ul {
+  padding-left: 22px;
+  border-left: 1px solid #e5e7eb;
+  margin-left: 13px;
+}
+.skill-directory-trigger,
+.skill-file-link {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 6px;
+  min-width: 0;
+  color: #4b5563;
+  font-size: 0.875rem;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.skill-file-link span,
+.skill-directory-trigger span {
+  overflow-wrap: anywhere;
+}
+.skill-file-link svg,
+.skill-directory-trigger svg {
+  flex-shrink: 0;
+}
+.skill-file-link {
+  padding-left: 27px;
+}
+.skill-file-link:hover,
+.skill-directory-trigger:hover {
+  background: #f3f4f6;
+  color: #2563eb;
+}
+.skill-directory-trigger[data-panel-open] .folder-chevron {
+  transform: rotate(90deg);
+}
+.install-version-note {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 7px;
+  padding: 16px 20px;
+  margin: 20px 0;
+  overflow-wrap: anywhere;
+}
+.install-version-note h3 {
+  margin-top: 0;
+}
+.system-requirements li {
+  margin-bottom: 18px;
+}
+.system-requirements li > * {
+  display: block;
+}
+.system-requirements code,
+.system-requirements span {
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+.install-prerequisites {
+  border-top: 1px solid #e5e7eb;
+  margin-top: 28px;
+}
+.install-prerequisites .markdown-content {
+  padding-top: 0;
+}
+@media (max-width: 600px) {
+  .skill-file-bar {
+    flex-wrap: wrap;
+  }
+  .skill-bar-actions {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .skill-files ul ul {
+    padding-left: 12px;
+    margin-left: 7px;
+  }
+}
 .tool-definition > summary > span {
   font-size: 0.75rem;
   color: #6b7280;
@@ -1457,7 +1634,8 @@ h1 {
   max-width: 440px;
   margin: auto;
 }
-.skill-only-note button {
+.skill-only-note button,
+.skill-only-action {
   display: inline-flex;
   align-items: center;
   gap: 7px;

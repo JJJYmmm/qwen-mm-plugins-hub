@@ -313,7 +313,9 @@ export function Catalog({
                       </button>
                     ))}
                     <span>·</span>
-                    <span>v{p.version}</span>
+                    <span title="Manifest version in the documented main snapshot">
+                      main · v{p.version}
+                    </span>
                   </div>
                   <p className="card-description">
                     {p.description.replace(/^Qwen-MM-Plugins\s+[^—]+—\s*/i, '')}
@@ -331,13 +333,19 @@ export function Catalog({
                     ))}
                   </div>
                   <div className="card-bottom">
-                    <span>
+                    <Link
+                      className="card-content-link"
+                      href={`/plugins/${p.id}/#skill`}
+                    >
                       <BookOpen size={14} />1 Skill
-                    </span>
-                    <span>
+                    </Link>
+                    <Link
+                      className="card-content-link"
+                      href={`/plugins/${p.id}/#tools`}
+                    >
                       <Braces size={14} />
                       {p.toolCount ? `${p.toolCount} tools` : 'Skill only'}
-                    </span>
+                    </Link>
                     <Link
                       href={`/plugins/${p.id}/`}
                       aria-label={`Explore ${p.title}`}

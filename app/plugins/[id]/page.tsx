@@ -4,7 +4,7 @@ import ReactMarkdown, { defaultUrlTransform } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import catalog from '@/data/catalog.json';
 import { PluginDetail } from '@/components/plugin-detail';
-import type { Plugin } from '@/lib/catalog';
+import { skillExcerpt, type Plugin } from '@/lib/catalog';
 
 export function generateStaticParams() {
   return catalog.plugins.map((p) => ({ id: p.id }));
@@ -33,7 +33,7 @@ export default async function PluginPage({
   if (!plugin) notFound();
   // Resolve bundled relative references against the exact documented commit.
   const skillDirectory = plugin.skill.sourceUrl.replace(/SKILL\.md$/, '');
-  const preview = (
+  const renderMarkdown = (markdown: string) => (
     <article className="markdown-content">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
@@ -50,7 +50,7 @@ export default async function PluginPage({
             : resolved;
         }}
       >
-        {plugin.skill.markdown}
+        {markdown}
       </ReactMarkdown>
     </article>
   );
@@ -58,7 +58,13 @@ export default async function PluginPage({
     <PluginDetail
       plugin={plugin as unknown as Plugin}
       contributors={catalog.contributors}
-      skillPreview={preview}
+      skillPreview={renderMarkdown(skillExcerpt(plugin.skill.markdown).text)}
+      skillFullPreview={renderMarkdown(plugin.skill.markdown)}
+      prerequisitesPreview={
+        plugin.skill.prerequisites
+          ? renderMarkdown(plugin.skill.prerequisites)
+          : null
+      }
     />
   );
 }

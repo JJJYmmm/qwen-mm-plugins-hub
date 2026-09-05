@@ -12,8 +12,10 @@ import inspect
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
+from urllib.parse import quote
 
 import yaml
 
@@ -42,7 +44,10 @@ def worker(source: Path, cap: str) -> dict:
         if module.__version__ != manifest["version"]:
             raise ValueError(f"Manifest/server version mismatch: {cap}")
         module_doc = inspect.getdoc(module) or ""
-        requirements = [d["label"] for d in getattr(module, "SYSTEM_DEPS", [])]
+        requirements = [
+            {key: d[key] for key in ("label", "tools", "hint")}
+            for d in getattr(module, "SYSTEM_DEPS", [])
+        ]
         for spec in module.SPECS:
             path = Path(inspect.getfile(spec.handle)).resolve()
             tools.append(
@@ -52,6 +57,10 @@ def worker(source: Path, cap: str) -> dict:
                     "sourceLine": inspect.getsourcelines(spec.handle)[1],
                 }
             )
+    markdown = parts[2].strip()
+    prerequisite = re.search(
+        r"^## Prerequisites?\b[^\n]*\n.*?(?=^## |\Z)", markdown, re.M | re.S
+    )
     return {
         "name": manifest["name"],
         "version": manifest["version"],
@@ -61,7 +70,8 @@ def worker(source: Path, cap: str) -> dict:
         "skill": {
             "name": front["name"],
             "description": front.get("description", ""),
-            "markdown": parts[2].strip(),
+            "markdown": markdown,
+            "prerequisites": prerequisite.group().strip() if prerequisite else "",
             "raw": raw,
             "path": skill_path.relative_to(source).as_posix(),
         },
@@ -72,7 +82,8 @@ def worker(source: Path, cap: str) -> dict:
 
 def export(source: Path, extras: list[str]) -> dict:
     config = json.loads((ROOT / "catalog.config.json").read_text())
-    versions = json.loads((source / "plugin-versions.json").read_text())["plugins"]
+    release_catalog = json.loads((source / "plugin-versions.json").read_text())
+    versions = release_catalog["plugins"]
     sources = {cap: source for cap in versions}
     for extra in extras:
         cap, location = extra.split("=", 1)
@@ -95,8 +106,18 @@ def export(source: Path, extras: list[str]) -> dict:
         )
         data = json.loads(result)
         sha = git(checkout, "rev-parse", "HEAD")
+        skill_folder = f"src/capabilities/{cap}/skill/"
+        skill_files = git(
+            checkout, "ls-tree", "-rz", "--name-only", "HEAD", "--", skill_folder
+        ).split("\0")
         info = config["plugins"].get(cap, {})
         source_url = config["repository"] + "/blob/" + sha + "/"
+        release_version = versions.get(cap)
+        release_tag = (
+            release_catalog["tag_format"].format(cap=cap, version=release_version)
+            if release_version
+            else None
+        )
         contributors = info.get("contributors", config["defaults"]["contributors"])
         if any(c not in config["contributors"] for c in contributors):
             raise ValueError(f"Unknown contributor for {cap}")
@@ -104,6 +125,13 @@ def export(source: Path, extras: list[str]) -> dict:
             {
                 **data,
                 "id": cap,
+                "release": {
+                    "version": release_version,
+                    "tag": release_tag,
+                    "url": config["repository"] + "/tree/" + release_tag,
+                }
+                if release_tag
+                else None,
                 "title": info.get("title", cap.replace("-", " ").title()),
                 "category": info.get("category", "Other"),
                 "tags": info.get("tags", []),
@@ -124,6 +152,16 @@ def export(source: Path, extras: list[str]) -> dict:
                 "skill": {
                     **data["skill"],
                     "sourceUrl": source_url + data["skill"]["path"],
+                    "directoryUrl": source_url.replace("/blob/", "/tree/")
+                    + skill_folder,
+                    "files": [
+                        {
+                            "path": path.removeprefix(skill_folder),
+                            "sourceUrl": source_url + quote(path, safe="/"),
+                        }
+                        for path in skill_files
+                        if path
+                    ],
                 },
                 "tools": [
                     {

@@ -27,8 +27,15 @@ import {
 import { SiteHeader, SiteFooter } from '@/components/site-header';
 import { PluginIcon } from '@/components/plugin-icon';
 import { CopyButton } from '@/components/copy-button';
+import { SkillFiles } from '@/components/skill-files';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible';
 import {
   schemaType,
+  skillExcerpt,
   type Plugin,
   type Contributor,
   type Tool,
@@ -135,13 +142,18 @@ export function PluginDetail({
   plugin: p,
   contributors,
   skillPreview,
+  skillFullPreview,
+  prerequisitesPreview,
 }: {
   plugin: Plugin;
   contributors: Record<string, Contributor>;
   skillPreview: ReactNode;
+  skillFullPreview: ReactNode;
+  prerequisitesPreview: ReactNode;
 }) {
   const [tab, setTab] = useState('skill');
   const [skillView, setSkillView] = useState('preview');
+  const [skillExpanded, setSkillExpanded] = useState(false);
   const [query, setQuery] = useState('');
   const [linkedTool, setLinkedTool] = useState('');
   useEffect(() => {
@@ -156,6 +168,15 @@ export function PluginDetail({
             document.getElementById(hash)?.scrollIntoView({ block: 'start' }),
           100,
         );
+      } else if (hash === 'files') {
+        setTab('skill');
+        window.setTimeout(
+          () =>
+            document
+              .getElementById('files')
+              ?.scrollIntoView({ block: 'start' }),
+          100,
+        );
       } else if (['skill', 'tools', 'install'].includes(hash)) setTab(hash);
     }
     fromHash();
@@ -164,6 +185,9 @@ export function PluginDetail({
   }, []);
   const tools = p.tools.filter((t) =>
     `${t.name} ${t.description}`.toLowerCase().includes(query.toLowerCase()),
+  );
+  const excerpt = skillExcerpt(
+    skillView === 'raw' ? p.skill.raw : p.skill.markdown,
   );
   return (
     <>
@@ -193,7 +217,13 @@ export function PluginDetail({
             </div>
             <h1>
               {p.title}
-              <span className="version-badge">v{p.version}</span>
+              <a
+                className="version-badge"
+                href="#install"
+                title="Version and installation details"
+              >
+                main · v{p.version}
+              </a>
             </h1>
             <p className="package-name">{p.name}</p>
           </div>
@@ -217,6 +247,20 @@ export function PluginDetail({
               {t}
             </Link>
           ))}
+        </div>
+        <div className="version-context">
+          <span>
+            Docs:{' '}
+            <a href={`${p.source.repository}/commit/${p.source.commit}`}>
+              main @ {p.source.commit.slice(0, 7)}
+            </a>
+          </span>
+          {p.release && (
+            <span>
+              Default release: <a href={p.release.url}>v{p.release.version}</a>
+            </span>
+          )}
+          <a href="#install">Why can these differ?</a>
         </div>
         <div className="detail-layout">
           <section id="plugin-content" className="detail-main">
@@ -248,6 +292,9 @@ export function PluginDetail({
                     SKILL.md
                   </span>
                   <div className="skill-bar-actions">
+                    <a href="#skill" className="section-permalink">
+                      Permalink
+                    </a>
                     <Tabs
                       value={skillView}
                       onValueChange={(v) => setSkillView(String(v))}
@@ -266,15 +313,63 @@ export function PluginDetail({
                     </a>
                   </div>
                 </div>
-                {skillView === 'preview' ? (
-                  skillPreview
-                ) : (
-                  <pre className="raw-skill">{p.skill.raw}</pre>
-                )}
+                <Collapsible
+                  open={skillExpanded}
+                  onOpenChange={setSkillExpanded}
+                >
+                  {!skillExpanded && (
+                    <div id="skill-excerpt">
+                      {skillView === 'preview' ? (
+                        skillPreview
+                      ) : (
+                        <pre className="raw-skill">{excerpt.text}</pre>
+                      )}
+                    </div>
+                  )}
+                  <CollapsibleContent id="skill-full">
+                    {skillView === 'preview' ? (
+                      skillFullPreview
+                    ) : (
+                      <pre className="raw-skill">{p.skill.raw}</pre>
+                    )}
+                  </CollapsibleContent>
+                  {excerpt.truncated && (
+                    <div className="skill-preview-footer">
+                      <span>
+                        {skillExpanded
+                          ? `All ${excerpt.lineCount} lines`
+                          : `First 50 of ${excerpt.lineCount} lines`}{' '}
+                        ·{' '}
+                        {skillView === 'raw'
+                          ? 'with front matter'
+                          : 'Markdown body'}
+                      </span>
+                      <CollapsibleTrigger
+                        className="skill-expand-button"
+                        onClick={() => {
+                          if (skillExpanded)
+                            document
+                              .getElementById('plugin-content')
+                              ?.scrollIntoView({ block: 'start' });
+                        }}
+                      >
+                        {skillExpanded ? 'Show less' : 'Expand full Skill'}{' '}
+                        <ChevronDown size={15} />
+                      </CollapsibleTrigger>
+                    </div>
+                  )}
+                </Collapsible>
+                <SkillFiles
+                  files={p.skill.files}
+                  directoryUrl={p.skill.directoryUrl}
+                />
               </TabsContent>
               <TabsContent value="tools">
                 <div className="tools-heading">
-                  <h2>Tool definitions</h2>
+                  <div className="section-link-heading">
+                    <h2>Tool definitions</h2>
+                    <a href="#tools">Permalink</a>
+                  </div>
                   <p>
                     Names, descriptions, and input schemas exposed by this
                     plugin’s MCP server.
@@ -321,15 +416,45 @@ export function PluginDetail({
                       This plugin provides instructions and bundled resources.
                       It does not ship an MCP server or expose tool definitions.
                     </p>
-                    <button onClick={() => setTab('skill')}>
+                    <a className="skill-only-action" href="#skill">
                       Read the Skill <ArrowRight size={16} />
-                    </button>
+                    </a>
                   </div>
                 )}
               </TabsContent>
               <TabsContent value="install">
                 <div className="install-content">
                   <h2>Add {p.title} to your agent</h2>
+                  <section className="install-version-note">
+                    <h3>Source snapshot ≠ installed release</h3>
+                    <p>
+                      This page documents{' '}
+                      <a
+                        href={`${p.source.repository}/commit/${p.source.commit}`}
+                      >
+                        main @ {p.source.commit.slice(0, 7)}
+                      </a>
+                      , whose plugin manifest declares v{p.version}. The Skills
+                      and tool definitions above may include changes made after
+                      a release.
+                    </p>
+                    {p.release && (
+                      <p>
+                        The default installer selects the immutable plugin tag{' '}
+                        <a href={p.release.url}>
+                          <code>{p.release.tag}</code>
+                        </a>
+                        , as listed by upstream at this snapshot. Fetching
+                        install.sh from main does not mean it installs main.
+                        Newer installer snapshots may select newer releases.
+                      </p>
+                    )}
+                    <p>
+                      Plugins are versioned independently; these are plugin
+                      versions, not the shared Python distribution version. For
+                      a specific release’s files, follow its tag link.
+                    </p>
+                  </section>
                   <p>
                     Run the guided installer, choose your agent harness, then
                     select <strong>{p.id}</strong>.
@@ -353,13 +478,40 @@ export function PluginDetail({
                   </a>
                   {p.requirements.length > 0 && (
                     <>
-                      <h3>System requirements</h3>
-                      <ul>
+                      <h3>MCP system tools</h3>
+                      <p>
+                        Reported by the server’s SYSTEM_DEPS. These checks cover
+                        individual features, not every Skill dependency.
+                      </p>
+                      <ul className="system-requirements">
                         {p.requirements.map((r) => (
-                          <li key={r}>{r}</li>
+                          <li key={r.label}>
+                            <strong>{r.label}</strong>
+                            <code>{r.tools.join(', ')}</code>
+                            <span>{r.hint}</span>
+                          </li>
                         ))}
                       </ul>
                     </>
+                  )}
+                  {prerequisitesPreview && (
+                    <section className="install-prerequisites">
+                      <div className="section-link-heading">
+                        <h3>Skill prerequisites</h3>
+                        <a href={p.skill.sourceUrl}>
+                          View source <ArrowUpRight size={14} />
+                        </a>
+                      </div>
+                      <p>Extracted from this snapshot’s SKILL.md.</p>
+                      {prerequisitesPreview}
+                    </section>
+                  )}
+                  {p.kind === 'Skill only' && (
+                    <p>
+                      This is a Skill-only plugin: installing the Skill does not
+                      install its runtime dependencies. Complete the
+                      prerequisites before use.
+                    </p>
                   )}
                   <p>
                     Provider keys and optional dependencies depend on the tools
@@ -393,7 +545,10 @@ export function PluginDetail({
                 </div>
                 <div>
                   <dt>Includes</dt>
-                  <dd>1 Skill · {p.tools.length} tools</dd>
+                  <dd>
+                    <a href="#skill">1 Skill</a> ·{' '}
+                    <a href="#tools">{p.tools.length} tools</a>
+                  </dd>
                 </div>
                 <div>
                   <dt>License</dt>
@@ -412,6 +567,10 @@ export function PluginDetail({
                 <FileText size={15} />
                 Skill source
                 <ArrowUpRight size={13} />
+              </a>
+              <a className="resource-link" href="#files">
+                <FileText size={15} />
+                Skill files <span>{p.skill.files.length}</span>
               </a>
               <a className="resource-link" href={p.source.url + p.source.path}>
                 <CodeXml size={15} />
