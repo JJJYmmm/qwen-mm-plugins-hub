@@ -6,6 +6,10 @@ A searchable plugin directory with contributor/tag filters, Skill previews, actu
 
 ## Add a plugin in two places
 
+Start with [Add a new plugin](https://jjjymmm.github.io/qwen-mm-plugins-hub/docs/how-to-add-new-capability/)
+for the complete implementation and registration checklist. [Hub authoring](https://jjjymmm.github.io/qwen-mm-plugins-hub/docs/hub/)
+covers the two-repository workflow, media conventions, and when to refresh the website.
+
 1. **Qwen-MM-Plugins:** add the capability using its normal packaging convention, including its entry in `plugin-versions.json`, Skill, manifests, and MCP tools where applicable. Document every tool in its handler's Google-style docstring. The framework derives both the real MCP schema and Hub descriptions from it; no website-specific tool definition is needed.
 2. **This Hub:** add `content/cookbooks/<cap>/usage.md` and any case files under `public/cases/<cap>/<case>/`. Commit and push to Hub main. GitHub Actions discovers plugins from the configured upstream branch, generates content and token estimates, validates the site, and deploys GitHub Pages.
 
