@@ -143,6 +143,9 @@ for (const file of [
         !html.includes('id="tokens"') ||
         !html.includes('data-token-kind="skill"') ||
         !html.includes('data-token-kind="tools"') ||
+        !html.includes('Skill instructions') ||
+        !html.includes('Tool definitions') ||
+        !html.includes('Estimated text size—not usage or cost.') ||
         !html.includes(
           current.tokenEstimate.skillFull.toLocaleString('en-US'),
         ) ||
@@ -158,9 +161,20 @@ for (const file of [
         );
     }
   } else {
+    if (
+      html.includes('class="card-token-estimate"') ||
+      html.includes('MCP tools, and hands-on cookbooks.')
+    )
+      throw new Error('Catalog should not display technical token/tool totals');
     for (const plugin of plugins) {
-      if (!html.includes(`href="${prefix}/plugins/${plugin.id}/#tokens"`))
-        throw new Error(`Token estimate card link missing: ${plugin.id}`);
+      for (const destination of [
+        `/plugins/${plugin.id}/#skill`,
+        ...(plugin.tools.length ? [`/plugins/${plugin.id}/#tools`] : []),
+        plugin.cookbookUrl,
+      ]) {
+        if (!html.includes(`href="${prefix}${destination}"`))
+          throw new Error(`Card resource link missing: ${destination}`);
+      }
     }
     for (const contributor of Object.values(contributors)) {
       if (!html.includes(`href="${contributor.url}"`))

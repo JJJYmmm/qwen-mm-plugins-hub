@@ -483,11 +483,6 @@
 .more-tags:hover {
   color: var(--primary);
 }
-.catalog-token-label {
-  font-size: 0.8125rem;
-  color: #6b7280;
-  margin: 0 0 12px;
-}
 .contribute-note {
   background: #fff;
   box-shadow: none;
@@ -858,19 +853,6 @@
     flex-basis: 100%;
   }
 }
-.card-token-estimate {
-  grid-column: 1/-1;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 5px 14px;
-  padding: 2px 0 12px;
-  font-size: 0.875rem;
-  color: #6b7280;
-}
-.card-token-estimate:hover {
-  color: #2563eb;
-}
 .token-estimate {
   margin: 14px 0 18px;
   padding: 10px 0;
@@ -882,7 +864,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 4px 18px;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: #6b7280;
 }
 .token-estimate-row h2 {
@@ -899,6 +881,7 @@
 }
 .token-estimate-values > div {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   gap: 6px;
 }
@@ -906,6 +889,11 @@
   font-weight: 500;
   color: #374151;
   font-variant-numeric: tabular-nums;
+}
+.token-estimate-note {
+  margin: 6px 0 0;
+  font-size: 0.875rem;
+  color: #6b7280;
 }
 .token-method-trigger {
   display: inline-flex;

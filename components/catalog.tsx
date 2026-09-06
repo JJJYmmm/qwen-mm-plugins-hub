@@ -6,7 +6,6 @@ import {
   Search,
   SlidersHorizontal,
   ArrowUpRight,
-  ArrowRight,
   BookOpen,
   Braces,
   Layers3,
@@ -25,7 +24,6 @@ import { SiteHeader, SiteFooter } from '@/components/site-header';
 import { ContributorAvatar } from '@/components/contributor-avatar';
 import {
   filterPlugins,
-  formatTokens,
   type PluginSummary,
   type Contributor,
 } from '@/lib/catalog';
@@ -34,12 +32,10 @@ export function Catalog({
   plugins,
   contributors,
   categories,
-  tokenizerLabel,
 }: {
   plugins: PluginSummary[];
   contributors: Record<string, Contributor>;
   categories: string[];
-  tokenizerLabel: string;
 }) {
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('');
@@ -96,7 +92,6 @@ export function Catalog({
   const visibleTags = allTags.filter(
     (t, i) => allTagsOpen || i < 6 || tags.includes(t),
   );
-  const totalTools = plugins.reduce((n, p) => n + p.toolCount, 0);
   const active = Boolean(query || category || contributor || tags.length);
   function reset() {
     setQuery('');
@@ -247,11 +242,6 @@ export function Catalog({
                 <h1>
                   Plugins <span>{filtered.length}</span>
                 </h1>
-                <p>
-                  {active
-                    ? 'Matching your filters'
-                    : `Skills, ${totalTools} MCP tools, and hands-on cookbooks.`}
-                </p>
               </div>
               <Select
                 value={sort}
@@ -304,9 +294,6 @@ export function Catalog({
             <div aria-live="polite" className="sr-only">
               {filtered.length} plugins found
             </div>
-            <p className="catalog-token-label">
-              Content tokens estimated with {tokenizerLabel}.
-            </p>
             <div className="plugin-grid">
               {filtered.map((p) => (
                 <article key={p.id} className="plugin-card">
@@ -346,37 +333,26 @@ export function Catalog({
                       </button>
                     ))}
                   </div>
-                  <Link
-                    className="card-token-estimate"
-                    href={`/plugins/${p.id}/#tokens`}
-                    title={`${tokenizerLabel} content-token estimates`}
-                  >
-                    <span>
-                      Skill ≈ {formatTokens(p.tokenEstimate.skillFull)}
-                    </span>
-                    <span>
-                      Tools ≈ {formatTokens(p.tokenEstimate.toolsTotal)}
-                    </span>
-                  </Link>
                   <div className="card-bottom">
                     <Link
                       className="card-content-link"
                       href={`/plugins/${p.id}/#skill`}
                     >
-                      <BookOpen size={14} />1 Skill
+                      <BookOpen size={14} />
+                      Skill
                     </Link>
-                    <Link
-                      className="card-content-link"
-                      href={`/plugins/${p.id}/#tools`}
-                    >
-                      <Braces size={14} />
-                      {p.toolCount ? `${p.toolCount} tools` : 'Skill only'}
-                    </Link>
-                    <Link
-                      href={`/plugins/${p.id}/`}
-                      aria-label={`Explore ${p.title}`}
-                    >
-                      <ArrowRight size={17} />
+                    {p.toolCount > 0 && (
+                      <Link
+                        className="card-content-link"
+                        href={`/plugins/${p.id}/#tools`}
+                      >
+                        <Braces size={14} />
+                        Tools
+                      </Link>
+                    )}
+                    <Link className="card-content-link" href={p.cookbookUrl}>
+                      <BookOpen size={14} />
+                      Cookbook
                     </Link>
                   </div>
                 </article>
@@ -391,7 +367,6 @@ export function Catalog({
               </div>
             )}
             <div className="directory-end">
-              <span>Generated from upstream main.</span>
               <a href="https://github.com/QwenLM/Qwen-MM-Plugins">
                 Explore the repository <ArrowUpRight size={13} />
               </a>

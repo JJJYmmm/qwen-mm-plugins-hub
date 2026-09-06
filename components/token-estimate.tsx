@@ -23,28 +23,31 @@ export function TokenEstimate({
     <section
       id="tokens"
       className="token-estimate"
-      aria-label="Estimated content tokens"
+      aria-label="Token estimates"
     >
       <Collapsible>
         <div className="token-estimate-row">
-          <h2>Content tokens</h2>
+          <h2>Token estimates</h2>
           <dl className="token-estimate-values">
             <div data-token-kind="skill">
-              <dt>Skill</dt>
-              <dd>≈ {formatTokens(estimate.skillFull)}</dd>
+              <dt>Skill instructions</dt>
+              <dd>About {formatTokens(estimate.skillFull)} tokens</dd>
             </div>
             <div data-token-kind="tools">
-              <dt>Tools</dt>
-              <dd>≈ {formatTokens(estimate.toolsTotal)}</dd>
+              <dt>Tool definitions</dt>
+              <dd>About {formatTokens(estimate.toolsTotal)} tokens</dd>
             </div>
           </dl>
           <CollapsibleTrigger
             className="token-method-trigger"
             aria-label={`Token counting details (${tokenizer.label})`}
           >
-            {tokenizer.label} · Details <ChevronDown size={14} />
+            How it’s counted <ChevronDown size={14} />
           </CollapsibleTrigger>
         </div>
+        <p className="token-estimate-note">
+          Estimated text size—not usage or cost.
+        </p>
         <CollapsibleContent className="token-method-content">
           <p>
             Counted with <a href={tokenizer.sourceUrl}>{tokenizer.modelId}</a>{' '}

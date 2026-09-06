@@ -24,7 +24,6 @@ export default function Home() {
       plugins={plugins}
       contributors={catalog.contributors}
       categories={categories}
-      tokenizerLabel={catalog.tokenizer.label}
     />
   );
 }

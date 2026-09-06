@@ -80,7 +80,7 @@ function ToolDefinition({
             className="tool-token-count"
             title={`${tokenizerLabel} tokens for the copied definition JSON`}
           >
-            ≈ {formatTokens(tool.tokenCount)} tokens
+            Definition: {formatTokens(tool.tokenCount)} tokens
           </span>
           <a href={tool.sourceUrl}>
             View source <ArrowUpRight size={13} />
@@ -571,7 +571,7 @@ export function PluginDetail({
                 >
                   Installation
                 </a>
-                <a href="#tokens">Content tokens</a>
+                <a href="#tokens">Token estimates</a>
               </nav>
               <section>
                 <h2>Plugin details</h2>
