@@ -1,12 +1,7 @@
 ---
 title: Video Memory
 category: Search & memory
-tags:
-- video
-- memory
-- retrieval
-icon: network
-color: orange
+tags: [video]
 order: 4
 ---
 

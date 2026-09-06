@@ -13,15 +13,14 @@ There is no plugin registration table or media checksum inventory to update. Gen
 
 ### Cookbook
 
-Optional YAML front matter controls discovery metadata. Omit any field to use its default; contributors default to Qwen Team.
+Optional YAML front matter controls discovery metadata. Contributors are GitHub accounts and default to QwenLM.
 
 ```markdown
 ---
 title: My Plugin
 category: Understanding
-tags: [image, local]
-icon: scan
-color: purple
+tags: [image, video]
+contributors: [QwenLM]
 order: 10
 ---
 
@@ -36,13 +35,12 @@ Installation, workflows, and examples.
 Categories and tags are collected from cookbooks automatically. For a different contributor, add this optional field in the same front matter—no separate registration:
 
 ```yaml
-contributors:
-  my-team:
-    name: My Team
-    url: https://example.com/team
+contributors: [MyTeam, another-contributor]
 ```
 
-Title defaults to the capitalized capability ID, category to Other, icon to box, color to purple, and order to 99. Existing icon choices are scan, waves, search, network, brain, film, box, ruler, graduation, and monitor.
+Profile links and avatars are derived from those accounts; the first account supplies the plugin avatar. No API lookup or separate logo field is required. Accounts are case-insensitive; tags are normalized and deduplicated. Prefer one or two task/modality tags, not synonyms or details already in the category. All tags remain searchable; the filter initially shows the six most-used plus any selected tags.
+
+Title defaults to the capitalized capability ID, category to Other, and order to 99.
 
 ### Cases and media
 

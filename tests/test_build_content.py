@@ -6,7 +6,12 @@ import subprocess
 import tempfile
 import unittest
 
-from scripts.build_content import build_content, check_cases, read_markdown
+from scripts.build_content import (
+    build_content,
+    check_cases,
+    contributor_metadata,
+    read_markdown,
+)
 
 
 class ContentBuildTests(unittest.TestCase):
@@ -78,7 +83,17 @@ class ContentBuildTests(unittest.TestCase):
         catalog, books = build_content(self.source, self.books)
         plugin = catalog["plugins"][0]
         self.assertEqual(plugin["id"], "new-plugin")
-        self.assertEqual(plugin["contributors"], ["qwen-team"])
+        self.assertEqual(plugin["contributors"], ["qwenlm"])
+        self.assertEqual(
+            catalog["contributors"]["qwenlm"],
+            {
+                "name": "QwenLM",
+                "url": "https://github.com/QwenLM",
+                "avatarUrl": "https://github.com/QwenLM.png?size=80",
+            },
+        )
+        self.assertNotIn("icon", plugin)
+        self.assertNotIn("color", plugin)
         self.assertEqual(plugin["title"], "New Plugin")
         self.assertEqual(plugin["tools"], [])
         self.assertEqual(
@@ -93,11 +108,8 @@ class ContentBuildTests(unittest.TestCase):
             """---
 title: My plugin
 category: A new category
-tags: [demo, local]
-contributors:
-  new-team:
-    name: New Team
-    url: https://example.com/team
+tags: [Demo, local, ' demo ']
+contributors: [New-Team, new-team, Another]
 ---
 
 # Cookbook
@@ -106,8 +118,40 @@ contributors:
         catalog, books = build_content(self.source, self.books)
         self.assertEqual(catalog["categories"], ["A new category"])
         self.assertEqual(catalog["plugins"][0]["tags"], ["demo", "local"])
-        self.assertEqual(catalog["contributors"]["new-team"]["name"], "New Team")
+        self.assertEqual(catalog["plugins"][0]["contributors"], ["new-team", "another"])
+        self.assertEqual(catalog["contributors"]["new-team"]["name"], "New-Team")
+        self.assertEqual(
+            catalog["contributors"]["another"]["avatarUrl"],
+            "https://github.com/Another.png?size=80",
+        )
         self.assertEqual(books["new-plugin"]["markdown"], "# Cookbook\n")
+
+    def test_invalid_contributors_name_the_cookbook(self):
+        for handles in (
+            [],
+            "QwenLM",
+            [""],
+            ["bad/name"],
+            ["-invalid"],
+            ["a--b"],
+            [123],
+            ["a" * 40],
+        ):
+            with self.subTest(handles=handles):
+                with self.assertRaisesRegex(ValueError, "new-plugin/usage.md"):
+                    contributor_metadata(handles, Path("new-plugin/usage.md"))
+
+    def test_invalid_tags_name_the_cookbook(self):
+        self.plugin("new-plugin")
+        self.commit(["new-plugin"])
+        for tags in ("video", "[video, 123]", '[""]'):
+            with self.subTest(tags=tags):
+                self.write(
+                    self.books / "new-plugin/usage.md",
+                    f"---\ntags: {tags}\n---\n# Cookbook\n",
+                )
+                with self.assertRaisesRegex(ValueError, "new-plugin/usage.md"):
+                    build_content(self.source, self.books)
 
     def test_missing_cookbook_names_the_file_to_add(self):
         self.plugin("new-plugin")

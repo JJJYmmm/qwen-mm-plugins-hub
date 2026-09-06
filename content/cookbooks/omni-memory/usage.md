@@ -1,13 +1,7 @@
 ---
 title: Omni Memory
 category: Search & memory
-tags:
-- video
-- audio
-- memory
-- retrieval
-icon: brain
-color: pink
+tags: [video, audio]
 order: 5
 ---
 

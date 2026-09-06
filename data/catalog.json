@@ -1,9 +1,10 @@
 {
   "repository": "https://github.com/QwenLM/Qwen-MM-Plugins",
   "contributors": {
-    "qwen-team": {
-      "name": "Qwen Team",
-      "url": "https://github.com/QwenLM"
+    "qwenlm": {
+      "name": "QwenLM",
+      "url": "https://github.com/QwenLM",
+      "avatarUrl": "https://github.com/QwenLM.png?size=80"
     }
   },
   "categories": [
@@ -381,15 +382,11 @@
       "category": "Understanding",
       "tags": [
         "image",
-        "video",
-        "documents",
-        "local"
+        "video"
       ],
       "contributors": [
-        "qwen-team"
+        "qwenlm"
       ],
-      "icon": "scan",
-      "color": "purple",
       "order": 1,
       "channel": "Main",
       "source": {
@@ -1036,16 +1033,12 @@
       "title": "Vision & audio APIs",
       "category": "Understanding",
       "tags": [
-        "vision",
-        "audio",
-        "OCR",
-        "grounding"
+        "image",
+        "audio"
       ],
       "contributors": [
-        "qwen-team"
+        "qwenlm"
       ],
-      "icon": "waves",
-      "color": "blue",
       "order": 2,
       "channel": "Main",
       "source": {
@@ -1201,15 +1194,12 @@
       "title": "Search",
       "category": "Search & memory",
       "tags": [
-        "web search",
-        "reverse image",
-        "extraction"
+        "web",
+        "image"
       ],
       "contributors": [
-        "qwen-team"
+        "qwenlm"
       ],
-      "icon": "search",
-      "color": "green",
       "order": 3,
       "channel": "Main",
       "source": {
@@ -1572,15 +1562,11 @@
       "title": "Video Memory",
       "category": "Search & memory",
       "tags": [
-        "video",
-        "memory",
-        "retrieval"
+        "video"
       ],
       "contributors": [
-        "qwen-team"
+        "qwenlm"
       ],
-      "icon": "network",
-      "color": "orange",
       "order": 4,
       "channel": "Main",
       "source": {
@@ -2113,15 +2099,11 @@
       "category": "Search & memory",
       "tags": [
         "video",
-        "audio",
-        "memory",
-        "retrieval"
+        "audio"
       ],
       "contributors": [
-        "qwen-team"
+        "qwenlm"
       ],
-      "icon": "brain",
-      "color": "pink",
       "order": 5,
       "channel": "Main",
       "source": {
@@ -4244,16 +4226,11 @@
       "title": "Video Edit",
       "category": "Generation",
       "tags": [
-        "video",
-        "image",
-        "audio",
-        "editing"
+        "video"
       ],
       "contributors": [
-        "qwen-team"
+        "qwenlm"
       ],
-      "icon": "film",
-      "color": "purple",
       "order": 6,
       "channel": "Main",
       "source": {
@@ -4804,15 +4781,12 @@
       "title": "Blender",
       "category": "3D & design",
       "tags": [
-        "3D",
-        "rendering",
-        "modeling"
+        "3d",
+        "animation"
       ],
       "contributors": [
-        "qwen-team"
+        "qwenlm"
       ],
-      "icon": "box",
-      "color": "orange",
       "order": 7,
       "channel": "Main",
       "source": {
@@ -5233,15 +5207,12 @@
       "title": "FreeCAD",
       "category": "3D & design",
       "tags": [
-        "CAD",
-        "3D",
-        "engineering"
+        "3d",
+        "cad"
       ],
       "contributors": [
-        "qwen-team"
+        "qwenlm"
       ],
-      "icon": "ruler",
-      "color": "blue",
       "order": 8,
       "channel": "Main",
       "source": {
@@ -6140,14 +6111,11 @@
       "category": "Generation",
       "tags": [
         "education",
-        "animation",
-        "interactive"
+        "animation"
       ],
       "contributors": [
-        "qwen-team"
+        "qwenlm"
       ],
-      "icon": "graduation",
-      "color": "green",
       "order": 9,
       "channel": "Main",
       "source": {

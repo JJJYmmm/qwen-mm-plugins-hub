@@ -24,9 +24,34 @@ from .token_estimates import annotate_catalog
 ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY = "https://github.com/QwenLM/Qwen-MM-Plugins"
 HUB_REPOSITORY = "https://github.com/JJJYmmm/qwen-mm-plugins-hub"
-DEFAULT_CONTRIBUTORS = {
-    "qwen-team": {"name": "Qwen Team", "url": "https://github.com/QwenLM"}
-}
+DEFAULT_CONTRIBUTORS = ["QwenLM"]
+
+
+def contributor_metadata(handles: list[str], path: Path) -> dict:
+    """GitHub handles are the only authored identity; profile and avatar follow it."""
+    if not isinstance(handles, list) or not handles:
+        raise ValueError(
+            f"contributors must be a non-empty list of GitHub accounts: {path}"
+        )
+    people = {}
+    for handle in handles:
+        if (
+            not isinstance(handle, str)
+            or not re.fullmatch(
+                r"[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?", handle
+            )
+            or "--" in handle
+        ):
+            raise ValueError(f"Invalid GitHub contributor {handle!r}: {path}")
+        people.setdefault(
+            handle.lower(),
+            {
+                "name": handle,
+                "url": f"https://github.com/{handle}",
+                "avatarUrl": f"https://github.com/{handle}.png?size=80",
+            },
+        )
+    return people
 
 
 def read_markdown(path: Path) -> tuple[dict, str]:
@@ -165,11 +190,18 @@ def build_content(
         release_tag = release_catalog["tag_format"].format(
             cap=cap, version=release_version
         )
-        contributors = info.get("contributors", DEFAULT_CONTRIBUTORS)
+        contributors = contributor_metadata(
+            info.get("contributors", DEFAULT_CONTRIBUTORS), cookbook_path
+        )
         for key, person in contributors.items():
-            if key in all_contributors and all_contributors[key] != person:
-                raise ValueError(f"Conflicting contributor details: {key}")
-            all_contributors[key] = person
+            all_contributors.setdefault(key, person)
+        tags = info.get("tags", [])
+        if not isinstance(tags, list) or any(
+            not isinstance(tag, str) or not tag.strip() for tag in tags
+        ):
+            raise ValueError(
+                f"tags must be a list of non-empty strings: {cookbook_path}"
+            )
         plugins.append(
             {
                 **data,
@@ -181,10 +213,8 @@ def build_content(
                 },
                 "title": info.get("title", cap.replace("-", " ").title()),
                 "category": info.get("category", "Other"),
-                "tags": info.get("tags", []),
+                "tags": list(dict.fromkeys(tag.strip().lower() for tag in tags)),
                 "contributors": list(contributors),
-                "icon": info.get("icon", "box"),
-                "color": info.get("color", "purple"),
                 "order": info.get("order", 99),
                 "channel": "Main",
                 "source": {

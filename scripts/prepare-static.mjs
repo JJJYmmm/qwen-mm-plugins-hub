@@ -9,7 +9,9 @@ import {
 import path from 'node:path';
 
 const root = path.resolve('dist/client');
-const { plugins } = JSON.parse(await readFile('data/catalog.json', 'utf8'));
+const { plugins, contributors } = JSON.parse(
+  await readFile('data/catalog.json', 'utf8'),
+);
 const cookbooks = JSON.parse(await readFile('data/cookbooks.json', 'utf8'));
 // Vinext's trailingSlash export currently redirects its internal RSC requests.
 // Export without redirects, then provide directory indexes for portable URLs.
@@ -50,6 +52,13 @@ for (const file of [
     throw new Error(`Error page exported: ${file}`);
   if (!html.includes(`action="${prefix}/"`))
     throw new Error(`Documentation search has the wrong destination: ${file}`);
+  if (
+    !html.includes('class="brand-mark"') ||
+    !html.includes(`src="${prefix}/favicon.svg"`)
+  )
+    throw new Error(
+      `Qwen brand asset missing or incorrectly prefixed: ${file}`,
+    );
   if (file.startsWith('plugins/')) {
     if (
       !html.includes('aria-label="Plugin documentation"') ||
@@ -126,10 +135,14 @@ for (const file of [
       const current = plugins.find(
         (p) => file === `plugins/${p.id}/index.html`,
       );
+      for (const id of current.contributors) {
+        if (!html.includes(`href="${contributors[id].url}"`))
+          throw new Error(`Contributor profile missing in ${file}: ${id}`);
+      }
       if (
         !html.includes('id="tokens"') ||
-        !html.includes('Full SKILL.md') ||
-        !html.includes('All tool definitions') ||
+        !html.includes('data-token-kind="skill"') ||
+        !html.includes('data-token-kind="tools"') ||
         !html.includes(
           current.tokenEstimate.skillFull.toLocaleString('en-US'),
         ) ||
@@ -148,6 +161,12 @@ for (const file of [
     for (const plugin of plugins) {
       if (!html.includes(`href="${prefix}/plugins/${plugin.id}/#tokens"`))
         throw new Error(`Token estimate card link missing: ${plugin.id}`);
+    }
+    for (const contributor of Object.values(contributors)) {
+      if (!html.includes(`href="${contributor.url}"`))
+        throw new Error(
+          `Contributor profile missing from catalog: ${contributor.name}`,
+        );
     }
   }
   for (const [, url] of html.matchAll(

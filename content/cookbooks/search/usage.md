@@ -1,12 +1,7 @@
 ---
 title: Search
 category: Search & memory
-tags:
-- web search
-- reverse image
-- extraction
-icon: search
-color: green
+tags: [web, image]
 order: 3
 ---
 

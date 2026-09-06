@@ -7,7 +7,6 @@ import {
   ArrowUpRight,
   BookOpen,
   Braces,
-  Check,
   CodeXml,
   FileText,
   Search,
@@ -25,7 +24,7 @@ import {
   TableCell,
 } from '@/components/ui/table';
 import { SiteHeader, SiteFooter } from '@/components/site-header';
-import { PluginIcon } from '@/components/plugin-icon';
+import { ContributorAvatar } from '@/components/contributor-avatar';
 import { CopyButton } from '@/components/copy-button';
 import { SkillFiles } from '@/components/skill-files';
 import { TokenEstimate } from '@/components/token-estimate';
@@ -229,31 +228,21 @@ export function PluginDetail({
                 All plugins
               </Link>
               <div className="plugin-hero">
-                <PluginIcon icon={p.icon} color={p.color} large />
                 <div className="plugin-hero-title">
                   <div className="hero-byline">
                     {p.contributors.map((c) => (
-                      <Link key={c} href={`/?contributor=${c}`}>
-                        {contributors[c]?.name || c}
-                        <span className="verified">
-                          <Check size={10} />
-                        </span>
-                      </Link>
+                      <a key={c} href={contributors[c].url}>
+                        <ContributorAvatar
+                          contributor={contributors[c]}
+                          small
+                        />
+                        {contributors[c].name}
+                      </a>
                     ))}
                     <span>/</span>
                     <span>{p.id}</span>
                   </div>
-                  <h1>
-                    {p.title}
-                    <a
-                      className="version-badge"
-                      href="#install"
-                      title="Version and installation details"
-                    >
-                      main · v{p.version}
-                    </a>
-                  </h1>
-                  <p className="package-name">{p.name}</p>
+                  <h1>{p.title}</h1>
                 </div>
                 <div
                   className="plugin-resource-actions"
@@ -266,7 +255,7 @@ export function PluginDetail({
                   >
                     <BookOpen size={16} />
                     <span>Cookbook</span>
-                    <ArrowUpRight size={14} />
+                    <ArrowRight size={14} />
                   </Link>
                   <a
                     className="source-button"
@@ -282,8 +271,7 @@ export function PluginDetail({
                 {p.description.replace(/^Qwen-MM-Plugins\s+[^—]+—\s*/i, '')}
               </p>
               <div className="detail-tags">
-                <span className="kind-badge">{p.kind}</span>
-                {p.tags.map((t) => (
+                {p.tags.slice(0, 3).map((t) => (
                   <Link
                     className="tag"
                     key={t}
@@ -292,21 +280,6 @@ export function PluginDetail({
                     {t}
                   </Link>
                 ))}
-              </div>
-              <div className="version-context">
-                <span>
-                  Docs:{' '}
-                  <a href={`${p.source.repository}/commit/${p.source.commit}`}>
-                    main @ {p.source.commit.slice(0, 7)}
-                  </a>
-                </span>
-                {p.release && (
-                  <span>
-                    Default release:{' '}
-                    <a href={p.release.url}>v{p.release.version}</a>
-                  </span>
-                )}
-                <a href="#install">Why can these differ?</a>
               </div>
               <TokenEstimate estimate={p.tokenEstimate} tokenizer={tokenizer} />
               <section id="plugin-content" className="detail-main">
@@ -387,11 +360,7 @@ export function PluginDetail({
                           <span>
                             {skillExpanded
                               ? `All ${excerpt.lineCount} lines`
-                              : `First 50 of ${excerpt.lineCount} lines`}{' '}
-                            ·{' '}
-                            {skillView === 'raw'
-                              ? 'with front matter'
-                              : 'Markdown body'}
+                              : `50 of ${excerpt.lineCount} lines`}
                           </span>
                           <CollapsibleTrigger
                             className="skill-expand-button"
@@ -402,7 +371,9 @@ export function PluginDetail({
                                   ?.scrollIntoView({ block: 'start' });
                             }}
                           >
-                            {skillExpanded ? 'Show less' : 'Expand full Skill'}{' '}
+                            {skillExpanded
+                              ? 'Show less'
+                              : `Show all ${excerpt.lineCount} lines`}{' '}
                             <ChevronDown size={15} />
                           </CollapsibleTrigger>
                         </div>
@@ -419,10 +390,6 @@ export function PluginDetail({
                         <h2>Tool definitions</h2>
                         <a href="#tools">Permalink</a>
                       </div>
-                      <p>
-                        Names, descriptions, and input schemas exposed by this
-                        plugin’s MCP server.
-                      </p>
                     </div>
                     {p.tools.length ? (
                       <>
@@ -436,7 +403,10 @@ export function PluginDetail({
                           />
                         </div>
                         <div className="tools-count" aria-live="polite">
-                          {tools.length} of {p.tools.length} tools
+                          {query
+                            ? `${tools.length} of ${p.tools.length}`
+                            : p.tools.length}{' '}
+                          tools
                         </div>
                         {tools.map((tool, i) => (
                           <ToolDefinition
@@ -461,11 +431,9 @@ export function PluginDetail({
                     ) : (
                       <div className="skill-only-note">
                         <BookOpen size={28} />
-                        <h3>A Skill-only plugin</h3>
+                        <h3>No MCP tools</h3>
                         <p>
-                          This plugin provides instructions and bundled
-                          resources. It does not ship an MCP server or expose
-                          tool definitions.
+                          This plugin provides a Skill and bundled resources.
                         </p>
                         <a className="skill-only-action" href="#skill">
                           Read the Skill <ArrowRight size={16} />
@@ -475,41 +443,10 @@ export function PluginDetail({
                   </TabsContent>
                   <TabsContent value="install" id="install">
                     <div className="install-content">
-                      <h2>Add {p.title} to your agent</h2>
-                      <section className="install-version-note">
-                        <h3>Source snapshot ≠ installed release</h3>
-                        <p>
-                          This page documents{' '}
-                          <a
-                            href={`${p.source.repository}/commit/${p.source.commit}`}
-                          >
-                            main @ {p.source.commit.slice(0, 7)}
-                          </a>
-                          , whose plugin manifest declares v{p.version}. The
-                          Skills and tool definitions above may include changes
-                          made after a release.
-                        </p>
-                        {p.release && (
-                          <p>
-                            The default installer selects the immutable plugin
-                            tag{' '}
-                            <a href={p.release.url}>
-                              <code>{p.release.tag}</code>
-                            </a>
-                            , as listed by upstream at this snapshot. Fetching
-                            install.sh from main does not mean it installs main.
-                            Newer installer snapshots may select newer releases.
-                          </p>
-                        )}
-                        <p>
-                          Plugins are versioned independently; these are plugin
-                          versions, not the shared Python distribution version.
-                          For a specific release’s files, follow its tag link.
-                        </p>
-                      </section>
+                      <h2>Installation</h2>
                       <p>
-                        Run the guided installer, choose your agent harness,
-                        then select <strong>{p.id}</strong>.
+                        Run the installer, then select your agent and{' '}
+                        <strong>{p.id}</strong>.
                       </p>
                       <div className="install-command">
                         <div>
@@ -518,10 +455,44 @@ export function PluginDetail({
                         </div>
                         <pre>{installCommand}</pre>
                       </div>
-                      <p>
-                        The installer supports Claude Code, CodeBuddy, Codex,
-                        Qoder, OpenClaw, Qwen Code, and Gemini CLI.
-                      </p>
+                      <section className="install-version-note">
+                        <p className="install-version-summary">
+                          {p.release && (
+                            <span>
+                              Installer release:{' '}
+                              <a href={p.release.url}>v{p.release.version}</a>
+                            </span>
+                          )}
+                          <span>
+                            Documentation:{' '}
+                            <a
+                              href={`${p.source.repository}/commit/${p.source.commit}`}
+                            >
+                              main @ {p.source.commit.slice(0, 7)}
+                            </a>
+                          </span>
+                        </p>
+                        <details>
+                          <summary>Version details</summary>
+                          <p>
+                            The installer uses a release tag; this page follows
+                            main and may include unreleased changes. This
+                            snapshot declares plugin v{p.version}
+                            {p.release && (
+                              <>
+                                {' '}
+                                and selects{' '}
+                                <a href={p.release.url}>
+                                  <code>{p.release.tag}</code>
+                                </a>
+                              </>
+                            )}
+                            . Plugin versions are independent of the Python
+                            package version; later installer snapshots may
+                            select newer releases.
+                          </p>
+                        </details>
+                      </section>
                       <a
                         className="documentation-link"
                         href="https://github.com/QwenLM/Qwen-MM-Plugins/blob/main/docs/en/installation.md"
@@ -530,12 +501,8 @@ export function PluginDetail({
                       </a>
                       {p.requirements.length > 0 && (
                         <>
-                          <h3>MCP system tools</h3>
-                          <p>
-                            Reported by the server’s SYSTEM_DEPS. These checks
-                            cover individual features, not every Skill
-                            dependency.
-                          </p>
+                          <h3>System dependencies</h3>
+                          <p>Required by the listed features.</p>
                           <ul className="system-requirements">
                             {p.requirements.map((r) => (
                               <li key={r.label}>
@@ -555,24 +522,18 @@ export function PluginDetail({
                               View source <ArrowUpRight size={14} />
                             </a>
                           </div>
-                          <p>Extracted from this snapshot’s SKILL.md.</p>
                           {prerequisitesPreview}
                         </section>
                       )}
-                      {p.kind === 'Skill only' && (
+                      {p.kind === 'Skill only' && prerequisitesPreview && (
                         <p>
-                          This is a Skill-only plugin: installing the Skill does
-                          not install its runtime dependencies. Complete the
-                          prerequisites before use.
+                          Install the runtime dependencies above before using
+                          this Skill.
                         </p>
                       )}
-                      <p>
-                        Provider keys and optional dependencies depend on the
-                        tools you use. The cookbook covers setup and examples
-                        for this plugin.
-                      </p>
+                      <p>For provider keys and examples, see the cookbook.</p>
                       <Link className="documentation-link" href={p.cookbookUrl}>
-                        Open cookbook <ArrowUpRight size={15} />
+                        Open cookbook <ArrowRight size={15} />
                       </Link>
                     </div>
                   </TabsContent>
@@ -582,7 +543,6 @@ export function PluginDetail({
             <aside className="detail-sidebar">
               <nav className="docs-toc" aria-label="On this page">
                 <h2>On this page</h2>
-                <a href="#tokens">Token estimates</a>
                 <a
                   href="#skill"
                   aria-current={tab === 'skill' ? 'location' : undefined}
@@ -594,7 +554,7 @@ export function PluginDetail({
                   href="#tools"
                   aria-current={tab === 'tools' ? 'location' : undefined}
                 >
-                  Tool definitions <span>{p.tools.length}</span>
+                  Tools <span>{p.tools.length}</span>
                 </a>
                 {tab === 'tools' && p.tools.length > 0 && (
                   <div className="docs-tool-toc">
@@ -609,8 +569,9 @@ export function PluginDetail({
                   href="#install"
                   aria-current={tab === 'install' ? 'location' : undefined}
                 >
-                  Installation & versions
+                  Installation
                 </a>
+                <a href="#tokens">Content tokens</a>
               </nav>
               <section>
                 <h2>Plugin details</h2>
@@ -640,6 +601,16 @@ export function PluginDetail({
                     <dt>License</dt>
                     <dd>Apache 2.0</dd>
                   </div>
+                  <div>
+                    <dt>Source</dt>
+                    <dd>
+                      <a
+                        href={`${p.source.repository}/commit/${p.source.commit}`}
+                      >
+                        main @ {p.source.commit.slice(0, 7)}
+                      </a>
+                    </dd>
+                  </div>
                 </dl>
               </section>
               <section>
@@ -647,7 +618,7 @@ export function PluginDetail({
                 <Link className="resource-link" href={p.cookbookUrl}>
                   <BookOpen size={15} />
                   Cookbook
-                  <ArrowUpRight size={13} />
+                  <ArrowRight size={13} />
                 </Link>
                 <a className="resource-link" href={p.skill.sourceUrl}>
                   <FileText size={15} />
@@ -665,17 +636,6 @@ export function PluginDetail({
                   <CodeXml size={15} />
                   Plugin source
                   <ArrowUpRight size={13} />
-                </a>
-              </section>
-              <section className="source-note">
-                <span className="live-dot" />
-                <h2>From the source</h2>
-                <p>
-                  Built from the upstream main branch. Definitions and Skills
-                  refer to the same source snapshot.
-                </p>
-                <a href={`${p.source.repository}/commit/${p.source.commit}`}>
-                  View source snapshot <ArrowUpRight size={13} />
                 </a>
               </section>
             </aside>

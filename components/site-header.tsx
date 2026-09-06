@@ -1,14 +1,20 @@
 import Link from '@/components/static-link';
-import { ArrowUpRight, CodeXml, Layers3, Search, BookOpen } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowUpRight, CodeXml, Search, BookOpen } from 'lucide-react';
 
 export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="header-inner">
         <Link href="/" className="brand">
-          <span className="brand-mark">
-            <Layers3 size={23} strokeWidth={1.7} />
-          </span>
+          <Image
+            className="brand-mark"
+            src={(process.env.NEXT_PUBLIC_BASE_PATH || '') + '/favicon.svg'}
+            width={32}
+            height={32}
+            alt=""
+            unoptimized
+          />
           <span>
             Qwen <span className="brand-light">MM Plugins</span>
           </span>

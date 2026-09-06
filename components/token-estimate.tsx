@@ -23,64 +23,52 @@ export function TokenEstimate({
     <section
       id="tokens"
       className="token-estimate"
-      aria-label="Estimated context tokens"
+      aria-label="Estimated content tokens"
     >
-      <div className="token-estimate-heading">
-        <h2>Estimated tokens</h2>
-        <span>{tokenizer.label}</span>
-      </div>
-      <dl className="token-estimate-values">
-        <div>
-          <dt>Full SKILL.md</dt>
-          <dd>
-            ≈ {formatTokens(estimate.skillFull)} <span>tokens</span>
-          </dd>
-        </div>
-        <div>
-          <dt>All tool definitions</dt>
-          <dd>
-            ≈ {formatTokens(estimate.toolsTotal)} <span>tokens</span>
-          </dd>
-        </div>
-      </dl>
-      <p className="token-estimate-note">
-        Content only—not runtime or billed usage.
-      </p>
       <Collapsible>
-        <CollapsibleTrigger className="token-method-trigger">
-          How this is counted <ChevronDown size={14} />
-        </CollapsibleTrigger>
+        <div className="token-estimate-row">
+          <h2>Content tokens</h2>
+          <dl className="token-estimate-values">
+            <div data-token-kind="skill">
+              <dt>Skill</dt>
+              <dd>≈ {formatTokens(estimate.skillFull)}</dd>
+            </div>
+            <div data-token-kind="tools">
+              <dt>Tools</dt>
+              <dd>≈ {formatTokens(estimate.toolsTotal)}</dd>
+            </div>
+          </dl>
+          <CollapsibleTrigger
+            className="token-method-trigger"
+            aria-label={`Token counting details (${tokenizer.label})`}
+          >
+            {tokenizer.label} · Details <ChevronDown size={14} />
+          </CollapsibleTrigger>
+        </div>
         <CollapsibleContent className="token-method-content">
           <p>
-            Reference tokenizer:{' '}
-            <a href={tokenizer.sourceUrl}>{tokenizer.modelId}</a> at{' '}
-            <code>{tokenizer.revision.slice(0, 7)}</code>. Computed at build
-            time with the official tokenizer, without padding, truncation, or
-            added special tokens.
+            Counted with <a href={tokenizer.sourceUrl}>{tokenizer.modelId}</a>{' '}
+            at <code>{tokenizer.revision.slice(0, 7)}</code>, without added
+            special tokens.
           </p>
           <ul>
             <li>
-              <strong>Skill:</strong> the complete SKILL.md, including YAML
-              front matter—not just the first 50 preview lines. Bundled files
-              and cookbooks are excluded.
+              <strong>Skill:</strong> complete SKILL.md, including front matter.
             </li>
             <li>
-              <strong>Tools:</strong> the sum of each tool’s formatted MCP JSON
-              (name, description, inputSchema), exactly as offered by “Copy
-              definition”. No extra registry metadata is included.
+              <strong>Tools:</strong> summed JSON from “Copy definition” (name,
+              description, inputSchema).
             </li>
             <li>
-              <strong>Discovery metadata only:</strong> ≈{' '}
+              <strong>Discovery metadata:</strong> ≈{' '}
               {formatTokens(estimate.skillMetadata)} tokens for the Skill’s name
-              and description as formatted JSON. This is a separate estimate,
-              not added to the full Skill count.
+              and description; counted separately.
             </li>
           </ul>
           <p>
-            Content size is not always-loaded context or billed usage. A client
-            may load Skills on demand, expose only selected tools, or add its
-            own chat template, instructions, and wrappers. Tool results,
-            conversation history, images, audio, and video are not counted.
+            Excludes bundled files, cookbooks, client wrappers, history, tool
+            results, and media. Content estimates are not always-loaded context
+            or billed usage.
           </p>
         </CollapsibleContent>
       </Collapsible>

@@ -12,8 +12,6 @@ import {
   Layers3,
   X,
   Users,
-  Check,
-  Sparkles,
 } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -24,7 +22,7 @@ import {
   SelectItem,
 } from '@/components/ui/select';
 import { SiteHeader, SiteFooter } from '@/components/site-header';
-import { PluginIcon } from '@/components/plugin-icon';
+import { ContributorAvatar } from '@/components/contributor-avatar';
 import {
   filterPlugins,
   formatTokens,
@@ -49,6 +47,7 @@ export function Catalog({
   const [tags, setTags] = useState<string[]>([]);
   const [sort, setSort] = useState('default');
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [allTagsOpen, setAllTagsOpen] = useState(false);
   const [ready, setReady] = useState(false);
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -87,7 +86,16 @@ export function Catalog({
         ? b.toolCount - a.toolCount
         : a.order - b.order,
   );
-  const allTags = [...new Set(plugins.flatMap((p) => p.tags))].sort();
+  const tagCounts = new Map<string, number>();
+  plugins.forEach((p) =>
+    p.tags.forEach((t) => tagCounts.set(t, (tagCounts.get(t) || 0) + 1)),
+  );
+  const allTags = [...tagCounts.keys()].sort(
+    (a, b) => tagCounts.get(b)! - tagCounts.get(a)! || a.localeCompare(b),
+  );
+  const visibleTags = allTags.filter(
+    (t, i) => allTagsOpen || i < 6 || tags.includes(t),
+  );
   const totalTools = plugins.reduce((n, p) => n + p.toolCount, 0);
   const active = Boolean(query || category || contributor || tags.length);
   function reset() {
@@ -159,11 +167,8 @@ export function Catalog({
                     }
                     aria-label={c.name}
                   />
-                  <span className="mini-avatar">Q</span>
+                  <ContributorAvatar contributor={c} small />
                   <span>{c.name}</span>
-                  <span className="verified" aria-label="Verified source">
-                    <Check size={11} />
-                  </span>
                   <small>
                     {plugins.filter((p) => p.contributors.includes(id)).length}
                   </small>
@@ -172,8 +177,8 @@ export function Catalog({
             </section>
             <section className="filter-section">
               <h2>Tags</h2>
-              <div className="filter-tags">
-                {allTags.map((t) => (
+              <div className="filter-tags" id="tag-filters">
+                {visibleTags.map((t) => (
                   <button
                     key={t}
                     className={`tag ${tags.includes(t) ? 'tag-active' : ''}`}
@@ -185,15 +190,22 @@ export function Catalog({
                   </button>
                 ))}
               </div>
+              {allTags.length > 6 && (
+                <button
+                  className="more-tags"
+                  onClick={() => setAllTagsOpen(!allTagsOpen)}
+                  aria-expanded={allTagsOpen}
+                  aria-controls="tag-filters"
+                >
+                  {allTagsOpen ? 'Fewer tags' : `All ${allTags.length} tags`}
+                </button>
+              )}
             </section>
             <a
               className="contribute-note"
               href="https://github.com/QwenLM/Qwen-MM-Plugins/blob/main/CONTRIBUTING.md"
             >
-              <Sparkles size={17} />
-              <strong>Build something useful.</strong>
-              <span>Add your capability to the toolkit.</span>
-              <span className="purple-text">
+              <span>
                 Contribute a plugin <ArrowUpRight size={14} />
               </span>
             </a>
@@ -238,7 +250,7 @@ export function Catalog({
                 <p>
                   {active
                     ? 'Matching your filters'
-                    : `Skills and ${totalTools} MCP tools from Qwen Team`}
+                    : `Skills, ${totalTools} MCP tools, and hands-on cookbooks.`}
                 </p>
               </div>
               <Select
@@ -292,39 +304,38 @@ export function Catalog({
             <div aria-live="polite" className="sr-only">
               {filtered.length} plugins found
             </div>
+            <p className="catalog-token-label">
+              Content tokens estimated with {tokenizerLabel}.
+            </p>
             <div className="plugin-grid">
               {filtered.map((p) => (
                 <article key={p.id} className="plugin-card">
-                  <div className="card-top">
-                    <PluginIcon icon={p.icon} color={p.color} />
-                    <span className="category-label">{p.category}</span>
-                    {p.channel === 'Development' && (
-                      <span className="dev-badge">Dev</span>
-                    )}
-                  </div>
+                  <a
+                    href={contributors[p.contributors[0]].url}
+                    className="card-avatar-link"
+                    aria-label={`${contributors[p.contributors[0]].name} on GitHub`}
+                  >
+                    <ContributorAvatar
+                      contributor={contributors[p.contributors[0]]}
+                    />
+                  </a>
                   <Link href={`/plugins/${p.id}/`} className="card-title">
-                    <h3>
-                      <span className="namespace">Qwen / </span>
-                      {p.id}
-                    </h3>
-                    <ArrowUpRight size={19} />
+                    <h3>{p.id}</h3>
                   </Link>
                   <div className="card-byline">
                     {p.contributors.map((c) => (
-                      <button key={c} onClick={() => setContributor(c)}>
-                        {contributors[c]?.name || c}
-                      </button>
+                      <a key={c} href={contributors[c].url}>
+                        {contributors[c].name}
+                      </a>
                     ))}
                     <span>·</span>
-                    <span title="Manifest version in the documented main snapshot">
-                      main · v{p.version}
-                    </span>
+                    <span>{p.category}</span>
                   </div>
                   <p className="card-description">
                     {p.description.replace(/^Qwen-MM-Plugins\s+[^—]+—\s*/i, '')}
                   </p>
                   <div className="card-tags">
-                    {p.tags.map((t) => (
+                    {p.tags.slice(0, 2).map((t) => (
                       <button
                         className="tag"
                         key={t}
@@ -338,16 +349,13 @@ export function Catalog({
                   <Link
                     className="card-token-estimate"
                     href={`/plugins/${p.id}/#tokens`}
-                    title={`Estimated content tokens, using the ${tokenizerLabel} tokenizer. Excludes client wrappers and runtime content.`}
+                    title={`${tokenizerLabel} content-token estimates`}
                   >
                     <span>
                       Skill ≈ {formatTokens(p.tokenEstimate.skillFull)}
                     </span>
                     <span>
                       Tools ≈ {formatTokens(p.tokenEstimate.toolsTotal)}
-                    </span>
-                    <span className="token-model-label">
-                      {tokenizerLabel} tokens
                     </span>
                   </Link>
                   <div className="card-bottom">
@@ -383,8 +391,7 @@ export function Catalog({
               </div>
             )}
             <div className="directory-end">
-              <span className="live-dot" />
-              <span>Skills and tool definitions, directly from source.</span>
+              <span>Generated from upstream main.</span>
               <a href="https://github.com/QwenLM/Qwen-MM-Plugins">
                 Explore the repository <ArrowUpRight size={13} />
               </a>

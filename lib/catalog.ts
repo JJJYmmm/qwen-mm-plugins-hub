@@ -1,4 +1,4 @@
-export type Contributor = { name: string; url: string };
+export type Contributor = { name: string; url: string; avatarUrl: string };
 export type Schema = {
   type?: string | string[];
   description?: string;
@@ -114,8 +114,6 @@ export type PluginSummary = {
   category: string;
   tags: string[];
   kind: string;
-  icon: string;
-  color: string;
   order: number;
   channel: string;
   toolCount: number;

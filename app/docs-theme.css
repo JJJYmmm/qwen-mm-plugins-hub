@@ -26,10 +26,13 @@
   flex-shrink: 0;
 }
 .brand-mark {
-  background: #6d5ce7;
+  display: block;
+  background: transparent;
+  border-radius: 0;
   box-shadow: none;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
 }
 .brand-light {
   font-weight: 600;
@@ -120,18 +123,6 @@
   font-weight: 600;
   color: #111827;
 }
-.docs-nav-version {
-  display: flex;
-  gap: 8px;
-  margin-top: 6px;
-}
-.docs-nav-version > span {
-  font-size: 0.875rem;
-  padding: 3px 10px;
-  border: 1px solid #e5e7eb;
-  border-radius: 5px;
-  color: #6b7280;
-}
 .docs-navigation [data-slot='sidebar-group'],
 [data-mobile='true'] [data-slot='sidebar-group'] {
   padding: 7px 16px;
@@ -198,16 +189,10 @@
   gap: 15px;
   align-items: flex-start;
 }
-.doc-detail .plugin-hero > .plugin-icon {
-  display: none;
-}
 .doc-detail .hero-byline {
   font-size: 0.875rem;
   color: #6b7280;
   margin-bottom: 6px;
-}
-.doc-detail .verified {
-  display: none;
 }
 .doc-detail .plugin-hero h1 {
   font-size: 1.5rem;
@@ -217,13 +202,6 @@
   gap: 9px;
   margin: 0;
 }
-.doc-detail .version-badge {
-  font-size: 0.8125rem;
-  font-weight: 400;
-  color: #6b7280;
-  background: #f9fafb;
-  border-color: #e5e7eb;
-}
 .doc-detail .source-button {
   border: 0;
   background: none;
@@ -231,32 +209,22 @@
   font-size: 0.875rem;
   box-shadow: none;
 }
-.doc-detail .package-name {
-  font-size: 0.875rem;
-  margin-top: 9px;
-  color: #6b7280;
-}
 .doc-detail .plugin-description {
   font-size: 1.05rem;
   line-height: 1.75;
-  margin: 22px 0 15px;
+  margin: 18px 0 12px;
 }
 .doc-detail .detail-tags {
   gap: 6px;
+  margin-bottom: 0;
 }
-.doc-detail .detail-tags .tag,
-.doc-detail .kind-badge {
+.doc-detail .detail-tags .tag {
   border: 0;
   background: #f3f4f6;
   border-radius: 4px;
   color: #6b7280;
   font-size: 0.8125rem;
   padding: 3px 7px;
-}
-.doc-detail .version-context {
-  font-size: 0.875rem;
-  gap: 5px 14px;
-  margin: 15px 0 25px;
 }
 .doc-detail .detail-tabs {
   gap: 22px;
@@ -286,21 +254,11 @@
 }
 .doc-detail .detail-sidebar dt,
 .doc-detail .detail-sidebar dd,
-.doc-detail .detail-sidebar a,
-.doc-detail .source-note p {
+.doc-detail .detail-sidebar a {
   font-size: 0.875rem;
 }
 .doc-detail .detail-sidebar dl > div {
   margin-bottom: 12px;
-}
-.doc-detail .source-note {
-  background: none;
-  border: 0;
-  box-shadow: none;
-  border-radius: 0;
-}
-.doc-detail .source-note .live-dot {
-  display: none;
 }
 .docs-toc {
   border-left: 1px solid #e5e7eb;
@@ -483,6 +441,53 @@
   background: #f9fafb;
   border-color: #d1d5db;
 }
+.contributor-avatar {
+  width: 28px;
+  height: 28px;
+}
+.contributor-avatar[data-size='sm'] {
+  width: 20px;
+  height: 20px;
+}
+.card-avatar-link {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+}
+.hero-byline > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.hero-byline,
+.card-byline {
+  flex-wrap: wrap;
+}
+.card-byline > a {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.card-byline > a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+.more-tags {
+  display: block;
+  padding: 8px 0 2px;
+  font-size: 0.8125rem;
+  color: #6b7280;
+  cursor: pointer;
+}
+.more-tags:hover {
+  color: var(--primary);
+}
+.catalog-token-label {
+  font-size: 0.8125rem;
+  color: #6b7280;
+  margin: 0 0 12px;
+}
 .contribute-note {
   background: #fff;
   box-shadow: none;
@@ -490,6 +495,11 @@
   border: 0;
   border-top: 1px solid #e5e7eb;
   border-radius: 0;
+}
+.contribute-note > span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--icon-gap);
 }
 .site-footer {
   max-width: none;
@@ -696,10 +706,6 @@
   align-items: center;
   gap: var(--icon-gap);
 }
-.docs-cookbook-link > svg {
-  margin-left: auto;
-  color: #9ca3af;
-}
 .doc-detail .detail-tabs {
   gap: 24px !important;
 }
@@ -865,59 +871,41 @@
 .card-token-estimate:hover {
   color: #2563eb;
 }
-.card-token-estimate .token-model-label {
-  color: #9ca3af;
-  font-size: 0.75rem;
-}
 .token-estimate {
-  margin: 20px 0 24px;
-  padding: 14px 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 7px;
-  background: #fafbfc;
+  margin: 14px 0 18px;
+  padding: 10px 0;
+  border-block: 1px solid #f3f4f6;
   scroll-margin-top: calc(var(--docs-header-height) + 20px);
 }
-.token-estimate-heading {
+.token-estimate-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  gap: 4px 18px;
+  font-size: 0.8125rem;
+  color: #6b7280;
 }
-.token-estimate-heading h2 {
-  font-size: 0.875rem;
+.token-estimate-row h2 {
+  font-size: inherit;
   font-weight: 600;
   color: #4b5563;
   margin: 0;
 }
-.token-estimate-heading > span {
-  font-size: 0.75rem;
-  color: #6b7280;
-  border: 1px solid #e5e7eb;
-  border-radius: 5px;
-  padding: 1px 7px;
-  background: #fff;
-}
 .token-estimate-values {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-  margin: 14px 0 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 0;
 }
-.token-estimate-values dt {
-  font-size: 0.875rem;
-  color: #6b7280;
+.token-estimate-values > div {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
 }
 .token-estimate-values dd {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 500;
   color: #374151;
-  margin-top: 3px;
   font-variant-numeric: tabular-nums;
-}
-.token-estimate-values dd span {
-  font-size: 0.875rem;
-  font-weight: 400;
-  color: #6b7280;
 }
 .token-method-trigger {
   display: inline-flex;
@@ -925,13 +913,8 @@
   gap: 6px;
   min-height: 28px;
   color: #6b7280;
-  font-size: 0.875rem;
-  cursor: pointer;
-}
-.token-estimate-note {
-  margin: 0 0 4px;
-  color: #6b7280;
   font-size: 0.8125rem;
+  cursor: pointer;
 }
 .token-method-trigger[data-panel-open] svg {
   transform: rotate(180deg);
@@ -964,12 +947,6 @@
   border-radius: 5px;
   padding: 3px 7px;
 }
-@media (max-width: 400px) {
-  .token-estimate-values {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-}
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -994,11 +971,6 @@
   gap: 8px;
   font-size: 0.875rem;
   color: #6b7280;
-}
-.cookbook-snapshot {
-  color: #6b7280;
-  font-size: 0.875rem;
-  margin-bottom: 22px;
 }
 .cookbook-prose h1 {
   font-size: 2rem;

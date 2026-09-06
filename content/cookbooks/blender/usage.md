@@ -1,12 +1,7 @@
 ---
 title: Blender
 category: 3D & design
-tags:
-- 3D
-- rendering
-- modeling
-icon: box
-color: orange
+tags: [3d, animation]
 order: 7
 ---
 

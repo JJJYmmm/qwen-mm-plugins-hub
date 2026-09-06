@@ -1,13 +1,7 @@
 ---
 title: Vision & audio APIs
 category: Understanding
-tags:
-- vision
-- audio
-- OCR
-- grounding
-icon: waves
-color: blue
+tags: [image, audio]
 order: 2
 ---
 

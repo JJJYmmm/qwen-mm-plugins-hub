@@ -10,6 +10,8 @@ The three-column documentation shell also references [doc-builder's development 
 
 ## Qwen-MM-Plugins
 
+The blue Qwen header mark and favicon are copied unchanged from the upstream [qwen-icon.svg](https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-edit/skill/assets/images/qwen-icon.svg). Qwen branding remains the property of its owner. Plugin avatars are provided by their contributors' public GitHub profiles; a contributor avatar is not a verification badge or an endorsement of this independently hosted Hub.
+
 Plugin descriptions, Skill Markdown and tool definitions are generated from [QwenLM/Qwen-MM-Plugins](https://github.com/QwenLM/Qwen-MM-Plugins), licensed under Apache 2.0. Each displayed source link records the exact source commit. Third-party integrations retain the notices in their upstream capability directories.
 
 The initial Hub-owned cookbooks, screenshots and local case traces were migrated from upstream commit `82008629c47c385d073801d6cabac05ce8284e78`. Published demo recordings and additional HTML traces came from the upstream cookbook's linked Qwen OSS assets; the [migration provenance record](https://github.com/JJJYmmm/qwen-mm-plugins-hub/blob/823bef90cee588c256709a18da6e10e2d61d40c4/cookbook-media.json) preserves their original URLs, checksums and video conversions. Cookbook edits now live in `content/cookbooks/`. Original credits and external reference links inside the case content are preserved.

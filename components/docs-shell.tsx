@@ -2,7 +2,6 @@
 
 import type { CSSProperties, ReactNode } from 'react';
 import Link from '@/components/static-link';
-import { ArrowUpRight } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -36,10 +35,6 @@ function DocumentationNavigation({
         <Link href="/" className="docs-project-title">
           Qwen MM Plugins
         </Link>
-        <div className="docs-nav-version">
-          <span>main</span>
-          <span>English</span>
-        </div>
       </SidebarHeader>
       <SidebarContent>
         <nav aria-label="Plugin documentation">
@@ -68,7 +63,6 @@ function DocumentationNavigation({
                   className="docs-cookbook-link"
                 >
                   <span>Cookbook</span>
-                  <ArrowUpRight size={14} />
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>

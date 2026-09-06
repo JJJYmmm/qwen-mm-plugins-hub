@@ -59,9 +59,6 @@ export default async function CookbookPage({
                   Source Markdown
                 </a>
               </div>
-              <p className="cookbook-snapshot">
-                Setup, workflows, and examples · Maintained in the Hub
-              </p>
               <section id="cookbook-content">
                 <CookbookMarkdown
                   markdown={book.markdown}
@@ -75,9 +72,7 @@ export default async function CookbookPage({
                 <h2>Plugin documentation</h2>
                 <Link href={`/plugins/${id}/#skill`}>Skill</Link>
                 <Link href={`/plugins/${id}/#tools`}>Tool definitions</Link>
-                <Link href={`/plugins/${id}/#install`}>
-                  Installation & versions
-                </Link>
+                <Link href={`/plugins/${id}/#install`}>Installation</Link>
                 <a href={book.sourceUrl}>Edit cookbook on GitHub</a>
               </nav>
             </aside>

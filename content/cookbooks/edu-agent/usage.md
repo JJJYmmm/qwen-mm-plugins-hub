@@ -1,12 +1,7 @@
 ---
 title: Education Agent
 category: Generation
-tags:
-- education
-- animation
-- interactive
-icon: graduation
-color: green
+tags: [education, animation]
 order: 9
 ---
 

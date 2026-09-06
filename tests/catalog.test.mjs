@@ -123,7 +123,7 @@ test('search finds tool names, ignores case, and ANDs query terms', () => {
 });
 
 test('category, contributor and multiple tags compose as an intersection', () => {
-  const result = filterPlugins(plugins, '', 'Search & memory', 'qwen-team', [
+  const result = filterPlugins(plugins, '', 'Search & memory', 'qwenlm', [
     'audio',
     'video',
   ]);
@@ -132,6 +132,21 @@ test('category, contributor and multiple tags compose as an intersection', () =>
     ['omni-memory'],
   );
   assert.equal(filterPlugins(plugins, '', '', 'unknown', []).length, 0);
+});
+
+test('contributor identity comes from GitHub accounts, not capability glyphs', () => {
+  for (const [id, contributor] of Object.entries(catalog.contributors)) {
+    assert.equal(id, contributor.name.toLowerCase());
+    assert.equal(contributor.url, `https://github.com/${contributor.name}`);
+    assert.equal(contributor.avatarUrl, `${contributor.url}.png?size=80`);
+  }
+  for (const plugin of plugins) {
+    assert(plugin.contributors.length);
+    assert(!Object.hasOwn(plugin, 'icon'));
+    assert(!Object.hasOwn(plugin, 'color'));
+    assert.deepEqual(plugin.tags, [...new Set(plugin.tags)]);
+    assert(plugin.tags.every((tag) => tag === tag.trim().toLowerCase()));
+  }
 });
 
 test('Skill-only capabilities are not represented as MCP servers', () => {

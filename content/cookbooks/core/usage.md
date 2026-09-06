@@ -1,13 +1,7 @@
 ---
 title: Core
 category: Understanding
-tags:
-- image
-- video
-- documents
-- local
-icon: scan
-color: purple
+tags: [image, video]
 order: 1
 ---
 

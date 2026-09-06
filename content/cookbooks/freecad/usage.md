@@ -1,12 +1,7 @@
 ---
 title: FreeCAD
 category: 3D & design
-tags:
-- CAD
-- 3D
-- engineering
-icon: ruler
-color: blue
+tags: [3d, cad]
 order: 8
 ---
 

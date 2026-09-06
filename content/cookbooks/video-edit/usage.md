@@ -1,13 +1,7 @@
 ---
 title: Video Edit
 category: Generation
-tags:
-- video
-- image
-- audio
-- editing
-icon: film
-color: purple
+tags: [video]
 order: 6
 ---
 
