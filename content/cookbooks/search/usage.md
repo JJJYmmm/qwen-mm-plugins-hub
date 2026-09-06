@@ -1,3 +1,15 @@
+---
+title: Search
+category: Search & memory
+tags:
+- web search
+- reverse image
+- extraction
+icon: search
+color: green
+order: 3
+---
+
 # Cookbook — Qwen-MM-Plugins Search
 
 `qwen-mm-plugins-search` verifies facts that cannot be established from media alone. Web search and

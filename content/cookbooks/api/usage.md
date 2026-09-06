@@ -1,3 +1,16 @@
+---
+title: Vision & audio APIs
+category: Understanding
+tags:
+- vision
+- audio
+- OCR
+- grounding
+icon: waves
+color: blue
+order: 2
+---
+
 # Cookbook — Qwen-MM-Plugins API
 
 `qwen-mm-plugins-api` calls cloud models to understand images, video, and audio. Local file reading

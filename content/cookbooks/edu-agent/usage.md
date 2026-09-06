@@ -1,3 +1,15 @@
+---
+title: Education Agent
+category: Generation
+tags:
+- education
+- animation
+- interactive
+icon: graduation
+color: green
+order: 9
+---
+
 # Cookbook — Qwen-MM-Plugins Edu Agent
 
 `qwen-mm-plugins-edu-agent` turns a K12 problem — typed, pasted as LaTeX, or handed over as a photo —

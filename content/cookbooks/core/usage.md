@@ -1,3 +1,16 @@
+---
+title: Core
+category: Understanding
+tags:
+- image
+- video
+- documents
+- local
+icon: scan
+color: purple
+order: 1
+---
+
 # Cookbook — Qwen-MM-Plugins Core
 
 `qwen-mm-plugins-core` is the local file capability: it reads media at model-optimized resolution,

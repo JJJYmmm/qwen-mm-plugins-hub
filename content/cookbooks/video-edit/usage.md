@@ -1,3 +1,16 @@
+---
+title: Video Edit
+category: Generation
+tags:
+- video
+- image
+- audio
+- editing
+icon: film
+color: purple
+order: 6
+---
+
 # Cookbook — Qwen-MM-Plugins Video Edit
 
 `qwen-mm-plugins-video-edit` pairs a video-editing **skill** with DashScope **generation** tools —

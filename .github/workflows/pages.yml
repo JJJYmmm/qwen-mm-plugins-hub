@@ -35,12 +35,10 @@ jobs:
           cache: npm
       - name: Install catalog export dependencies
         run: pip install -e '.sources/upstream[omni-memory]' -r scripts/requirements-export.txt
-      - name: Generate Skills and definitions from upstream main
-        run: python scripts/export_catalog.py --source .sources/upstream
-      - name: Verify token estimates offline
-        run: python -m unittest discover -s tests -p 'test_token_estimates.py'
-      - name: Build Hub cookbooks and verify bundled cases
-        run: python scripts/export_cookbooks.py
+      - name: Build plugin catalog, cookbooks, and token estimates
+        run: python -m scripts.build_content --source .sources/upstream
+      - name: Verify content build and token estimates offline
+        run: python -m unittest discover -s tests -p 'test_*.py'
       - run: npm ci
       - run: npm test
       - uses: actions/configure-pages@v5

@@ -1,6 +1,6 @@
-"""Export real MCP ToolSpec.meta and Skill source without invoking handlers.
+"""Build the Hub from one plugin checkout plus local cookbooks and case files.
 
-Each plugin uses a fresh process so source overrides cannot share imports.
+Each plugin uses a fresh process so registries cannot contaminate each other's imports.
 Missing imports and invalid versions fail the build instead of hiding tools.
 """
 
@@ -19,9 +19,45 @@ from urllib.parse import quote
 
 import yaml
 
-from token_estimates import annotate_catalog
+from .token_estimates import annotate_catalog
 
 ROOT = Path(__file__).resolve().parents[1]
+REPOSITORY = "https://github.com/QwenLM/Qwen-MM-Plugins"
+HUB_REPOSITORY = "https://github.com/JJJYmmm/qwen-mm-plugins-hub"
+DEFAULT_CONTRIBUTORS = {
+    "qwen-team": {"name": "Qwen Team", "url": "https://github.com/QwenLM"}
+}
+
+
+def read_markdown(path: Path) -> tuple[dict, str]:
+    """Optional YAML front matter supplies display metadata; the rest is Markdown."""
+    text = path.read_text()
+    if not text.startswith("---\n"):
+        return {}, text
+    front, separator, body = text[4:].partition("\n---\n")
+    if not separator:
+        raise ValueError(f"Unclosed YAML front matter: {path}")
+    metadata = yaml.safe_load(front + "\n") or {}
+    if not isinstance(metadata, dict):
+        raise ValueError(f"Front matter must be a mapping: {path}")
+    return metadata, body.lstrip("\n")
+
+
+def check_cases(root: Path) -> None:
+    """Check actual files, never a second hand-maintained media inventory."""
+    for file in root.rglob("*"):
+        if file.is_symlink():
+            raise ValueError(f"Case assets cannot be symlinks: {file}")
+        if file.is_file():
+            if file.stat().st_size >= 25 * 1024 * 1024:
+                raise ValueError(f"Case file must be below 25 MiB: {file}")
+            if not re.fullmatch(
+                r"[^/]+/[^/]+/(?:index\.html|assert/.+)",
+                file.relative_to(root).as_posix(),
+            ):
+                raise ValueError(
+                    f"Put case media under <plugin>/<case>/assert/: {file}"
+                )
 
 
 def git(source: Path, *args: str) -> str:
@@ -35,10 +71,9 @@ def worker(source: Path, cap: str) -> dict:
     manifest = json.loads((folder / ".codex-plugin/plugin.json").read_text())
     skill_path = folder / "skill/SKILL.md"
     raw = skill_path.read_text()
-    parts = raw.split("---", 2)
-    if len(parts) != 3 or parts[0].strip():
+    if not raw.startswith("---\n"):
         raise ValueError(f"Missing Skill front matter: {cap}")
-    front = yaml.safe_load(parts[1])
+    front, body = read_markdown(skill_path)
     tools, requirements = [], []
     module_doc = ""
     if manifest.get("mcpServers"):
@@ -59,7 +94,7 @@ def worker(source: Path, cap: str) -> dict:
                     "sourceLine": inspect.getsourcelines(spec.handle)[1],
                 }
             )
-    markdown = parts[2].strip()
+    markdown = body.strip()
     prerequisite = re.search(
         r"^## Prerequisites?\b[^\n]*\n.*?(?=^## |\Z)", markdown, re.M | re.S
     )
@@ -82,17 +117,24 @@ def worker(source: Path, cap: str) -> dict:
     }
 
 
-def export(source: Path, extras: list[str]) -> dict:
-    config = json.loads((ROOT / "catalog.config.json").read_text())
+def build_content(
+    source: Path, cookbook_root: Path = ROOT / "content/cookbooks"
+) -> tuple[dict, dict]:
     release_catalog = json.loads((source / "plugin-versions.json").read_text())
     versions = release_catalog["plugins"]
-    sources = {cap: source for cap in versions}
-    for extra in extras:
-        cap, location = extra.split("=", 1)
-        if cap not in sources:
-            sources[cap] = Path(location).resolve()
-    plugins = []
-    for cap, checkout in sources.items():
+    plugins, cookbooks, all_contributors = [], {}, {}
+    sha = git(source, "rev-parse", "HEAD")
+    source_url = REPOSITORY + "/blob/" + sha + "/"
+    source_date = git(source, "show", "-s", "--format=%cI", "HEAD")
+    for cap, release_version in versions.items():
+        cookbook_path = cookbook_root / cap / "usage.md"
+        if not cookbook_path.is_file():
+            raise ValueError(f"Add the new plugin's cookbook: {cookbook_path}")
+        info, markdown = read_markdown(cookbook_path)
+        cookbooks[cap] = {
+            "markdown": markdown,
+            "sourceUrl": f"{HUB_REPOSITORY}/blob/main/content/cookbooks/{cap}/usage.md",
+        }
         env = {
             k: v
             for k, v in os.environ.items()
@@ -102,27 +144,32 @@ def export(source: Path, extras: list[str]) -> dict:
         }
         env["QWEN_MM_CONFIG"] = os.devnull
         result = subprocess.check_output(
-            [sys.executable, __file__, "--source", str(checkout), "--worker", cap],
+            [
+                sys.executable,
+                "-m",
+                "scripts.build_content",
+                "--source",
+                str(source),
+                "--worker",
+                cap,
+            ],
             text=True,
             env=env,
+            cwd=ROOT,
         )
         data = json.loads(result)
-        sha = git(checkout, "rev-parse", "HEAD")
         skill_folder = f"src/capabilities/{cap}/skill/"
         skill_files = git(
-            checkout, "ls-tree", "-rz", "--name-only", "HEAD", "--", skill_folder
+            source, "ls-tree", "-rz", "--name-only", "HEAD", "--", skill_folder
         ).split("\0")
-        info = config["plugins"].get(cap, {})
-        source_url = config["repository"] + "/blob/" + sha + "/"
-        release_version = versions.get(cap)
-        release_tag = (
-            release_catalog["tag_format"].format(cap=cap, version=release_version)
-            if release_version
-            else None
+        release_tag = release_catalog["tag_format"].format(
+            cap=cap, version=release_version
         )
-        contributors = info.get("contributors", config["defaults"]["contributors"])
-        if any(c not in config["contributors"] for c in contributors):
-            raise ValueError(f"Unknown contributor for {cap}")
+        contributors = info.get("contributors", DEFAULT_CONTRIBUTORS)
+        for key, person in contributors.items():
+            if key in all_contributors and all_contributors[key] != person:
+                raise ValueError(f"Conflicting contributor details: {key}")
+            all_contributors[key] = person
         plugins.append(
             {
                 **data,
@@ -130,24 +177,20 @@ def export(source: Path, extras: list[str]) -> dict:
                 "release": {
                     "version": release_version,
                     "tag": release_tag,
-                    "url": config["repository"] + "/tree/" + release_tag,
-                }
-                if release_tag
-                else None,
+                    "url": REPOSITORY + "/tree/" + release_tag,
+                },
                 "title": info.get("title", cap.replace("-", " ").title()),
                 "category": info.get("category", "Other"),
                 "tags": info.get("tags", []),
-                "contributors": contributors,
+                "contributors": list(contributors),
                 "icon": info.get("icon", "box"),
                 "color": info.get("color", "purple"),
                 "order": info.get("order", 99),
-                "channel": info.get("channel", "Development")
-                if checkout != source
-                else "Main",
+                "channel": "Main",
                 "source": {
-                    "repository": config["repository"],
+                    "repository": REPOSITORY,
                     "commit": sha,
-                    "date": git(checkout, "show", "-s", "--format=%cI", "HEAD"),
+                    "date": source_date,
                     "url": source_url,
                     "path": f"src/capabilities/{cap}",
                 },
@@ -178,27 +221,30 @@ def export(source: Path, extras: list[str]) -> dict:
                 "cookbookUrl": f"/plugins/{cap}/cookbook/",
             }
         )
+    plugins.sort(key=lambda p: (p["order"], p["id"]))
     return {
-        "repository": config["repository"],
-        "contributors": config["contributors"],
-        "categories": config["categories"],
-        "plugins": sorted(plugins, key=lambda p: (p["order"], p["id"])),
-    }
+        "repository": REPOSITORY,
+        "contributors": all_contributors,
+        "categories": list(dict.fromkeys(p["category"] for p in plugins)),
+        "plugins": plugins,
+    }, cookbooks
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, required=True)
-    parser.add_argument("--extra-source", action="append", default=[])
     parser.add_argument("--worker")
-    parser.add_argument("--output", type=Path, default=ROOT / "data/catalog.json")
     args = parser.parse_args()
     if args.worker:
         print(json.dumps(worker(args.source.resolve(), args.worker)))
         return
-    catalog = annotate_catalog(export(args.source.resolve(), args.extra_source))
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(catalog, ensure_ascii=False, indent=2) + "\n")
+    check_cases(ROOT / "public/cases")
+    catalog, cookbooks = build_content(args.source.resolve())
+    catalog = annotate_catalog(catalog)
+    for name, data in (("catalog", catalog), ("cookbooks", cookbooks)):
+        (ROOT / "data" / f"{name}.json").write_text(
+            json.dumps(data, ensure_ascii=False, indent=2) + "\n"
+        )
     print(
         f"Exported {len(catalog['plugins'])} plugins / {sum(len(p['tools']) for p in catalog['plugins'])} tools"
     )

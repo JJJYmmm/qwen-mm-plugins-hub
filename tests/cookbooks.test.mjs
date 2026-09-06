@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, existsSync } from 'node:fs';
-import { createHash } from 'node:crypto';
+import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { cookbookUrl, cookbookEmbeds } from '../lib/cookbook.ts';
 
 const catalog = JSON.parse(
@@ -10,9 +9,7 @@ const catalog = JSON.parse(
 const books = JSON.parse(
   readFileSync(new URL('../data/cookbooks.json', import.meta.url), 'utf8'),
 );
-const assets = JSON.parse(
-  readFileSync(new URL('../case-assets.json', import.meta.url), 'utf8'),
-);
+const casesRoot = new URL('../public/cases/', import.meta.url);
 const source =
   'https://github.com/JJJYmmm/qwen-mm-plugins-hub/blob/main/content/cookbooks/edu-agent/usage.md';
 
@@ -24,7 +21,7 @@ test('cookbooks have one Hub-owned source and no legacy OSS demo references', ()
       readFileSync(
         new URL(`../content/cookbooks/${plugin.id}/usage.md`, import.meta.url),
         'utf8',
-      ),
+      ).replace(/^---\n[\s\S]*?\n---\n+/, ''),
     );
     assert(
       book.sourceUrl.includes(
@@ -35,23 +32,19 @@ test('cookbooks have one Hub-owned source and no legacy OSS demo references', ()
   }
 });
 
-test('case files stay under per-case directories and retain reviewed checksums', () => {
-  let videos = 0,
-    pages = 0;
-  for (const [file, metadata] of Object.entries(assets)) {
+test('case files are discovered automatically and local media references resolve', () => {
+  const files = readdirSync(casesRoot, { recursive: true })
+    .filter((file) => statSync(new URL(file, casesRoot)).isFile())
+    .map((file) => `cases/${file}`);
+  assert(files.length > 0);
+  for (const file of files) {
     assert.match(file, /^cases\/[^/]+\/[^/]+\/(?:index\.html|assert\/.+)$/);
     const bytes = readFileSync(new URL('../public/' + file, import.meta.url));
-    assert.equal(bytes.length, metadata.bytes);
-    assert.equal(
-      createHash('sha256').update(bytes).digest('hex'),
-      metadata.sha256,
-    );
+    assert(bytes.length < 25 * 1024 * 1024);
     if (file.endsWith('.mp4')) {
-      videos++;
       assert.equal(bytes.subarray(4, 8).toString(), 'ftyp');
     }
     if (file.endsWith('/index.html')) {
-      pages++;
       const html = bytes.toString('utf8');
       assert(!html.includes('data:image/'));
       for (const match of html.matchAll(/(?:src|href)=["'](assert\/[^"']+)/g)) {
@@ -66,8 +59,6 @@ test('case files stay under per-case directories and retain reviewed checksums',
       }
     }
   }
-  assert.equal(videos, 6);
-  assert.equal(pages, 7);
 });
 
 test('GitHub-relative media links resolve inside both supported website base paths', () => {

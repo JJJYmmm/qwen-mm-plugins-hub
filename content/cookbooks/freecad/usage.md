@@ -1,3 +1,15 @@
+---
+title: FreeCAD
+category: 3D & design
+tags:
+- CAD
+- 3D
+- engineering
+icon: ruler
+color: blue
+order: 8
+---
+
 # Cookbook — Qwen-MM-Plugins FreeCAD
 
 Driving a **real, running** FreeCAD from a prompt with `qwen-mm-plugins-freecad`: the model builds a

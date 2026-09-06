@@ -1,3 +1,15 @@
+---
+title: Blender
+category: 3D & design
+tags:
+- 3D
+- rendering
+- modeling
+icon: box
+color: orange
+order: 7
+---
+
 # Cookbook — Qwen-MM-Plugins Blender
 
 Driving a **real, running** Blender from a prompt with `qwen-mm-plugins-blender`: the model models

@@ -1,3 +1,15 @@
+---
+title: Video Memory
+category: Search & memory
+tags:
+- video
+- memory
+- retrieval
+icon: network
+color: orange
+order: 4
+---
+
 # Cookbook — Qwen-MM-Plugins Video Memory
 
 The long-video capability, `qwen-mm-plugins-video-memory`: hierarchical graph memory for videos

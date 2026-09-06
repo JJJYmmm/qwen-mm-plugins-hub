@@ -1,3 +1,16 @@
+---
+title: Omni Memory
+category: Search & memory
+tags:
+- video
+- audio
+- memory
+- retrieval
+icon: brain
+color: pink
+order: 5
+---
+
 # Cookbook — Qwen-MM-Plugins Omni Memory
 
 The audio-visual long-video capability, `qwen-mm-plugins-omni-memory`. One omni model reads each 30s window **together with its in-video audio**, so the record it writes already holds the bindings between the two: every spoken line is attached to the person visibly saying it, with how they said it and what was audible around them. There is no separate ASR pass and no acoustic diarization — those would give you a transcript and a picture, but not what was said *while* something was done, or whether a sound came from the person on screen or from off it.
