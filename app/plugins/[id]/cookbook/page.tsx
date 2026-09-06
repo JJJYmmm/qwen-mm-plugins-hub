@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, CodeXml } from 'lucide-react';
+import { CodeXml } from 'lucide-react';
 import catalog from '@/data/catalog.json';
 import cookbooks from '@/data/cookbooks.json';
-import Link from '@/components/static-link';
 import { SiteHeader, SiteFooter } from '@/components/site-header';
 import { DocsShell } from '@/components/docs-shell';
 import { CookbookMarkdown } from '@/components/cookbook-markdown';
+import { CookbookToc } from '@/components/cookbook-toc';
+import { DocBreadcrumb } from '@/components/doc-breadcrumb';
 
 export function generateStaticParams() {
   return catalog.plugins.map((p) => ({ id: p.id }));
@@ -44,14 +45,13 @@ export default async function CookbookPage({
         plugins={catalog.plugins}
         current={id}
         cookbookUrl={`/plugins/${id}/cookbook/`}
+        section="cookbook"
+        hasTools={p.tools.length > 0}
       >
         <main className="detail-shell doc-detail">
           <div className="detail-layout">
             <div className="docs-article">
-              <Link className="back-link" href={`/plugins/${id}/`}>
-                <ArrowLeft size={15} />
-                {p.title} overview
-              </Link>
+              <DocBreadcrumb id={id} title={p.title} cookbook />
               <div className="cookbook-heading">
                 <span>COOKBOOK</span>
                 <a href={book.sourceUrl}>
@@ -68,18 +68,12 @@ export default async function CookbookPage({
               </section>
             </div>
             <aside className="detail-sidebar">
-              <nav className="docs-toc" aria-label="On this page">
-                <h2>Plugin documentation</h2>
-                <Link href={`/plugins/${id}/#skill`}>Skill</Link>
-                <Link href={`/plugins/${id}/#tools`}>Tool definitions</Link>
-                <Link href={`/plugins/${id}/#install`}>Installation</Link>
-                <a href={book.sourceUrl}>Edit cookbook on GitHub</a>
-              </nav>
+              <CookbookToc markdown={book.markdown} id={id} />
             </aside>
           </div>
-          <SiteFooter />
         </main>
       </DocsShell>
+      <SiteFooter />
     </>
   );
 }

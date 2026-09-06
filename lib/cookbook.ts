@@ -40,7 +40,8 @@ type MarkdownNode = {
   children?: MarkdownNode[];
   data?: Record<string, unknown>;
 };
-export function nodeText(node: MarkdownNode): string {
+type TextNode = { value?: string; children?: TextNode[] };
+export function nodeText(node: TextNode): string {
   return node.value || node.children?.map(nodeText).join('') || '';
 }
 

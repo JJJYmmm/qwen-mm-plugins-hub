@@ -3,7 +3,6 @@
 import { useState, useEffect, type ReactNode } from 'react';
 import Link from '@/components/static-link';
 import {
-  ArrowLeft,
   ArrowUpRight,
   BookOpen,
   Braces,
@@ -29,6 +28,13 @@ import { CopyButton } from '@/components/copy-button';
 import { SkillFiles } from '@/components/skill-files';
 import { TokenEstimate } from '@/components/token-estimate';
 import { DocsShell, type DocNavPlugin } from '@/components/docs-shell';
+import { DocBreadcrumb } from '@/components/doc-breadcrumb';
+import {
+  sectionFromHash,
+  tabForSection,
+  type PluginSection,
+  type PluginTab,
+} from '@/lib/navigation';
 import {
   Collapsible,
   CollapsibleContent,
@@ -162,46 +168,68 @@ export function PluginDetail({
   navigation: DocNavPlugin[];
   tokenizer: TokenizerInfo;
 }) {
-  const [tab, setTab] = useState('skill');
+  const [tab, setTab] = useState<PluginTab>('skill');
+  const [section, setSection] = useState<PluginSection>('overview');
   const [skillView, setSkillView] = useState('preview');
   const [skillExpanded, setSkillExpanded] = useState(false);
   const [query, setQuery] = useState('');
   const [linkedTool, setLinkedTool] = useState('');
+  const [toolLinkRevision, setToolLinkRevision] = useState(0);
   useEffect(() => {
-    function fromHash() {
+    let scrollTimer: number | undefined;
+    function fromHash(event?: Event) {
       const hash = window.location.hash.slice(1);
+      const next = sectionFromHash(hash);
+      setSection(next);
+      setTab((current) => tabForSection(next, current));
+      if (next !== 'tokens')
+        setLinkedTool(hash.startsWith('tool-') ? hash : '');
       if (hash.startsWith('tool-')) {
-        setTab('tools');
         setQuery('');
-        setLinkedTool(hash);
-        window.setTimeout(
-          () =>
-            document.getElementById(hash)?.scrollIntoView({ block: 'start' }),
-          100,
-        );
-      } else if (hash === 'files') {
-        setTab('skill');
-        window.setTimeout(
+        setToolLinkRevision((revision) => revision + 1);
+      }
+      window.clearTimeout(scrollTimer);
+      if (hash || event)
+        scrollTimer = window.setTimeout(
           () =>
             document
-              .getElementById('files')
+              .getElementById(hash || 'overview')
               ?.scrollIntoView({ block: 'start' }),
           100,
         );
-      } else if (hash === 'tokens') {
-        document.getElementById('tokens')?.scrollIntoView({ block: 'start' });
-      } else if (['skill', 'tools', 'install'].includes(hash)) {
-        setTab(hash);
-        window.setTimeout(
-          () =>
-            document.getElementById(hash)?.scrollIntoView({ block: 'start' }),
-          100,
-        );
-      }
+    }
+    // A repeated fragment click does not emit hashchange. Reapply it so a
+    // collapsed or filtered tool can still be opened by its permalink.
+    function repeatAnchor(event: MouseEvent) {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      )
+        return;
+      const anchor =
+        event.target instanceof Element
+          ? event.target.closest('a[href]')
+          : null;
+      if (
+        anchor instanceof HTMLAnchorElement &&
+        (!anchor.target || anchor.target === '_self') &&
+        !anchor.hasAttribute('download') &&
+        anchor.href === window.location.href
+      )
+        fromHash(event);
     }
     fromHash();
     window.addEventListener('hashchange', fromHash);
-    return () => window.removeEventListener('hashchange', fromHash);
+    document.addEventListener('click', repeatAnchor);
+    return () => {
+      window.clearTimeout(scrollTimer);
+      window.removeEventListener('hashchange', fromHash);
+      document.removeEventListener('click', repeatAnchor);
+    };
   }, []);
   const tools = p.tools.filter((t) =>
     `${t.name} ${t.description}`.toLowerCase().includes(query.toLowerCase()),
@@ -219,15 +247,14 @@ export function PluginDetail({
         plugins={navigation}
         current={p.id}
         cookbookUrl={p.cookbookUrl}
+        section={section}
+        hasTools={p.tools.length > 0}
       >
         <main className="detail-shell doc-detail">
           <div className="detail-layout">
             <div className="docs-article">
-              <Link href="/" className="back-link">
-                <ArrowLeft size={15} />
-                All plugins
-              </Link>
-              <div className="plugin-hero">
+              <DocBreadcrumb id={p.id} title={p.title} />
+              <div className="plugin-hero" id="overview">
                 <div className="plugin-hero-title">
                   <div className="hero-byline">
                     {p.contributors.map((c) => (
@@ -286,8 +313,10 @@ export function PluginDetail({
                 <Tabs
                   value={tab}
                   onValueChange={(value) => {
-                    setTab(String(value));
-                    window.history.replaceState(null, '', '#' + value);
+                    const next = sectionFromHash(String(value));
+                    setSection(next);
+                    setTab((current) => tabForSection(next, current));
+                    window.location.hash = String(value);
                   }}
                 >
                   <TabsList variant="line" className="detail-tabs">
@@ -410,7 +439,7 @@ export function PluginDetail({
                         </div>
                         {tools.map((tool, i) => (
                           <ToolDefinition
-                            key={tool.name + linkedTool}
+                            key={tool.name + linkedTool + toolLinkRevision}
                             tool={tool}
                             tokenizerLabel={tokenizer.label}
                             initialOpen={
@@ -545,14 +574,19 @@ export function PluginDetail({
                 <h2>On this page</h2>
                 <a
                   href="#skill"
-                  aria-current={tab === 'skill' ? 'location' : undefined}
+                  aria-current={section === 'skill' ? 'location' : undefined}
                 >
                   Skill
                 </a>
-                <a href="#files">Bundled files</a>
+                <a
+                  href="#files"
+                  aria-current={section === 'files' ? 'location' : undefined}
+                >
+                  Bundled files
+                </a>
                 <a
                   href="#tools"
-                  aria-current={tab === 'tools' ? 'location' : undefined}
+                  aria-current={section === 'tools' ? 'location' : undefined}
                 >
                   Tools <span>{p.tools.length}</span>
                 </a>
@@ -567,11 +601,16 @@ export function PluginDetail({
                 )}
                 <a
                   href="#install"
-                  aria-current={tab === 'install' ? 'location' : undefined}
+                  aria-current={section === 'install' ? 'location' : undefined}
                 >
                   Installation
                 </a>
-                <a href="#tokens">Token estimates</a>
+                <a
+                  href="#tokens"
+                  aria-current={section === 'tokens' ? 'location' : undefined}
+                >
+                  Token estimates
+                </a>
               </nav>
               <section>
                 <h2>Plugin details</h2>

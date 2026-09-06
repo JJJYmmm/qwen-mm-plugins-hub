@@ -123,6 +123,27 @@
   font-weight: 600;
   color: #111827;
 }
+.other-plugin-navigation {
+  border-top: 1px solid #e5e7eb;
+  margin-top: 12px;
+  padding-top: 18px;
+}
+.other-plugin-navigation > h2 {
+  padding: 0 24px 8px;
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.doc-breadcrumb {
+  margin-bottom: 22px;
+}
+.doc-breadcrumb [data-slot='breadcrumb-list'] {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+.cookbook-toc .toc-subheading {
+  padding-left: 12px;
+}
 .docs-navigation [data-slot='sidebar-group'],
 [data-mobile='true'] [data-slot='sidebar-group'] {
   padding: 7px 16px;
@@ -178,11 +199,6 @@
 .docs-article {
   min-width: 0;
   padding: 30px 40px 64px;
-}
-.doc-detail .back-link {
-  margin-bottom: 20px;
-  font-size: 0.875rem;
-  color: #6b7280;
 }
 .doc-detail .plugin-hero {
   margin: 0;
@@ -379,6 +395,8 @@
   background: #f9fafb;
   border-color: #e5e7eb;
 }
+.doc-detail #overview,
+.doc-detail #cookbook-content,
 .doc-detail #plugin-content,
 .doc-detail #skill,
 .doc-detail #tools,
@@ -616,8 +634,7 @@
 .site-header nav > a,
 .site-footer > a,
 .documentation-link,
-.section-link-heading > a,
-.back-link {
+.section-link-heading > a {
   display: inline-flex;
   align-items: center;
   gap: var(--icon-gap);
@@ -694,12 +711,6 @@
 .doc-detail .plugin-resource-actions .source-button:hover {
   background: #f9fafb;
   border-color: #d1d5db;
-}
-.docs-navigation .docs-cookbook-link,
-[data-mobile='true'] .docs-cookbook-link {
-  display: flex;
-  align-items: center;
-  gap: var(--icon-gap);
 }
 .doc-detail .detail-tabs {
   gap: 24px !important;

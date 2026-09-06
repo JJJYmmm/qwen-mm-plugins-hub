@@ -65,6 +65,33 @@ for (const file of [
       !html.includes('aria-label="On this page"')
     )
       throw new Error(`Documentation navigation missing: ${file}`);
+    const currentId = file.split('/')[1];
+    const currentRoot = `${prefix}/plugins/${currentId}/`;
+    const localNav = html.match(
+      /<nav\b[^>]*data-plugin-navigation="[^"]+"[^>]*>([\s\S]*?)<\/nav>/,
+    )?.[1];
+    if (!localNav || localNav.includes('Plugin directory'))
+      throw new Error(`Plugin-scoped navigation missing: ${file}`);
+    for (const [, href] of localNav.matchAll(/href="([^"]+)"/g)) {
+      const destination = new URL(href, `https://hub.local${currentRoot}`);
+      if (!destination.pathname.startsWith(currentRoot))
+        throw new Error(
+          `Local plugin navigation leaves the plugin: ${file}: ${href}`,
+        );
+    }
+    const selected = [
+      ...localNav.matchAll(/<a\b[^>]*aria-current="(?:page|location)"[^>]*>/g),
+    ];
+    const selectedHref = file.includes('/cookbook/')
+      ? currentRoot + 'cookbook/'
+      : currentRoot;
+    if (
+      selected.length !== 1 ||
+      !selected[0][0].includes(`href="${selectedHref}"`)
+    )
+      throw new Error(`Incorrect current-page navigation: ${file}`);
+    if (!html.includes('aria-label="breadcrumb"'))
+      throw new Error(`Global return breadcrumb missing: ${file}`);
     for (const plugin of plugins) {
       if (!html.includes(`href="${prefix}/plugins/${plugin.id}/"`))
         throw new Error(
@@ -74,6 +101,17 @@ for (const file of [
     if (file.includes('/cookbook/')) {
       if (!html.includes('id="cookbook-content"'))
         throw new Error(`Cookbook content missing: ${file}`);
+      const toc = html.match(
+        /<nav\b[^>]*class="docs-toc cookbook-toc"[^>]*>([\s\S]*?)<\/nav>/,
+      )?.[1];
+      if (!toc || !toc.includes('href="#cookbook-content"'))
+        throw new Error(`Cookbook outline missing: ${file}`);
+      for (const [, href] of toc.matchAll(/href="([^"]+)"/g)) {
+        if (!href.startsWith('#') || !html.includes(`id="${href.slice(1)}"`))
+          throw new Error(
+            `Cookbook outline leaves this page or misses its heading: ${file}: ${href}`,
+          );
+      }
       for (const [, url] of html.matchAll(
         /(?:src|href)="([^"?#]*\/cases\/[^"?#]+)"/g,
       )) {
