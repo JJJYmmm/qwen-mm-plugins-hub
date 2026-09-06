@@ -188,11 +188,9 @@ the whole movie, then walks the hierarchy (`get_summary` → `get_super_events` 
 self-contained **interactive film-breakdown report**: 10 story arcs, 29 narrative segments on a
 clickable timeline, character profiles, and key moments with frame captures.
 
-▶ **[Open the generated report](../../../public/cases/video-memory/video-memory-demo/index.html)** · **[Watch the demo recording](../../../public/cases/video-memory/video-memory-demo/assert/video-memory-demo.mp4)**
+[Interactive film-breakdown report](../../../public/cases/video-memory/video-memory-demo/index.html)
 
-<p align="center">
-  <img src="../../../public/cases/video-memory/video-memory-demo/assert/video-memory-demo.png" alt="Robot Dreams interactive film-breakdown report — SuperEvent/MacroEvent timeline built from graph memory" width="640">
-</p>
+[Film-breakdown session](../../../public/cases/video-memory/video-memory-demo/assert/video-memory-demo.mp4)
 
 ### More query patterns
 

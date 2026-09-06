@@ -1060,12 +1060,6 @@
   border-radius: 8px;
   background: white;
 }
-.cookbook-media figcaption {
-  font-size: 0.875rem;
-  color: #6b7280;
-  line-height: 1.6;
-  margin-top: 9px;
-}
 @media (max-width: 600px) {
   .cookbook-media iframe {
     height: 440px;

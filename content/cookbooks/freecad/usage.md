@@ -95,7 +95,7 @@ the exported geometry independently of FreeCAD's own view.
 `Spreadsheet::Sheet`, so the 8 → 12 mm thickness and 6 → 8 mm hole change is two cell edits plus a
 recompute.
 
-▶ **[View the detailed trace in Claude Code](../../../public/cases/freecad/case-freecad-cc-bracket/index.html)**
+[Parametric L-bracket workflow in Claude Code](../../../public/cases/freecad/case-freecad-cc-bracket/index.html)
 
 <p align="center">
   <img src="../../../public/cases/freecad/case-freecad-cc-bracket/assert/freecad-bracket-iso.png" alt="Isometric view — parametric L-bracket, 12 mm thick, four Ø8 holes" width="520">
@@ -123,7 +123,8 @@ properties are all bound by expression to a `Spreadsheet::Sheet`, which `get_obj
 the `ExpressionEngine` — so the parametric claim is checkable in the trace. First build: one valid
 solid, 100 × 42 × 18 mm, **37 467.93 mm³**. After editing three cells and recomputing: still one
 valid solid, now 100 × 42 × 22 mm and **36 481.58 mm³**.
-▶ **[View the detailed trace in Codex](../../../public/cases/freecad/case-freecad-codex-dovetail-quick-release/index.html)**
+
+[Dovetail quick-release workflow in Codex](../../../public/cases/freecad/case-freecad-codex-dovetail-quick-release/index.html)
 
 <p align="center">
   <img src="../../../public/cases/freecad/case-freecad-codex-dovetail-quick-release/assert/freecad-codex-dovetail-quick-release.png" alt="Isometric view — parametric dovetail camera quick-release plate" width="520">

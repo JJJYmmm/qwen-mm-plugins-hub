@@ -29,6 +29,7 @@ order: 10
 Installation, workflows, and examples.
 
 [Demo](../../../public/cases/my-plugin/demo/assert/demo.mp4)
+
 [Interactive case](../../../public/cases/my-plugin/demo/index.html)
 ```
 
@@ -53,7 +54,7 @@ public/cases/<cap>/<case>/
     ...
 ```
 
-Relative cookbook links work in GitHub and are rewritten to same-site URLs, including the GitHub Pages base path. Linked MP4s play inline; linked case HTML is previewed in an iframe with `sandbox="allow-scripts"` and no same-origin privileges. HTML case assets should use relative `assert/...` links.
+Relative cookbook links work in GitHub and are rewritten to same-site URLs, including the GitHub Pages base path. Put each video or HTML case link in its own paragraph, with a descriptive label. The Hub replaces that link with a player or iframe, without a duplicate caption or download prompt; inline prose links remain links. Case iframes use `sandbox="allow-scripts"` with no same-origin privileges. HTML case assets should use relative `assert/...` links. Keep useful output illustrations, but do not repeat a screenshot of an adjacent player or interactive case.
 
 Use H.264/YUV420P MP4, AAC audio when present, and faststart for video playback/download. Keep individual files below 25 MiB for the configured hosts. Uploading means committing reviewed public files, not using a browser upload service. Do not include credentials or private traces.
 

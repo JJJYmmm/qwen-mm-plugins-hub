@@ -62,55 +62,44 @@ export function markdownHeadings() {
   };
 }
 
-/** Move demo embeds out of paragraphs/strong tags, so the exported HTML remains valid. */
+/** A standalone local media link becomes an embed; prose links remain ordinary links. */
 export function cookbookEmbeds({ id }: { id: string }) {
   return (tree: MarkdownNode) => {
     markdownHeadings()(tree);
     function visit(parent: MarkdownNode) {
-      const children: MarkdownNode[] = [];
-      for (const node of parent.children || []) {
-        if (node.type === 'paragraph') {
-          const media: MarkdownNode[] = [];
-          function collect(n: MarkdownNode) {
-            if (
-              n.type === 'link' &&
-              n.url &&
-              /\.(mp4|webm|html)$/.test(n.url)
-            ) {
-              const local = new URL(
-                n.url,
-                `https://cookbook.local/content/cookbooks/${id}/usage.md`,
-              );
-              if (
-                local.origin === 'https://cookbook.local' &&
-                local.pathname.startsWith('/public/cases/')
-              )
-                media.push({
-                  ...n,
-                  url: local.pathname.slice('/public'.length),
-                });
-            }
-            n.children?.forEach(collect);
-          }
-          collect(node);
-          children.push(node);
-          for (const item of media)
-            children.push({
+      parent.children = parent.children?.map((node) => {
+        const link =
+          node.type === 'paragraph' && node.children?.length === 1
+            ? node.children[0]
+            : undefined;
+        if (link?.type === 'link' && link.url) {
+          const local = new URL(
+            link.url,
+            `https://cookbook.local/content/cookbooks/${id}/usage.md`,
+          );
+          if (
+            local.origin === 'https://cookbook.local' &&
+            local.pathname.startsWith('/public/cases/') &&
+            /\.(mp4|webm|html)$/.test(local.pathname)
+          ) {
+            return {
               type: 'paragraph',
               children: [],
               data: {
-                hName: item.url!.endsWith('.html')
+                hName: local.pathname.endsWith('.html')
                   ? 'cookbook-case'
                   : 'cookbook-video',
-                hProperties: { src: item.url, title: nodeText(item) },
+                hProperties: {
+                  src: local.pathname.slice('/public'.length),
+                  title: nodeText(link),
+                },
               },
-            });
-        } else {
-          visit(node);
-          children.push(node);
+            };
+          }
         }
-      }
-      parent.children = children;
+        visit(node);
+        return node;
+      });
     }
     visit(tree);
   };

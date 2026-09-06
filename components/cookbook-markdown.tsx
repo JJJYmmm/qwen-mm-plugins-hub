@@ -34,14 +34,6 @@ export function CookbookMarkdown({
         ? src
         : '';
   const components = {
-    a: ({ href, children }) => {
-      const isCase = href?.includes('/cases/') && href.endsWith('.html');
-      return (
-        <a href={isCase ? `#case-${href?.split('/').at(-2)}` : href}>
-          {children}
-        </a>
-      );
-    },
     img: ({ src, alt }) => <img src={src} alt={alt || ''} loading="lazy" />,
     'cookbook-video': ({ src, title }: { src?: string; title?: string }) => (
       <figure className="cookbook-media">
@@ -52,12 +44,6 @@ export function CookbookMarkdown({
           src={hosted(src)}
           aria-label={title}
         />
-        <figcaption>
-          {title} ·{' '}
-          <a href={hosted(src)} download>
-            Download video
-          </a>
-        </figcaption>
       </figure>
     ),
     'cookbook-case': ({ src, title }: { src?: string; title?: string }) => (
@@ -69,12 +55,6 @@ export function CookbookMarkdown({
           loading="lazy"
           referrerPolicy="no-referrer"
         />
-        <figcaption>
-          {title} · Isolated preview ·{' '}
-          <a href={hosted(src)} download>
-            Download HTML
-          </a>
-        </figcaption>
       </figure>
     ),
   } as Components;

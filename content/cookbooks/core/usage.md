@@ -66,11 +66,7 @@ is never uploaded. This feature is for inspection and visualization, not clinica
 This Claude Code session reads a full promotional video, opens a 35-page PDF, and saves a specific
 figure for closer inspection.
 
-▶ **[View the detailed trace](../../../public/cases/core/case-core-cc-basic-use/index.html)**
-
-<p align="center">
-  <img src="../../../public/cases/core/case-core-cc-basic-use/assert/cc-basic-use.png" alt="Claude Code trace — video and PDF figure" width="520">
-</p>
+[Video and PDF workflow](../../../public/cases/core/case-core-cc-basic-use/index.html)
 
 ### Shared Case: local views, cloud grounding, and web verification
 
@@ -86,15 +82,11 @@ cookbooks because the workflow crosses all three capabilities:
 | `api` | Ground objects and reason about the image |
 | `search` | Verify candidates with web search and page extraction |
 
-▶ **[View the shared detailed trace](../../../public/cases/core/case-core-codex-api-use/index.html)**
+[Shared Core, API and Search workflow](../../../public/cases/core/case-core-codex-api-use/index.html)
 
 > The trace was recorded before `api` and `search` were split out of `core`. Tool names carrying the
 > old `qwen_mm_plugins_core` namespace map to the current capabilities shown above; the demonstrated
 > workflow and outputs are retained because the session cannot currently be re-recorded.
-
-<p align="center">
-  <img src="../../../public/cases/core/case-core-codex-api-use/assert/codex-api-use.png" alt="Shared Core, API, and Search workflow" width="520">
-</p>
 
 ### Case 3 — ask a GUI harness to install Core and Edu Agent
 

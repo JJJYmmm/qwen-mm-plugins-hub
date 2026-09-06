@@ -84,12 +84,8 @@ search and page extraction. Frame/image handling belongs to
 grounding and vision reasoning belong to
 [`api`](../api/usage.md#shared-case-local-views-cloud-grounding-and-web-verification).
 
-▶ **[View the shared detailed trace](../../../public/cases/core/case-core-codex-api-use/index.html)**
+[Shared Core, API and Search workflow](../../../public/cases/core/case-core-codex-api-use/index.html)
 
 > The trace predates the capability split, so `web_search` and `web_extractor` appear under the old
 > `qwen_mm_plugins_core` namespace. They are now provided by `qwen-mm-plugins-search`; the recorded
 > search and verification workflow is otherwise unchanged.
-
-<p align="center">
-  <img src="../../../public/cases/core/case-core-codex-api-use/assert/codex-api-use.png" alt="Shared Core, API, and Search workflow" width="520">
-</p>

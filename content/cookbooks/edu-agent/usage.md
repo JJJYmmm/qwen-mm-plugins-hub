@@ -133,11 +133,7 @@ then F — with the reasoning tracked in a side panel. Part (1) resolves into th
 (弧AE = 弧BE → E 是弧 AB 中点 → DE ∥ AB); part (2) finds the right angle, applies the Pythagorean
 theorem, and lands on R = AB/2 = √5.
 
-▶ **[Watch the recording](../../../public/cases/edu-agent/case-edu-agent-math/assert/case-edu-agent-math.mp4)**
-
-<p align="center">
-  <img src="../../../public/cases/edu-agent/case-edu-agent-math/assert/case-edu-agent-math.jpg" alt="Geometry canvas — circle with chords and the right angle at C, alongside the given conditions for part (2)" width="520">
-</p>
+[Circle proof and radius computation](../../../public/cases/edu-agent/case-edu-agent-math/assert/case-edu-agent-math.mp4)
 
 ### Case 2 — identifying Fe²⁺ by precipitate colour (chemistry, 89s)
 
@@ -149,11 +145,7 @@ dropper adds NaOH to the test tube, white Fe(OH)₂ forms, and O₂ oxidizes it 
 red-brown Fe(OH)₃ — with a colour legend mapping each stage to its oxidation state and the two ionic
 equations kept on screen.
 
-▶ **[Watch the recording](../../../public/cases/edu-agent/case-edu-agent-chemistry/assert/case-edu-agent-chemistry.mp4)**
-
-<p align="center">
-  <img src="../../../public/cases/edu-agent/case-edu-agent-chemistry/assert/case-edu-agent-chemistry.jpg" alt="Test tube with red-brown precipitate, colour-change legend, and the oxidation equation" width="520">
-</p>
+[Identifying Fe²⁺ by precipitate colour](../../../public/cases/edu-agent/case-edu-agent-chemistry/assert/case-edu-agent-chemistry.mp4)
 
 ### Case 3 — force analysis on a rough incline (physics, 58s)
 
@@ -164,8 +156,4 @@ The incline is drawn with the block and its velocity, then one force is added at
 down, N perpendicular to the surface, f up the slope — each narrated as it appears, so the friction
 direction is argued from the motion rather than asserted. It closes on the three-force summary.
 
-▶ **[Watch the recording](../../../public/cases/edu-agent/case-edu-agent-physics/assert/case-edu-agent-physics.mp4)**
-
-<p align="center">
-  <img src="../../../public/cases/edu-agent/case-edu-agent-physics/assert/case-edu-agent-physics.jpg" alt="Free-body diagram on a 30° incline with G, N, and f labelled, beside a three-force legend" width="520">
-</p>
+[Force analysis on a rough incline](../../../public/cases/edu-agent/case-edu-agent-physics/assert/case-edu-agent-physics.mp4)

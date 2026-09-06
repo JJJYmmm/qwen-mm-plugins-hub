@@ -93,7 +93,7 @@ bmesh lathes for the base and shade, a bevelled helix for the tension spring, a 
 the knurled knobs. Verification went through renders rather than viewport screenshots: it rendered to
 a PNG and read the file back 13 times before it was satisfied.
 
-▶ **[View the detailed trace in Claude Code](../../../public/cases/blender/case-blender-cc-desk-lamp/index.html)**
+[Desk lamp workflow in Claude Code](../../../public/cases/blender/case-blender-cc-desk-lamp/index.html)
 
 <p align="center">
   <img src="../../../public/cases/blender/case-blender-cc-desk-lamp/assert/blender-desk-lamp.png" alt="Cycles render — articulated desk lamp modelled from scratch" width="520">
@@ -122,7 +122,7 @@ is laid out at tabletop scale (1.20 m long, 0.65 m deep, ~1.05 m to the ridge) a
 carries **873 objects and 37 materials** — glass panes, metal frame bars, a hinged door with handle,
 layered substrate, pebbles, moss, individual leaves, condensation droplets, and grow-light strips.
 
-▶ **[View the detailed trace in Codex](../../../public/cases/blender/case-blender-codex-terrarium/index.html)**
+[Terrarium workflow in Codex](../../../public/cases/blender/case-blender-codex-terrarium/index.html)
 
 <p align="center">
   <img src="../../../public/cases/blender/case-blender-codex-terrarium/assert/blender-codex-terrarium.png" alt="Cycles render — miniature glass greenhouse terrarium with plants and condensation" width="520">

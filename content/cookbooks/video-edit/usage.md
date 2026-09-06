@@ -136,7 +136,7 @@ subtitles, split screens, photo-collage moments, and soft transitions.
 
 > 请将当前目录中的家庭父子互动素材剪成一支温暖、活泼、可爱且富有设计感的家庭 Vlog，围绕父子陪伴与欢乐互动组织叙事，精选自然真实的表情和动作，运用轻快剪辑、趣味分屏、照片拼贴、手绘贴纸、可爱字幕与柔和转场丰富画面层次，搭配明亮温暖的调色和轻松音乐，最终呈现真实、有爱又充满童趣的家庭时光。
 
-▶ **[View the session recording](../../../public/cases/video-edit/case-video-edit-cc-family-vlog/assert/case-video-edit-cc-family-vlog.mp4)**
+[Family vlog session](../../../public/cases/video-edit/case-video-edit-cc-family-vlog/assert/case-video-edit-cc-family-vlog.mp4)
 
 ### Case 2 — install the plugins, then cut a tech-style city promo
 
@@ -148,4 +148,4 @@ multi-cam grids, picture-in-picture, and animated data overlays.
 >
 > 请将当前目录中的城市夜景和车流延时素材剪成一支节奏快速、科技感与未来感强烈的城市宣传片，通过分屏、动态拼贴、画中画、多镜头网格及丰富的科技动效提升视觉层次，最终呈现高速运转、充满活力的未来都市。
 
-▶ **[View the session recording](../../../public/cases/video-edit/case-video-edit-cc-city-promo/assert/case-video-edit-cc-city-promo.mp4)**
+[City promo session](../../../public/cases/video-edit/case-video-edit-cc-city-promo/assert/case-video-edit-cc-city-promo.mp4)

@@ -182,15 +182,25 @@ for (const file of [
           prefix +
           media.slice(media.indexOf('/public/cases/') + '/public'.length);
         const tag = media.endsWith('.html') ? 'iframe' : 'video';
-        const embed = [...html.matchAll(new RegExp(`<${tag}\\b[^>]*>`, 'g'))]
+        const embeds = [...html.matchAll(new RegExp(`<${tag}\\b[^>]*>`, 'g'))]
           .map((match) => match[0])
-          .find((element) => element.includes(`src="${src}"`));
+          .filter((element) => element.includes(`src="${src}"`));
         if (
-          !embed ||
-          (tag === 'iframe' && !embed.includes('sandbox="allow-scripts"'))
+          embeds.length !== 1 ||
+          (tag === 'iframe' &&
+            !embeds[0].includes('sandbox="allow-scripts"')) ||
+          (tag === 'video' && !embeds[0].includes('controls=""'))
         )
           throw new Error(
-            `Missing or unsafe cookbook preview in ${file}: ${src}`,
+            `Missing, duplicate or unsafe cookbook preview in ${file}: ${src}`,
+          );
+      }
+      for (const figure of html.matchAll(
+        /<figure\b[^>]*class="cookbook-media"[^>]*>([\s\S]*?)<\/figure>/g,
+      )) {
+        if (figure[1].includes('<figcaption') || figure[1].includes('<a '))
+          throw new Error(
+            `Cookbook embed repeats a caption or action link: ${file}`,
           );
       }
     } else {

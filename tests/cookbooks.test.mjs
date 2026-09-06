@@ -78,7 +78,7 @@ test('GitHub-relative media links resolve inside both supported website base pat
   assert.equal(cookbookUrl('//evil.test/video.mp4', 'edu-agent', source), '');
 });
 
-test('media embeds are lifted out of paragraphs, while external HTML stays a link', () => {
+test('standalone media links are replaced once, while external HTML stays a link', () => {
   const tree = {
     type: 'root',
     children: [
@@ -86,14 +86,9 @@ test('media embeds are lifted out of paragraphs, while external HTML stays a lin
         type: 'paragraph',
         children: [
           {
-            type: 'strong',
-            children: [
-              {
-                type: 'link',
-                url: '../../../public/cases/core/example/index.html',
-                children: [{ type: 'text', value: 'Example' }],
-              },
-            ],
+            type: 'link',
+            url: '../../../public/cases/core/example/index.html',
+            children: [{ type: 'text', value: 'Example' }],
           },
         ],
       },
@@ -106,16 +101,68 @@ test('media embeds are lifted out of paragraphs, while external HTML stays a lin
     ],
   };
   cookbookEmbeds({ id: 'core' })(tree);
-  assert.equal(tree.children.length, 3);
-  assert.equal(tree.children[1].data.hName, 'cookbook-case');
+  assert.equal(tree.children.length, 2);
+  assert.equal(tree.children[0].data.hName, 'cookbook-case');
+  assert.deepEqual(tree.children[0].children, []);
+  assert.equal(tree.children[0].data.hProperties.title, 'Example');
   assert.equal(
-    tree.children[1].data.hProperties.src,
+    tree.children[0].data.hProperties.src,
     '/cases/core/example/index.html',
   );
   assert.equal(
-    tree.children[2].children[0].url,
+    tree.children[1].children[0].url,
     'https://other.test/index.html',
   );
+});
+
+test('standalone videos preserve accessible labels without a duplicate paragraph', () => {
+  for (const extension of ['mp4', 'webm']) {
+    const tree = {
+      type: 'root',
+      children: [
+        {
+          type: 'paragraph',
+          children: [
+            {
+              type: 'link',
+              url: `../../../public/cases/core/demo/assert/demo.${extension}`,
+              children: [{ type: 'text', value: 'Demo session' }],
+            },
+          ],
+        },
+      ],
+    };
+    cookbookEmbeds({ id: 'core' })(tree);
+    assert.equal(tree.children.length, 1);
+    assert.equal(tree.children[0].data.hName, 'cookbook-video');
+    assert.equal(tree.children[0].data.hProperties.title, 'Demo session');
+    assert.deepEqual(tree.children[0].children, []);
+  }
+});
+
+test('inline media references keep their surrounding prose and do not add embeds', () => {
+  const tree = {
+    type: 'root',
+    children: [
+      {
+        type: 'paragraph',
+        children: [
+          { type: 'text', value: 'See the ' },
+          {
+            type: 'link',
+            url: '../../../public/cases/core/demo/assert/demo.mp4',
+            children: [{ type: 'text', value: 'recording' }],
+          },
+          { type: 'text', value: ' for details.' },
+        ],
+      },
+    ],
+  };
+  cookbookEmbeds({ id: 'core' })(tree);
+  assert.equal(tree.children.length, 1);
+  assert.equal(tree.children[0].data, undefined);
+  assert.equal(tree.children[0].children.length, 3);
+  assert.equal(tree.children[0].children[0].value, 'See the ');
 });
 
 test('heading IDs preserve existing GitHub-style cookbook anchors', () => {

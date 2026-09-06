@@ -202,13 +202,9 @@ belongs to [`core`](../core/usage.md#shared-case-local-views-cloud-grounding-and
 and external verification belongs to
 [`search`](../search/usage.md#shared-case-local-views-cloud-grounding-and-web-verification).
 
-▶ **[View the shared detailed trace](../../../public/cases/core/case-core-codex-api-use/index.html)**
+[Shared Core, API and Search workflow](../../../public/cases/core/case-core-codex-api-use/index.html)
 
 > The trace predates the capability split, so API calls appear under the old
 > `qwen_mm_plugins_core` namespace. Today `grounding`, `ocr`, and `vision_chat` are provided by
 > `qwen-mm-plugins-api`; the recorded inputs and outputs remain representative of the shared
 > workflow.
-
-<p align="center">
-  <img src="../../../public/cases/core/case-core-codex-api-use/assert/codex-api-use.png" alt="Shared Core, API, and Search workflow" width="520">
-</p>
