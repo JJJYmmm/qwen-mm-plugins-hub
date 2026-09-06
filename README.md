@@ -61,6 +61,8 @@ npm run build
 
 The Hub is a static site: upload means commit reviewed files to this repository and let CI publish, not a browser-based upload service. No storage account or runtime API keys are needed.
 
+Recordings use H.264/YUV420P MP4 for both browser playback and download. The three imported HEVC recordings were converted in place with MP4 faststart; no alternate video copies are deployed. Original checksums remain in `cookbook-media.json` for provenance. For new recordings, use H.264 video and AAC audio when present; enable `-movflags +faststart` when exporting MP4.
+
 The release target comes from the upstream version catalog at build time. It is not a live latest-release lookup or an end-to-end installation certification. The install page explicitly distinguishes this target from the main snapshot and the shared Python distribution version. Newer installers can select newer releases.
 
 ## Token estimates

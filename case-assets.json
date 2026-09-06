@@ -1496,12 +1496,12 @@
     "bytes": 460877
   },
   "cases/video-edit/case-video-edit-cc-city-promo/assert/case-video-edit-cc-city-promo.mp4": {
-    "sha256": "3b8d9bb6b44cc30cb65bc3842f1258ea6e7aaff30f9366fd2b5b8813c0a82e08",
-    "bytes": 10339125
+    "sha256": "e2a7aa105a45e355a165a70fe5c5b1f237df9b869c5eeb396c30106ee71921bc",
+    "bytes": 10881957
   },
   "cases/video-edit/case-video-edit-cc-family-vlog/assert/case-video-edit-cc-family-vlog.mp4": {
-    "sha256": "80b6f94d5735eeb71baf9432b572f1442bbd7b6b8657550bc87c90bc997d49be",
-    "bytes": 14662998
+    "sha256": "5c93512615547593787a5495898a272cbd16bf4531863c1bcb542a99b57ec5f7",
+    "bytes": 10917050
   },
   "cases/video-memory/video-memory-demo/assert/image-192988c39e1c14ef.jpg": {
     "sha256": "192988c39e1c14ef03c2f7880b0b44d30d78e3ec85372810707f5d870deed5c3",
@@ -1624,8 +1624,8 @@
     "bytes": 37480
   },
   "cases/video-memory/video-memory-demo/assert/video-memory-demo.mp4": {
-    "sha256": "b173dd06401f1763e4cf9d92d71c25cbdcc19a6c4139ab955a8fa3ce5352e7bc",
-    "bytes": 8458366
+    "sha256": "84d50a867f6ea7914899d6d69979c2091bc028a481043160159abd0eeb689a7d",
+    "bytes": 2424836
   },
   "cases/video-memory/video-memory-demo/assert/video-memory-demo.png": {
     "sha256": "29c30ec37d293bd270149b7f99ed84e60667f677be31f8bad0eac39480e5a485",
