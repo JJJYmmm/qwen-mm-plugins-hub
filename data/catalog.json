@@ -400,7 +400,7 @@
         "url": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/",
         "path": "src/capabilities/core"
       },
-      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/core/usage.md",
+      "cookbookUrl": "/plugins/core/cookbook/",
       "tokenEstimate": {
         "skillFull": 1334,
         "skillMetadata": 67,
@@ -1056,7 +1056,7 @@
         "url": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/",
         "path": "src/capabilities/api"
       },
-      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/api/usage.md",
+      "cookbookUrl": "/plugins/api/cookbook/",
       "tokenEstimate": {
         "skillFull": 1638,
         "skillMetadata": 123,
@@ -1220,7 +1220,7 @@
         "url": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/",
         "path": "src/capabilities/search"
       },
-      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/search/usage.md",
+      "cookbookUrl": "/plugins/search/cookbook/",
       "tokenEstimate": {
         "skillFull": 555,
         "skillMetadata": 89,
@@ -1591,7 +1591,7 @@
         "url": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/",
         "path": "src/capabilities/video-memory"
       },
-      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/video-memory/usage.md",
+      "cookbookUrl": "/plugins/video-memory/cookbook/",
       "tokenEstimate": {
         "skillFull": 2089,
         "skillMetadata": 71,
@@ -2132,7 +2132,7 @@
         "url": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/",
         "path": "src/capabilities/omni-memory"
       },
-      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/omni-memory/usage.md",
+      "cookbookUrl": "/plugins/omni-memory/cookbook/",
       "tokenEstimate": {
         "skillFull": 4851,
         "skillMetadata": 69,
@@ -4264,7 +4264,7 @@
         "url": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/",
         "path": "src/capabilities/video-edit"
       },
-      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/video-edit/usage.md",
+      "cookbookUrl": "/plugins/video-edit/cookbook/",
       "tokenEstimate": {
         "skillFull": 3618,
         "skillMetadata": 213,
@@ -4823,7 +4823,7 @@
         "url": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/",
         "path": "src/capabilities/blender"
       },
-      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/blender/usage.md",
+      "cookbookUrl": "/plugins/blender/cookbook/",
       "tokenEstimate": {
         "skillFull": 1794,
         "skillMetadata": 107,
@@ -5252,7 +5252,7 @@
         "url": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/",
         "path": "src/capabilities/freecad"
       },
-      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/freecad/usage.md",
+      "cookbookUrl": "/plugins/freecad/cookbook/",
       "tokenEstimate": {
         "skillFull": 1266,
         "skillMetadata": 99,
@@ -6158,7 +6158,7 @@
         "url": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/",
         "path": "src/capabilities/edu-agent"
       },
-      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/edu-agent/usage.md",
+      "cookbookUrl": "/plugins/edu-agent/cookbook/",
       "tokenEstimate": {
         "skillFull": 18842,
         "skillMetadata": 210,

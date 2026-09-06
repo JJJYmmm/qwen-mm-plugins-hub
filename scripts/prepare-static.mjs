@@ -10,6 +10,7 @@ import path from 'node:path';
 
 const root = path.resolve('dist/client');
 const { plugins } = JSON.parse(await readFile('data/catalog.json', 'utf8'));
+const cookbooks = JSON.parse(await readFile('data/cookbooks.json', 'utf8'));
 // Vinext's trailingSlash export currently redirects its internal RSC requests.
 // Export without redirects, then provide directory indexes for portable URLs.
 for (const { id } of plugins) {
@@ -18,6 +19,11 @@ for (const { id } of plugins) {
   await copyFile(
     path.join(root, 'plugins', `${id}.html`),
     path.join(destination, 'index.html'),
+  );
+  await mkdir(path.join(destination, 'cookbook'), { recursive: true });
+  await copyFile(
+    path.join(destination, 'cookbook.html'),
+    path.join(destination, 'cookbook/index.html'),
   );
 }
 await writeFile(path.join(root, '.nojekyll'), '');
@@ -37,6 +43,7 @@ if (prefix) {
 for (const file of [
   'index.html',
   ...plugins.map((p) => `plugins/${p.id}/index.html`),
+  ...plugins.map((p) => `plugins/${p.id}/cookbook/index.html`),
 ]) {
   const html = await readFile(path.join(root, file), 'utf8');
   if (html.includes('id="__next_error__"'))
@@ -55,22 +62,88 @@ for (const file of [
           `Plugin navigation link missing in ${file}: ${plugin.id}`,
         );
     }
-    if (!html.includes('id="skill"'))
-      throw new Error(`Skill permalink target missing: ${file}`);
-    const current = plugins.find((p) => file === `plugins/${p.id}/index.html`);
-    if (
-      !html.includes('id="tokens"') ||
-      !html.includes('Full SKILL.md') ||
-      !html.includes('All tool definitions') ||
-      !html.includes(current.tokenEstimate.skillFull.toLocaleString('en-US')) ||
-      !html.includes(current.tokenEstimate.toolsTotal.toLocaleString('en-US'))
-    )
-      throw new Error(`Token estimates missing or incorrect: ${file}`);
-    const cookbookButton = html.match(
-      /<a\b[^>]*class="cookbook-button"[^>]*>/,
-    )?.[0];
-    if (!cookbookButton?.includes(`href="${current.cookbookUrl}"`))
-      throw new Error(`Prominent Cookbook link missing or incorrect: ${file}`);
+    if (file.includes('/cookbook/')) {
+      if (!html.includes('id="cookbook-content"'))
+        throw new Error(`Cookbook content missing: ${file}`);
+      for (const [, url] of html.matchAll(
+        /(?:src|href)="([^"?#]*\/cases\/[^"?#]+)"/g,
+      )) {
+        if (!url.startsWith(prefix + '/cases/'))
+          throw new Error(`Wrong cookbook asset prefix: ${url}`);
+        await access(path.join(root, url.slice(prefix.length)));
+      }
+      for (const [, href] of html.matchAll(/href="([^"]*#[^"]+)"/g)) {
+        const url = new URL(href, `https://hub.local/${file}`);
+        if (url.origin !== 'https://hub.local') continue;
+        // Overview tabs are mounted on demand by PluginDetail's hash handler.
+        // Their targets are absent from prerendered HTML until that tab opens.
+        if (
+          plugins.some((p) => url.pathname === `${prefix}/plugins/${p.id}/`) &&
+          ['#tools', '#install'].includes(url.hash)
+        )
+          continue;
+        const destination =
+          url.pathname === `/${file}`
+            ? html
+            : await readFile(
+                path.join(
+                  root,
+                  url.pathname.slice(prefix.length),
+                  'index.html',
+                ),
+                'utf8',
+              );
+        if (
+          !destination.includes(`id="${decodeURIComponent(url.hash.slice(1))}"`)
+        )
+          throw new Error(`Broken cookbook anchor in ${file}: ${href}`);
+      }
+      const id = file.split('/')[1];
+      const expectedMedia = [
+        ...cookbooks[id].markdown.matchAll(
+          /\]\(([^)]+\/public\/cases\/[^)]+\.(?:mp4|webm|html))\)/g,
+        ),
+      ];
+      for (const [, media] of expectedMedia) {
+        const src =
+          prefix +
+          media.slice(media.indexOf('/public/cases/') + '/public'.length);
+        const tag = media.endsWith('.html') ? 'iframe' : 'video';
+        const embed = [...html.matchAll(new RegExp(`<${tag}\\b[^>]*>`, 'g'))]
+          .map((match) => match[0])
+          .find((element) => element.includes(`src="${src}"`));
+        if (
+          !embed ||
+          (tag === 'iframe' && !embed.includes('sandbox="allow-scripts"'))
+        )
+          throw new Error(
+            `Missing or unsafe cookbook preview in ${file}: ${src}`,
+          );
+      }
+    } else {
+      if (!html.includes('id="skill"'))
+        throw new Error(`Skill permalink target missing: ${file}`);
+      const current = plugins.find(
+        (p) => file === `plugins/${p.id}/index.html`,
+      );
+      if (
+        !html.includes('id="tokens"') ||
+        !html.includes('Full SKILL.md') ||
+        !html.includes('All tool definitions') ||
+        !html.includes(
+          current.tokenEstimate.skillFull.toLocaleString('en-US'),
+        ) ||
+        !html.includes(current.tokenEstimate.toolsTotal.toLocaleString('en-US'))
+      )
+        throw new Error(`Token estimates missing or incorrect: ${file}`);
+      const cookbookButton = html.match(
+        /<a\b[^>]*class="cookbook-button"[^>]*>/,
+      )?.[0];
+      if (!cookbookButton?.includes(`href="${prefix}${current.cookbookUrl}"`))
+        throw new Error(
+          `Prominent Cookbook link missing or incorrect: ${file}`,
+        );
+    }
   } else {
     for (const plugin of plugins) {
       if (!html.includes(`href="${prefix}/plugins/${plugin.id}/#tokens"`))
@@ -87,5 +160,5 @@ for (const file of [
   }
 }
 console.log(
-  `Verified ${plugins.length + 1} static pages, documentation navigation, token estimates, search destinations, and script, style, and font assets.`,
+  `Verified ${plugins.length * 2 + 1} static pages, documentation navigation, cookbook media, token estimates, search destinations, and script, style, and font assets.`,
 );

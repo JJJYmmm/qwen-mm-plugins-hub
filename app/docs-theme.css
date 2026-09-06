@@ -975,3 +975,87 @@
     scroll-behavior: auto;
   }
 }
+.cookbook-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  margin: 24px 0 10px;
+}
+.cookbook-heading > span {
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: #6b7280;
+}
+.cookbook-heading > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+.cookbook-snapshot {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-bottom: 22px;
+}
+.cookbook-prose h1 {
+  font-size: 2rem;
+  line-height: 1.25;
+  margin: 0 0 24px;
+  letter-spacing: -0.025em;
+}
+.cookbook-prose :is(h1, h2, h3, h4),
+.cookbook-media {
+  scroll-margin-top: calc(var(--docs-header-height) + 20px);
+}
+.cookbook-prose img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 20px auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+.cookbook-prose details {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 24px 0;
+}
+.cookbook-prose summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.cookbook-media {
+  margin: 18px 0 30px;
+  min-width: 0;
+}
+.cookbook-media video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #111827;
+  border-radius: 8px;
+}
+.cookbook-media iframe {
+  width: 100%;
+  height: 620px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: white;
+}
+.cookbook-media figcaption {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.6;
+  margin-top: 9px;
+}
+@media (max-width: 600px) {
+  .cookbook-media iframe {
+    height: 440px;
+  }
+  .cookbook-heading {
+    flex-wrap: wrap;
+  }
+}

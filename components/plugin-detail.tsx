@@ -259,15 +259,15 @@ export function PluginDetail({
                   className="plugin-resource-actions"
                   aria-label="Plugin resources"
                 >
-                  <a
+                  <Link
                     className="cookbook-button"
                     href={p.cookbookUrl}
-                    title={`${p.title}: setup and usage examples on GitHub`}
+                    title={`${p.title}: setup and usage examples`}
                   >
                     <BookOpen size={16} />
                     <span>Cookbook</span>
                     <ArrowUpRight size={14} />
-                  </a>
+                  </Link>
                   <a
                     className="source-button"
                     href={p.source.url + p.source.path}
@@ -571,9 +571,9 @@ export function PluginDetail({
                         tools you use. The cookbook covers setup and examples
                         for this plugin.
                       </p>
-                      <a className="documentation-link" href={p.cookbookUrl}>
+                      <Link className="documentation-link" href={p.cookbookUrl}>
                         Open cookbook <ArrowUpRight size={15} />
-                      </a>
+                      </Link>
                     </div>
                   </TabsContent>
                 </Tabs>
@@ -644,11 +644,11 @@ export function PluginDetail({
               </section>
               <section>
                 <h2>Resources</h2>
-                <a className="resource-link" href={p.cookbookUrl}>
+                <Link className="resource-link" href={p.cookbookUrl}>
                   <BookOpen size={15} />
                   Cookbook
                   <ArrowUpRight size={13} />
-                </a>
+                </Link>
                 <a className="resource-link" href={p.skill.sourceUrl}>
                   <FileText size={15} />
                   Skill source

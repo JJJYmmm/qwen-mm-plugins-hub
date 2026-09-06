@@ -175,7 +175,7 @@ def export(source: Path, extras: list[str]) -> dict:
                     }
                     for tool in data["tools"]
                 ],
-                "cookbookUrl": source_url + f"cookbooks/{cap}/usage.md",
+                "cookbookUrl": f"/plugins/{cap}/cookbook/",
             }
         )
     return {

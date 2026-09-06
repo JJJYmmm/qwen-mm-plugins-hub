@@ -95,7 +95,7 @@ test('all records use one public upstream snapshot and have a complete Skill', (
     assert(p.skill.raw.startsWith('---\n'));
     assert(p.skill.markdown.length > 50);
     assert(p.skill.sourceUrl.includes(p.source.commit));
-    assert.equal(p.cookbookUrl, `${p.source.url}cookbooks/${p.id}/usage.md`);
+    assert.equal(p.cookbookUrl, `/plugins/${p.id}/cookbook/`);
     assert(p.contributors.every((c) => catalog.contributors[c]));
     assert.equal(new Set(p.tools.map((t) => t.name)).size, p.tools.length);
     for (const t of p.tools) {

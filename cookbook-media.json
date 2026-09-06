@@ -1,0 +1,65 @@
+{
+  "https://qianwen-res.oss-accelerate.aliyuncs.com/Qwen-MM-Plugins/asserts/core/case-core-cc-basic-use.html": {
+    "path": "cases/core/case-core-cc-basic-use/index.html",
+    "sha256": "6599bb5c8a16bb9d951f7d5bdc11c7bf898382dde1c376740bbd39dc2d207e24",
+    "bytes": 141193,
+    "sourceSha256": "1f43dd62ad6bbdb851509761643fe966b38ce8a9198bf2b4a6f46e312919779e",
+    "sourceBytes": 24377589
+  },
+  "https://qianwen-res.oss-accelerate.aliyuncs.com/Qwen-MM-Plugins/asserts/core/case-core-codex-api-use.html": {
+    "path": "cases/core/case-core-codex-api-use/index.html",
+    "sha256": "c2dcc4846186da868e0fef94c507249398c284f0bb9835e4e253b10d276986f5",
+    "bytes": 112953,
+    "sourceSha256": "ca3e11f508738b9219d14645c0c7a9d9585d425de0ba06ddf1a3e04fa38eb59d",
+    "sourceBytes": 1275091
+  },
+  "https://qianwen-res.oss-accelerate.aliyuncs.com/Qwen-MM-Plugins/asserts/edu-agent/case-edu-agent-chemistry.mp4": {
+    "path": "cases/edu-agent/case-edu-agent-chemistry/assert/case-edu-agent-chemistry.mp4",
+    "sha256": "a1f68bbf6b473a5a6d8995adb5d20903dc629998d59715cd7427e93c3005964b",
+    "bytes": 15826408,
+    "sourceSha256": "a1f68bbf6b473a5a6d8995adb5d20903dc629998d59715cd7427e93c3005964b",
+    "sourceBytes": 15826408
+  },
+  "https://qianwen-res.oss-accelerate.aliyuncs.com/Qwen-MM-Plugins/asserts/edu-agent/case-edu-agent-math.mp4": {
+    "path": "cases/edu-agent/case-edu-agent-math/assert/case-edu-agent-math.mp4",
+    "sha256": "54b83cd5c3c3e647927750d8b50f180c95f35a48e7380acf79e64a3440792044",
+    "bytes": 11223451,
+    "sourceSha256": "54b83cd5c3c3e647927750d8b50f180c95f35a48e7380acf79e64a3440792044",
+    "sourceBytes": 11223451
+  },
+  "https://qianwen-res.oss-accelerate.aliyuncs.com/Qwen-MM-Plugins/asserts/edu-agent/case-edu-agent-physics.mp4": {
+    "path": "cases/edu-agent/case-edu-agent-physics/assert/case-edu-agent-physics.mp4",
+    "sha256": "7a150c81c453bfdbf19c16654a06b11f4d1074952b1dc1eba5b80dfa75006eca",
+    "bytes": 10926252,
+    "sourceSha256": "7a150c81c453bfdbf19c16654a06b11f4d1074952b1dc1eba5b80dfa75006eca",
+    "sourceBytes": 10926252
+  },
+  "https://qianwen-res.oss-accelerate.aliyuncs.com/Qwen-MM-Plugins/asserts/video-edit/case-video-edit-cc-city-promo.mp4": {
+    "path": "cases/video-edit/case-video-edit-cc-city-promo/assert/case-video-edit-cc-city-promo.mp4",
+    "sha256": "3b8d9bb6b44cc30cb65bc3842f1258ea6e7aaff30f9366fd2b5b8813c0a82e08",
+    "bytes": 10339125,
+    "sourceSha256": "3b8d9bb6b44cc30cb65bc3842f1258ea6e7aaff30f9366fd2b5b8813c0a82e08",
+    "sourceBytes": 10339125
+  },
+  "https://qianwen-res.oss-accelerate.aliyuncs.com/Qwen-MM-Plugins/asserts/video-edit/case-video-edit-cc-family-vlog.mp4": {
+    "path": "cases/video-edit/case-video-edit-cc-family-vlog/assert/case-video-edit-cc-family-vlog.mp4",
+    "sha256": "80b6f94d5735eeb71baf9432b572f1442bbd7b6b8657550bc87c90bc997d49be",
+    "bytes": 14662998,
+    "sourceSha256": "80b6f94d5735eeb71baf9432b572f1442bbd7b6b8657550bc87c90bc997d49be",
+    "sourceBytes": 14662998
+  },
+  "https://qianwen-res.oss-accelerate.aliyuncs.com/Qwen-MM-Plugins/asserts/video-memory/video-memory-demo-html.html": {
+    "path": "cases/video-memory/video-memory-demo/index.html",
+    "sha256": "07a42e48e874ea1b762c3d5ac3e5c00d4af49f0027231810d5fe5aa9abacc779",
+    "bytes": 33622,
+    "sourceSha256": "4768417f86ec17f6226217b86e6579d1ad2b358fee7220a3fc959e3d1a46f4b8",
+    "sourceBytes": 4839389
+  },
+  "https://qianwen-res.oss-accelerate.aliyuncs.com/Qwen-MM-Plugins/asserts/video-memory/video-memory-demo.mp4": {
+    "path": "cases/video-memory/video-memory-demo/assert/video-memory-demo.mp4",
+    "sha256": "b173dd06401f1763e4cf9d92d71c25cbdcc19a6c4139ab955a8fa3ce5352e7bc",
+    "bytes": 8458366,
+    "sourceSha256": "b173dd06401f1763e4cf9d92d71c25cbdcc19a6c4139ab955a8fa3ce5352e7bc",
+    "sourceBytes": 8458366
+  }
+}

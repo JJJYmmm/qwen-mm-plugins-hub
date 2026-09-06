@@ -62,7 +62,7 @@ function DocumentationNavigation({
               <SidebarMenuItem>
                 <SidebarMenuButton
                   render={
-                    <a href={cookbookUrl} aria-label="Cookbook on GitHub" />
+                    <Link href={cookbookUrl} aria-label="Read cookbook" />
                   }
                   onClick={() => setOpenMobile(false)}
                   className="docs-cookbook-link"

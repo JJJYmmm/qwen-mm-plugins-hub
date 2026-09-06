@@ -12,6 +12,8 @@ The three-column documentation shell also references [doc-builder's development 
 
 Plugin descriptions, Skill Markdown and tool definitions are generated from [QwenLM/Qwen-MM-Plugins](https://github.com/QwenLM/Qwen-MM-Plugins), licensed under Apache 2.0. Each displayed source link records the exact source commit. Third-party integrations retain the notices in their upstream capability directories.
 
+The initial Hub-owned cookbooks, screenshots and local case traces were migrated from upstream commit `82008629c47c385d073801d6cabac05ce8284e78`. Published demo recordings and additional HTML traces came from the upstream cookbook's linked Qwen OSS assets; `cookbook-media.json` records their provenance. Cookbook edits now live in `content/cookbooks/`. Original credits and external reference links inside the case content are preserved.
+
 ## Qwen3.5 tokenizer
 
 Build-time token estimates use the official [Qwen/Qwen3.5-9B tokenizer](https://huggingface.co/Qwen/Qwen3.5-9B/blob/c202236235762e1c871ad0ccb60c8ee5ba337b9a/tokenizer.json) with the [Hugging Face Tokenizers](https://github.com/huggingface/tokenizers) library. Exact source and engine versions are recorded in `tokenizer.config.json`. The tokenizer asset remains in an ignored build cache and is not redistributed in the website's static assets. Refer to the upstream repositories for their licenses and notices.

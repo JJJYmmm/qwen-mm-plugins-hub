@@ -4,7 +4,7 @@ A searchable directory of Qwen multimodal plugins, with contributor and capabili
 
 [Website](https://jjjymmm.github.io/qwen-mm-plugins-hub/) · [Plugin source](https://github.com/QwenLM/Qwen-MM-Plugins)
 
-The website is maintained independently of the plugin distribution. Every published build reads **the remote upstream `main` branch only**. All plugin content in a build shares one source commit; every Skill and tool links to that commit. This is a main-branch documentation snapshot, not a promise that the code matches an immutable release tag.
+The website is maintained independently of the plugin distribution. Every published build reads plugin metadata, Skills and tools from **the remote upstream `main` branch only**. Those records share one source commit; every Skill and tool links to that commit. This is a main-branch documentation snapshot, not a promise that the code matches an immutable release tag. Cookbooks and cases are maintained separately in this Hub.
 
 ## Content maintenance
 
@@ -21,15 +21,45 @@ The website is maintained independently of the plugin distribution. Every publis
 | Contributors, categories, tags, display titles        | `catalog.config.json` in this repository                              |
 | Token estimates                                       | Exported Skill/tool text and the pinned `tokenizer.config.json`       |
 
-Do not duplicate tool descriptions into website-specific docstrings. Maintain `TOOL.description` and `Field(description=...)` where the agent-facing definitions already live. Module docstrings are also exported as supplementary metadata. A later upstream change to derive `TOOL.description` from docstrings would automatically flow through the existing registry exporter.
+Do not duplicate tool definitions in the website. The plugin repository's [`support_hub` branch](https://github.com/QwenLM/Qwen-MM-Plugins/tree/support_hub) adds handler-docstring descriptions to the actual MCP registry: omit `TOOL.description` to use the handler's docstring, with Google-style `Args:` entries filling missing Pydantic field descriptions. Explicit `TOOL.description` and `Field(description=...)` remain compatible. See the [authoring convention](https://github.com/QwenLM/Qwen-MM-Plugins/blob/support_hub/docs/en/hub.md), including plain mode for long examples. The existing Hub exporter consumes this automatically after those changes reach upstream main; it does not parse or handwrite a separate definition. Module docstrings remain supplementary metadata.
 
-To add a contributor, add a record to `contributors`, then put that ID in the plugin's `contributors` list in `catalog.config.json`. The default is Qwen Team. Tags and categories are curated discovery metadata; they are independent of API documentation. New plugins on upstream main appear automatically with fallback display metadata, even before a curated entry is added.
+To add a contributor, add a record to `contributors`, then put that ID in the plugin's `contributors` list in `catalog.config.json`. The default is Qwen Team. Tags and categories are curated discovery metadata; they are independent of API documentation. New plugins on upstream main are discovered automatically with fallback display metadata. Add their `content/cookbooks/<cap>/usage.md` before publishing; the cookbook check intentionally rejects missing source files.
 
 The exporter imports registry modules but never calls handlers, starts an MCP server, or invokes startup hooks. It disables the local Qwen config file and exports an explicit allowlist of public fields. Import failures stop the build instead of silently omitting tools. Only use trusted source checkouts.
 
 Skill previews initially show 50 source lines (Markdown body in Preview; front matter included in Raw), with the full document available on expansion. Copy Skill always copies the complete source. The file browser includes tracked files only, preserves nested directories, and links each file to the immutable documentation snapshot. Directory cards link directly to `#skill` and `#tools`; individual definitions have `#tool-<name>` permalinks, and `#files` opens the Skill directory.
 
-Cookbooks remain in the upstream repository. Each plugin exposes a prominent Cookbook action beside its title and in the documentation navigation, linking to `cookbooks/<cap>/usage.md` at the same commit as its Skill and tools. The website does not maintain a second copy of cookbook prose.
+Cookbooks are now maintained in this Hub repository, independently of the plugin snapshot. Each plugin's Cookbook action opens `/plugins/<cap>/cookbook/`, with sanitized Markdown, inline videos and sandboxed interactive case previews. `content/cookbooks/<cap>/usage.md` is the only editable cookbook source; the plugin repository's `support_hub` branch keeps migration links instead of duplicate prose or case assets. The Skill/tool exporter still reads upstream main.
+
+## Cookbook and case maintenance
+
+Each case owns its files:
+
+```text
+content/cookbooks/edu-agent/usage.md
+public/cases/edu-agent/case-edu-agent-math/
+  assert/
+    case-edu-agent-math.mp4
+    case-edu-agent-math.jpg
+public/cases/core/case-core-cc-basic-use/
+  index.html
+  assert/
+    image-<hash>.webp
+```
+
+Use `../../../public/cases/<cap>/<case>/assert/<file>` relative links in cookbook Markdown. They resolve on GitHub and are rewritten to the deployed Hub's `/cases/` URLs, including its GitHub Pages base path. Link a case's `index.html` to embed an isolated preview. Videos have controls and load on demand; case frames use `sandbox="allow-scripts"` without same-origin privileges. Source Markdown links target this repository. Do not embed credentials or private traces in these public files.
+
+After adding or replacing reviewed media, run:
+
+```bash
+.venv/bin/python scripts/export_cookbooks.py --update-assets
+npm test
+npm run build
+```
+
+`case-assets.json` records each deployed file's checksum and size. Ordinary CI runs verify the manifest and stop if media changes unexpectedly. Files must stay below 25 MiB to fit both configured hosts. `cookbook-media.json` preserves original remote URLs/checksums as migration provenance; runtime previews do not fetch those URLs. Existing HTML trace images were extracted losslessly into each case's `assert/` directory. The one-time migration helper retains its staging copy under ignored `.sources/`; it is not a maintenance or CI command.
+
+The Hub is a static site: upload means commit reviewed files to this repository and let CI publish, not a browser-based upload service. No storage account or runtime API keys are needed.
 
 The release target comes from the upstream version catalog at build time. It is not a live latest-release lookup or an end-to-end installation certification. The install page explicitly distinguishes this target from the main snapshot and the shared Python distribution version. Newer installers can select newer releases.
 
@@ -63,6 +93,7 @@ git clone --depth 1 --branch main https://github.com/QwenLM/Qwen-MM-Plugins.git 
 python3 -m venv .venv
 .venv/bin/pip install -e '.sources/upstream[omni-memory]' -r scripts/requirements-export.txt
 .venv/bin/python scripts/export_catalog.py --source .sources/upstream
+.venv/bin/python scripts/export_cookbooks.py
 ```
 
 For an existing source clone, fetch and fast-forward its main branch before exporting. The exporter runs each capability in an isolated subprocess so registry imports cannot interfere with each other.
