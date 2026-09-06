@@ -12,6 +12,12 @@ import {
   X,
   Users,
 } from 'lucide-react';
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetTitle,
+} from '@/components/ui/sheet';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
@@ -52,6 +58,11 @@ export function Catalog({
       setCategory(params.get('category') || '');
       setContributor(params.get('contributor') || '');
       setTags(params.getAll('tag'));
+      setSort(
+        ['name', 'tools'].includes(params.get('sort') || '')
+          ? params.get('sort')!
+          : 'default',
+      );
       setReady(true);
     });
     return () => window.cancelAnimationFrame(frame);
@@ -62,13 +73,14 @@ export function Catalog({
     if (query) params.set('q', query);
     if (category) params.set('category', category);
     if (contributor) params.set('contributor', contributor);
+    if (sort !== 'default') params.set('sort', sort);
     tags.forEach((t) => params.append('tag', t));
     window.history.replaceState(
       null,
       '',
       window.location.pathname + (params.size ? '?' + params : ''),
     );
-  }, [query, category, contributor, tags, ready]);
+  }, [query, category, contributor, tags, sort, ready]);
   const filtered = filterPlugins(
     plugins,
     query,
@@ -104,6 +116,93 @@ export function Catalog({
       current.includes(t) ? current.filter((x) => x !== t) : [...current, t],
     );
   }
+  const filterContent = (location: string) => (
+    <>
+      <div className="filter-heading">
+        <span>
+          <SlidersHorizontal size={16} />
+          Filters
+        </span>
+        {active && <button onClick={reset}>Reset</button>}
+      </div>
+      <section className="filter-section">
+        <h2>Capabilities</h2>
+        <button
+          aria-pressed={!category}
+          onClick={() => setCategory('')}
+          className={`category-option ${!category ? 'selected' : ''}`}
+        >
+          <span>
+            <Layers3 size={15} />
+            All plugins
+          </span>
+          <small>{plugins.length}</small>
+        </button>
+        {categories.map((c) => (
+          <button
+            key={c}
+            aria-pressed={category === c}
+            onClick={() => setCategory(c === category ? '' : c)}
+            className={`category-option ${category === c ? 'selected' : ''}`}
+          >
+            <span>{c}</span>
+            <small>{plugins.filter((p) => p.category === c).length}</small>
+          </button>
+        ))}
+      </section>
+      <section className="filter-section">
+        <h2>
+          <Users size={15} />
+          Contributors
+        </h2>
+        {Object.entries(contributors).map(([id, c]) => (
+          <label className="contributor-option" key={id}>
+            <Checkbox
+              checked={contributor === id}
+              onCheckedChange={(checked) => setContributor(checked ? id : '')}
+              aria-label={c.name}
+            />
+            <ContributorAvatar contributor={c} small />
+            <span>{c.name}</span>
+            <small>
+              {plugins.filter((p) => p.contributors.includes(id)).length}
+            </small>
+          </label>
+        ))}
+      </section>
+      <section className="filter-section">
+        <h2>Tags</h2>
+        <div className="filter-tags" id={`tag-filters-${location}`}>
+          {visibleTags.map((t) => (
+            <button
+              key={t}
+              className={`tag ${tags.includes(t) ? 'tag-active' : ''}`}
+              onClick={() => toggleTag(t)}
+              aria-pressed={tags.includes(t)}
+            >
+              {t}
+              {tags.includes(t) && <X size={11} />}
+            </button>
+          ))}
+        </div>
+        {allTags.length > 6 && (
+          <button
+            className="more-tags"
+            onClick={() => setAllTagsOpen(!allTagsOpen)}
+            aria-expanded={allTagsOpen}
+            aria-controls={`tag-filters-${location}`}
+          >
+            {allTagsOpen ? 'Fewer tags' : `All ${allTags.length} tags`}
+          </button>
+        )}
+      </section>
+      <Link className="contribute-note" href="/docs/how-to-add-new-capability/">
+        <span>
+          Contribute a plugin <ArrowUpRight size={14} />
+        </span>
+      </Link>
+    </>
+  );
   return (
     <>
       <a className="skip-link" href="#plugins">
@@ -112,98 +211,8 @@ export function Catalog({
       <SiteHeader />
       <main className="catalog-shell">
         <div className="catalog-layout">
-          <aside
-            className={`filter-sidebar ${filtersOpen ? 'is-open' : ''}`}
-            aria-label="Filter plugins"
-          >
-            <div className="filter-heading">
-              <span>
-                <SlidersHorizontal size={16} />
-                Filters
-              </span>
-              {active && <button onClick={reset}>Reset</button>}
-            </div>
-            <section className="filter-section">
-              <h2>Capabilities</h2>
-              <button
-                onClick={() => setCategory('')}
-                className={`category-option ${!category ? 'selected' : ''}`}
-              >
-                <span>
-                  <Layers3 size={15} />
-                  All plugins
-                </span>
-                <small>{plugins.length}</small>
-              </button>
-              {categories.map((c) => (
-                <button
-                  key={c}
-                  onClick={() => setCategory(c === category ? '' : c)}
-                  className={`category-option ${category === c ? 'selected' : ''}`}
-                >
-                  <span>{c}</span>
-                  <small>
-                    {plugins.filter((p) => p.category === c).length}
-                  </small>
-                </button>
-              ))}
-            </section>
-            <section className="filter-section">
-              <h2>
-                <Users size={15} />
-                Contributors
-              </h2>
-              {Object.entries(contributors).map(([id, c]) => (
-                <label className="contributor-option" key={id}>
-                  <Checkbox
-                    checked={contributor === id}
-                    onCheckedChange={(checked) =>
-                      setContributor(checked ? id : '')
-                    }
-                    aria-label={c.name}
-                  />
-                  <ContributorAvatar contributor={c} small />
-                  <span>{c.name}</span>
-                  <small>
-                    {plugins.filter((p) => p.contributors.includes(id)).length}
-                  </small>
-                </label>
-              ))}
-            </section>
-            <section className="filter-section">
-              <h2>Tags</h2>
-              <div className="filter-tags" id="tag-filters">
-                {visibleTags.map((t) => (
-                  <button
-                    key={t}
-                    className={`tag ${tags.includes(t) ? 'tag-active' : ''}`}
-                    onClick={() => toggleTag(t)}
-                    aria-pressed={tags.includes(t)}
-                  >
-                    {t}
-                    {tags.includes(t) && <X size={11} />}
-                  </button>
-                ))}
-              </div>
-              {allTags.length > 6 && (
-                <button
-                  className="more-tags"
-                  onClick={() => setAllTagsOpen(!allTagsOpen)}
-                  aria-expanded={allTagsOpen}
-                  aria-controls="tag-filters"
-                >
-                  {allTagsOpen ? 'Fewer tags' : `All ${allTags.length} tags`}
-                </button>
-              )}
-            </section>
-            <a
-              className="contribute-note"
-              href="https://github.com/QwenLM/Qwen-MM-Plugins/blob/main/CONTRIBUTING.md"
-            >
-              <span>
-                Contribute a plugin <ArrowUpRight size={14} />
-              </span>
-            </a>
+          <aside className="filter-sidebar" aria-label="Filter plugins">
+            {filterContent('desktop')}
           </aside>
           <section
             id="plugins"
@@ -228,14 +237,21 @@ export function Catalog({
                   </button>
                 )}
               </div>
-              <button
-                className="mobile-filter-button"
-                onClick={() => setFiltersOpen(!filtersOpen)}
-                aria-expanded={filtersOpen}
-              >
-                <SlidersHorizontal size={18} />
-                Filters
-              </button>
+              <Sheet open={filtersOpen} onOpenChange={setFiltersOpen}>
+                <SheetTrigger className="mobile-filter-button">
+                  <SlidersHorizontal size={18} />
+                  Filters
+                </SheetTrigger>
+                <SheetContent side="left" className="filter-panel">
+                  <SheetTitle className="sr-only">Filter plugins</SheetTitle>
+                  {filterContent('mobile')}
+                  <div className="filter-panel-footer">
+                    <button onClick={() => setFiltersOpen(false)}>
+                      Show {filtered.length} plugins
+                    </button>
+                  </div>
+                </SheetContent>
+              </Sheet>
             </div>
             <div className="results-heading">
               <div>
@@ -266,6 +282,12 @@ export function Catalog({
                 </SelectContent>
               </Select>
             </div>
+            <p className="catalog-summary">
+              Explore multimodal skills, tools, and real examples.{' '}
+              <Link href="/docs/">
+                Installation guide <ArrowUpRight size={13} />
+              </Link>
+            </p>
             {active && (
               <div className="active-filters">
                 {category && (
@@ -307,7 +329,7 @@ export function Catalog({
                     />
                   </a>
                   <Link href={`/plugins/${p.id}/`} className="card-title">
-                    <h3>{p.id}</h3>
+                    <h2>{p.title}</h2>
                   </Link>
                   <div className="card-byline">
                     {p.contributors.map((c) => (
@@ -361,7 +383,7 @@ export function Catalog({
             {!filtered.length && (
               <div className="empty-state">
                 <Search size={30} />
-                <h3>No plugins found</h3>
+                <h2>No plugins found</h2>
                 <p>Try a different term or remove a filter.</p>
                 <button onClick={reset}>Clear filters</button>
               </div>

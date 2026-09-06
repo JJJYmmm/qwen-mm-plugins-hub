@@ -9,6 +9,7 @@ export type PluginTab = 'skill' | 'tools' | 'install';
 
 export function sectionFromHash(hash: string): PluginSection {
   const section = hash.replace(/^#/, '');
+  if (section.startsWith('skill-section-')) return 'skill';
   if (section.startsWith('tool-')) return 'tools';
   return ['skill', 'tools', 'install', 'files', 'tokens'].includes(section)
     ? (section as PluginSection)

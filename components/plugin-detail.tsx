@@ -178,7 +178,16 @@ export function PluginDetail({
   useEffect(() => {
     let scrollTimer: number | undefined;
     function fromHash(event?: Event) {
-      const hash = window.location.hash.slice(1);
+      let hash = window.location.hash.slice(1);
+      try {
+        hash = decodeURIComponent(hash);
+      } catch {
+        /* Preserve malformed fragments. */
+      }
+      if (hash.startsWith('skill-section-')) {
+        setSkillExpanded(true);
+        setSkillView('preview');
+      }
       const next = sectionFromHash(hash);
       setSection(next);
       setTab((current) => tabForSection(next, current));
@@ -327,7 +336,9 @@ export function PluginDetail({
                     <TabsTrigger value="tools">
                       <Braces size={16} />
                       <span>Tools</span>
-                      <span className="tab-count">{p.tools.length}</span>
+                      {p.tools.length > 0 && (
+                        <span className="tab-count">{p.tools.length}</span>
+                      )}
                     </TabsTrigger>
                     <TabsTrigger value="install">
                       <Terminal size={16} />
@@ -584,7 +595,7 @@ export function PluginDetail({
                   href="#tools"
                   aria-current={section === 'tools' ? 'location' : undefined}
                 >
-                  Tools <span>{p.tools.length}</span>
+                  Tools {p.tools.length > 0 && <span>{p.tools.length}</span>}
                 </a>
                 {tab === 'tools' && p.tools.length > 0 && (
                   <div className="docs-tool-toc">
@@ -628,8 +639,15 @@ export function PluginDetail({
                   <div>
                     <dt>Includes</dt>
                     <dd>
-                      <a href="#skill">1 Skill</a> ·{' '}
-                      <a href="#tools">{p.tools.length} tools</a>
+                      <a href="#skill">
+                        {p.tools.length ? '1 Skill' : 'Skill only'}
+                      </a>
+                      {p.tools.length > 0 && (
+                        <>
+                          {' '}
+                          · <a href="#tools">{p.tools.length} tools</a>
+                        </>
+                      )}
                     </dd>
                   </div>
                   <div>

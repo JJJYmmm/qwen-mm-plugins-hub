@@ -2,6 +2,7 @@ import Link from '@/components/static-link';
 import Image from 'next/image';
 import { ArrowUpRight, CodeXml, Search, BookOpen } from 'lucide-react';
 import source from '@/source.config.json';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 export function SiteHeader({
   section = 'plugins',
@@ -21,7 +22,7 @@ export function SiteHeader({
             unoptimized
           />
           <span>
-            Qwen <span className="brand-light">MM Plugins</span>
+            Qwen <span className="brand-light">MM</span> Plugins
           </span>
         </Link>
         <search className="header-doc-search">
@@ -29,8 +30,8 @@ export function SiteHeader({
             <Search size={16} />
             <input
               name="q"
-              aria-label="Search plugins, Skills and tools"
-              placeholder="Search plugins, Skills, tools…"
+              aria-label="Search plugins and tools"
+              placeholder="Search plugins and tools…"
             />
           </form>
         </search>
@@ -51,11 +52,13 @@ export function SiteHeader({
           </Link>
           <a
             className="github-link"
+            aria-label="Plugin repository on GitHub"
             href="https://github.com/QwenLM/Qwen-MM-Plugins"
           >
             <CodeXml size={18} />
             <span>GitHub</span>
           </a>
+          <ThemeToggle />
         </nav>
       </div>
       <div className="documentation-bar">
@@ -75,7 +78,7 @@ export function SiteFooter() {
         multimodal capabilities
       </span>
       <a href="https://github.com/JJJYmmm/qwen-mm-plugins-hub">
-        About this directory <ArrowUpRight size={13} />
+        Hub source <ArrowUpRight size={13} />
       </a>
       <a href="https://github.com/QwenLM/Qwen-MM-Plugins/blob/main/LICENSE">
         Apache 2.0

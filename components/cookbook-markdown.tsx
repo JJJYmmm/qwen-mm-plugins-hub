@@ -10,6 +10,7 @@ import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import { cookbookEmbeds, cookbookUrl } from '@/lib/cookbook';
 import docs from '@/data/docs.json';
 import { documentationUrl } from '@/lib/documentation';
+import { CodeBlock } from '@/components/code-block';
 
 export function CookbookMarkdown({
   markdown,
@@ -34,6 +35,7 @@ export function CookbookMarkdown({
         ? src
         : '';
   const components = {
+    pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
     img: ({ src, alt }) => <img src={src} alt={alt || ''} loading="lazy" />,
     'cookbook-video': ({ src, title }: { src?: string; title?: string }) => (
       <figure className="cookbook-media">

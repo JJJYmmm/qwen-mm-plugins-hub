@@ -65,6 +65,16 @@ for (const file of [
   const html = await readFile(path.join(root, file), 'utf8');
   if (html.includes('id="__next_error__"'))
     throw new Error(`Error page exported: ${file}`);
+  const outline = html.match(
+    /<nav\b[^>]*aria-label="On this page"[^>]*>([\s\S]*?)<\/nav>/,
+  )?.[1];
+  if (outline && /&lt;(?:p|img|div)\b/.test(outline))
+    throw new Error(`Raw HTML leaked into the page outline: ${file}`);
+  if (
+    !html.includes('aria-label="Color theme"') ||
+    !html.includes('qwen-hub-theme')
+  )
+    throw new Error(`Theme control or pre-paint theme script missing: ${file}`);
   if (!html.includes(`<span>${source.ref}</span>`))
     throw new Error(`Source branch badge missing: ${file}`);
   if (source.ref !== 'main') {

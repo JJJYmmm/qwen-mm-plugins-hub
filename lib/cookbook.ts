@@ -46,14 +46,14 @@ export function nodeText(node: TextNode): string {
 }
 
 /** Body and outline share the same GitHub-compatible heading IDs. */
-export function markdownHeadings() {
+export function markdownHeadings({ prefix = '' }: { prefix?: string } = {}) {
   return (tree: MarkdownNode) => {
     const headings = new GithubSlugger();
     function visit(node: MarkdownNode) {
       if (node.type === 'heading') {
         node.data = {
           ...node.data,
-          hProperties: { id: headings.slug(nodeText(node)) },
+          hProperties: { id: prefix + headings.slug(nodeText(node)) },
         };
       }
       node.children?.forEach(visit);

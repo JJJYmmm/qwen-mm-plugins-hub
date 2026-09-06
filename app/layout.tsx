@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Source_Sans_3, IBM_Plex_Mono } from 'next/font/google';
 import './globals.css';
 import './docs-theme.css';
+import { themeScript } from '@/lib/theme';
 
 const geistSans = Source_Sans_3({
   variable: '--font-geist-sans',
@@ -27,7 +28,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

@@ -12,6 +12,7 @@ test('overview and browser-back restore the Skill panel from any tab', () => {
 test('sidebar links, tabs and tool deep links resolve to the same section', () => {
   for (const [hash, section, tab] of [
     ['#skill', 'skill', 'skill'],
+    ['#skill-section-requirements', 'skill', 'skill'],
     ['#files', 'files', 'skill'],
     ['#tools', 'tools', 'tools'],
     ['#tool_read_image', 'overview', 'skill'],

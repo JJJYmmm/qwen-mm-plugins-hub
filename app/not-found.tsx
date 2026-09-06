@@ -5,12 +5,16 @@ export default function NotFound() {
     <>
       <SiteHeader />
       <main className="empty-state">
-        <h1>Plugin not found</h1>
+        <h1>Page not found</h1>
         <p>
-          This page may have moved, or the plugin is not in the directory yet.
+          This page may have moved. Explore the plugins or open the
+          documentation.
         </p>
         <Link className="documentation-link" href="/">
           Browse plugins →
+        </Link>
+        <Link className="documentation-link" href="/docs/">
+          Read the docs →
         </Link>
       </main>
     </>

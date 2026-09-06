@@ -4,15 +4,17 @@ import { Check, Copy } from 'lucide-react';
 
 export function CopyButton({
   text,
+  getText,
   label = 'Copy',
 }: {
-  text: string;
+  text?: string;
+  getText?: () => string;
   label?: string;
 }) {
   const [status, setStatus] = useState('');
   async function copy() {
     try {
-      await navigator.clipboard.writeText(text);
+      await navigator.clipboard.writeText(getText ? getText() : text || '');
       setStatus('Copied');
     } catch {
       setStatus('Select text to copy');

@@ -6,6 +6,7 @@ import Link from '@/components/static-link';
 import { SiteHeader, SiteFooter } from '@/components/site-header';
 import { DocumentationShell } from '@/components/documentation-shell';
 import { MarkdownToc } from '@/components/markdown-toc';
+import { CodeBlock } from '@/components/code-block';
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -85,6 +86,7 @@ export function DocumentationArticle({ page }: { page: DocumentationPage }) {
                     )
                   }
                   components={{
+                    pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
                     // The Hub currently publishes English only. Keep the original
                     // language selector in source, but don't advertise untranslated routes.
                     p: ({ node, children }) =>

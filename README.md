@@ -4,6 +4,11 @@
 
 A searchable plugin directory with contributor/tag filters, Skill previews, actual MCP definitions, Qwen3.5 token estimates, English documentation, and hosted cookbooks.
 
+Readers can choose light, dark, or system appearance; share a filtered and sorted directory URL;
+copy documentation code blocks; and link directly to Skill sections or individual tools.
+Mobile filters open in a keyboard-accessible drawer. These features are client-side and require
+no account, backend, analytics service, or additional publishing step.
+
 ## Add a plugin in two places
 
 Start with [Add a new plugin](https://jjjymmm.github.io/qwen-mm-plugins-hub/docs/how-to-add-new-capability/)
@@ -108,6 +113,12 @@ npm run build
 The committed generated data supports frontend-only development without Python. To rebuild production content locally, use a clean, updated checkout of the branch in `source.config.json` as `--source`. The exporter verifies that HEAD matches that branch. A development snapshot is labeled with its actual branch, never as main.
 
 Tests cover automatic plugin and documentation discovery, optional cookbook metadata, media paths, Skill hierarchy, tool definitions and token estimates. The static build checks all generated routes, documentation and cookbook anchors, media previews, and exported asset links. The postbuild directory indexes let detail URLs work without an application server.
+
+Before a frontend release, also review light and dark themes at desktop and phone widths;
+test filters and sort after reloading a shared URL, keyboard dismissal of menus, code copying,
+Skill expansion and tool permalinks, and a video and interactive cookbook case. Keep the final
+build configured for its host's base path. Automated checks complement this browser pass;
+they do not invoke paid providers or certify every agent harness installation.
 
 GitHub Actions runs on Hub main pushes and manual workflow dispatch. To refresh after an upstream change without editing Hub, run **Build and deploy plugin directory** from Actions. Failed builds leave the current published site intact. Pages must use GitHub Actions as its source. `SITE_BASE_PATH=/qwen-mm-plugins-hub` is set in CI; omit it for root-domain hosting.
 

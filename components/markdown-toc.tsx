@@ -15,6 +15,7 @@ export function MarkdownToc({
       <h2>On this page</h2>
       <a href={`#${top}`}>Top</a>
       <ReactMarkdown
+        skipHtml
         remarkPlugins={[remarkGfm, markdownHeadings]}
         allowedElements={[
           'h2',

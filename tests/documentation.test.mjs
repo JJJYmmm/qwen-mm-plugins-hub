@@ -148,4 +148,13 @@ test('document headings preserve code/link text, duplicates and non-Latin anchor
     tree.children.map((node) => node.data.hProperties.id),
     ['qwen-setup', 'qwen-setup-1', '中文'],
   );
+  markdownHeadings({ prefix: 'skill-section-' })(tree);
+  assert.deepEqual(
+    tree.children.map((node) => node.data.hProperties.id),
+    [
+      'skill-section-qwen-setup',
+      'skill-section-qwen-setup-1',
+      'skill-section-中文',
+    ],
+  );
 });

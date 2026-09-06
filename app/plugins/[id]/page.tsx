@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import ReactMarkdown, { defaultUrlTransform } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import catalog from '@/data/catalog.json';
+import { CodeBlock } from '@/components/code-block';
+import { markdownHeadings } from '@/lib/cookbook';
 import { PluginDetail } from '@/components/plugin-detail';
 import { skillExcerpt, type Plugin } from '@/lib/catalog';
 
@@ -36,10 +38,17 @@ export default async function PluginPage({
   const renderMarkdown = (markdown: string) => (
     <article className="markdown-content">
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={[
+          remarkGfm,
+          [markdownHeadings, { prefix: 'skill-section-' }],
+        ]}
+        components={{
+          pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
+        }}
         urlTransform={(url, key) => {
           const safe = defaultUrlTransform(url);
-          if (!safe || safe.startsWith('#')) return safe;
+          if (!safe) return safe;
+          if (safe.startsWith('#')) return '#skill-section-' + safe.slice(1);
           if (/^https?:\/\//.test(safe) || safe.startsWith('mailto:'))
             return safe;
           const resolved = new URL(safe, skillDirectory).href;
