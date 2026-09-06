@@ -8,6 +8,8 @@ import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import { cookbookEmbeds, cookbookUrl } from '@/lib/cookbook';
+import docs from '@/data/docs.json';
+import { documentationUrl } from '@/lib/documentation';
 
 export function CookbookMarkdown({
   markdown,
@@ -19,8 +21,12 @@ export function CookbookMarkdown({
   sourceUrl: string;
 }) {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || '';
-  const resolve = (url: string) =>
-    cookbookUrl(defaultUrlTransform(url), id, sourceUrl, base);
+  const resolve = (url: string) => {
+    const safe = defaultUrlTransform(url);
+    return /^https?:/.test(safe)
+      ? documentationUrl(safe, '', docs, base)
+      : cookbookUrl(safe, id, sourceUrl, base);
+  };
   const hosted = (src?: string) =>
     src?.startsWith('/cases/')
       ? base + src

@@ -1,21 +1,21 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { cookbookEmbeds, nodeText } from '@/lib/cookbook';
+import { markdownHeadings, nodeText } from '@/lib/cookbook';
 
-/** Use the same Markdown parser and slug order as the cookbook body. */
-export function CookbookToc({
+/** Use the same Markdown parser and slug order as the document body. */
+export function MarkdownToc({
   markdown,
-  id,
+  top,
 }: {
   markdown: string;
-  id: string;
+  top: string;
 }) {
   return (
     <nav className="docs-toc cookbook-toc" aria-label="On this page">
       <h2>On this page</h2>
-      <a href="#cookbook-content">Top</a>
+      <a href={`#${top}`}>Top</a>
       <ReactMarkdown
-        remarkPlugins={[remarkGfm, [cookbookEmbeds, { id }]]}
+        remarkPlugins={[remarkGfm, markdownHeadings]}
         allowedElements={[
           'h2',
           'h3',

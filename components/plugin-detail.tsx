@@ -522,12 +522,9 @@ export function PluginDetail({
                           </p>
                         </details>
                       </section>
-                      <a
-                        className="documentation-link"
-                        href="https://github.com/QwenLM/Qwen-MM-Plugins/blob/main/docs/en/installation.md"
-                      >
-                        Installation guide <ArrowUpRight size={15} />
-                      </a>
+                      <Link className="documentation-link" href="/docs/">
+                        Installation guide <ArrowRight size={15} />
+                      </Link>
                       {p.requirements.length > 0 && (
                         <>
                           <h3>System dependencies</h3>

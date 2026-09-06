@@ -260,6 +260,40 @@ def build_content(
     }, cookbooks
 
 
+def build_docs(source: Path) -> dict:
+    """Publish committed English Markdown without creating a second authored copy."""
+    sha = git(source, "rev-parse", "HEAD")
+    paths = git(source, "ls-tree", "-rz", "--name-only", sha, "--", "docs/en/")
+    pages = []
+    for path in paths.split("\0"):
+        if not path.endswith(".md"):
+            continue
+        slug = Path(path).relative_to("docs/en").with_suffix("").as_posix()
+        slug = slug.replace("_", "-").replace("/", "-")
+        if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", slug):
+            raise ValueError(f"Unsupported documentation filename: {path}")
+        if any(page["slug"] == slug for page in pages):
+            raise ValueError(f"Duplicate documentation slug: {slug}")
+        markdown = subprocess.check_output(
+            ["git", "-C", str(source), "show", f"{sha}:{path}"], text=True
+        )
+        title = re.search(r"^# (.+)$", markdown, re.M)
+        if not title:
+            raise ValueError(f"Documentation needs an H1 title: {path}")
+        pages.append(
+            {
+                "slug": slug,
+                "path": path,
+                "title": title.group(1).strip(),
+                "markdown": markdown,
+                "sourceUrl": f"{REPOSITORY}/blob/{sha}/{path}",
+            }
+        )
+    if not any(page["slug"] == "installation" for page in pages):
+        raise ValueError("Missing documentation entry: docs/en/installation.md")
+    return {"repository": REPOSITORY, "commit": sha, "pages": pages}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, required=True)
@@ -271,12 +305,13 @@ def main() -> None:
     check_cases(ROOT / "public/cases")
     catalog, cookbooks = build_content(args.source.resolve())
     catalog = annotate_catalog(catalog)
-    for name, data in (("catalog", catalog), ("cookbooks", cookbooks)):
+    docs = build_docs(args.source.resolve())
+    for name, data in (("catalog", catalog), ("cookbooks", cookbooks), ("docs", docs)):
         (ROOT / "data" / f"{name}.json").write_text(
             json.dumps(data, ensure_ascii=False, indent=2) + "\n"
         )
     print(
-        f"Exported {len(catalog['plugins'])} plugins / {sum(len(p['tools']) for p in catalog['plugins'])} tools"
+        f"Exported {len(catalog['plugins'])} plugins / {sum(len(p['tools']) for p in catalog['plugins'])} tools / {len(docs['pages'])} docs"
     )
 
 

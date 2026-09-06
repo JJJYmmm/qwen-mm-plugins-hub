@@ -2,7 +2,7 @@
 
 [Website](https://jjjymmm.github.io/qwen-mm-plugins-hub/) · [Plugin repository](https://github.com/QwenLM/Qwen-MM-Plugins)
 
-A searchable plugin directory with contributor/tag filters, Skill previews, actual MCP definitions, Qwen3.5 token estimates, and hosted cookbooks.
+A searchable plugin directory with contributor/tag filters, Skill previews, actual MCP definitions, Qwen3.5 token estimates, English documentation, and hosted cookbooks.
 
 ## Add a plugin in two places
 
@@ -60,13 +60,13 @@ Use H.264/YUV420P MP4, AAC audio when present, and faststart for video playback/
 ## One content build
 
 ```text
-upstream plugin-versions.json + manifests + Skills + MCP registry
+upstream plugin-versions.json + manifests + Skills + MCP registry + docs/en
                              +
 Hub cookbook Markdown/front matter + public/cases files
                              ↓
 python -m scripts.build_content --source <plugin-checkout>
                              ↓
-data/catalog.json + data/cookbooks.json (including token estimates)
+data/catalog.json + data/cookbooks.json + data/docs.json
                              ↓
 npm run build → dist/client → GitHub Pages
 ```
@@ -74,6 +74,14 @@ npm run build → dist/client → GitHub Pages
 Production always reads **remote upstream main**, not a mix of branches. Every Skill/tool source link pins the same commit. Cookbook source links point to this Hub. The plugin repository's `support_hub` branch contains the unified docstring convention; it must reach upstream main before production reflects those source changes.
 
 The exporter imports registries but never invokes handlers, startup hooks, or MCP servers. It ignores local Qwen configuration and exports an explicit set of public fields. Capability imports must keep optional heavy dependencies lazy, as required by the plugin repository.
+
+### English documentation
+
+The [Docs section](https://jjjymmm.github.io/qwen-mm-plugins-hub/docs/) opens directly on Installation. English Markdown is discovered from committed `docs/en/**/*.md` in the same upstream snapshot as the plugin catalog and refreshed on each Hub build. New pages appear automatically; filenames supply URL slugs and the first H1 supplies the title.
+
+Maintain these documents **in the plugin repository**, not in generated `data/docs.json`. In particular, its configuration reference remains owned by `scripts/gen_env_docs.py` and the upstream consistency tests. Cookbooks and case files remain Hub-owned.
+
+Rendered English document links stay inside the Hub, including links from cookbooks. Source-file and untranslated-page links use the upstream commit. Command examples and source Markdown are unchanged; the upstream language selector is hidden in the English-only website. Both GitHub Pages and root-domain URLs are checked during the static build.
 
 ## Development and checks
 
@@ -92,7 +100,7 @@ npm run build
 
 The committed generated data supports frontend-only development without Python. To rebuild production content locally, use a clean, updated checkout of upstream main as `--source`. To test unpublished plugin changes, point it at that checkout; do not publish its generated data as a main snapshot.
 
-Tests cover automatic plugin discovery, optional cookbook metadata, media paths, Skill hierarchy, tool definitions and token estimates. The static build checks all generated routes, cookbook anchors, media previews, and exported asset links. The postbuild directory indexes let detail URLs work without an application server.
+Tests cover automatic plugin and documentation discovery, optional cookbook metadata, media paths, Skill hierarchy, tool definitions and token estimates. The static build checks all generated routes, documentation and cookbook anchors, media previews, and exported asset links. The postbuild directory indexes let detail URLs work without an application server.
 
 GitHub Actions runs on Hub main pushes and manual workflow dispatch. To refresh after an upstream change without editing Hub, run **Build and deploy plugin directory** from Actions. Failed builds leave the current published site intact. Pages must use GitHub Actions as its source. `SITE_BASE_PATH=/qwen-mm-plugins-hub` is set in CI; omit it for root-domain hosting.
 

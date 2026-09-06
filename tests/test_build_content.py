@@ -8,6 +8,7 @@ import unittest
 
 from scripts.build_content import (
     build_content,
+    build_docs,
     check_cases,
     contributor_metadata,
     read_markdown,
@@ -99,6 +100,49 @@ class ContentBuildTests(unittest.TestCase):
         self.assertEqual(
             books["new-plugin"]["markdown"], "# New cookbook\n\nA case walkthrough.\n"
         )
+
+    def test_docs_are_discovered_from_the_same_committed_snapshot(self):
+        markdown = "# Installation\n\n```bash\ncurl https://example.test/install.sh | bash\n```\n"
+        self.write(self.source / "docs/en/installation.md", markdown)
+        self.write(
+            self.source / "docs/en/new_guide.md",
+            "# New guide\n\n[Install](installation.md#install)\n",
+        )
+        self.write(self.source / "docs/zh/installation.md", "# 中文\n")
+        self.plugin("new-plugin")
+        self.commit(["new-plugin"])
+        self.write(self.books / "new-plugin/usage.md", "# Cookbook\n")
+        self.write(self.source / "docs/en/installation.md", "# Uncommitted edit\n")
+        self.write(self.source / "docs/en/untracked.md", "# Not committed\n")
+        docs = build_docs(self.source)
+        catalog, _ = build_content(self.source, self.books)
+        self.assertEqual(docs["commit"], catalog["plugins"][0]["source"]["commit"])
+        self.assertEqual(
+            [page["slug"] for page in docs["pages"]], ["installation", "new-guide"]
+        )
+        self.assertEqual(docs["pages"][0]["markdown"], markdown)
+        self.assertEqual(
+            docs["pages"][0]["sourceUrl"],
+            f"{docs['repository']}/blob/{docs['commit']}/docs/en/installation.md",
+        )
+        self.assertEqual(docs["pages"][1]["title"], "New guide")
+
+    def test_docs_fail_on_missing_entry_or_duplicate_routes(self):
+        self.write(self.source / "docs/en/new_guide.md", "# New guide\n")
+        self.commit([])
+        with self.assertRaisesRegex(ValueError, "Missing documentation entry"):
+            build_docs(self.source)
+        self.write(self.source / "docs/en/installation.md", "# Installation\n")
+        self.write(self.source / "docs/en/new-guide.md", "# Duplicate\n")
+        self.commit([])
+        with self.assertRaisesRegex(ValueError, "Duplicate documentation slug"):
+            build_docs(self.source)
+
+    def test_docs_require_a_title(self):
+        self.write(self.source / "docs/en/installation.md", "Missing H1\n")
+        self.commit([])
+        with self.assertRaisesRegex(ValueError, "H1 title"):
+            build_docs(self.source)
 
     def test_cookbook_metadata_supplies_new_categories_tags_and_contributors(self):
         self.plugin("new-plugin")

@@ -2,7 +2,11 @@ import Link from '@/components/static-link';
 import Image from 'next/image';
 import { ArrowUpRight, CodeXml, Search, BookOpen } from 'lucide-react';
 
-export function SiteHeader() {
+export function SiteHeader({
+  section = 'plugins',
+}: {
+  section?: 'plugins' | 'docs';
+}) {
   return (
     <header className="site-header">
       <div className="header-inner">
@@ -24,18 +28,26 @@ export function SiteHeader() {
             <Search size={16} />
             <input
               name="q"
-              aria-label="Search plugin documentation"
+              aria-label="Search plugins, Skills and tools"
               placeholder="Search plugins, Skills, tools…"
             />
           </form>
         </search>
         <nav aria-label="Main navigation">
-          <Link className="nav-active" href="/">
+          <Link
+            className={section === 'plugins' ? 'nav-active' : undefined}
+            aria-current={section === 'plugins' ? 'page' : undefined}
+            href="/"
+          >
             Plugins
           </Link>
-          <a href="https://github.com/QwenLM/Qwen-MM-Plugins/tree/main/docs/en">
-            Docs <ArrowUpRight size={14} />
-          </a>
+          <Link
+            className={section === 'docs' ? 'nav-active' : undefined}
+            aria-current={section === 'docs' ? 'page' : undefined}
+            href="/docs/"
+          >
+            Docs
+          </Link>
           <a
             className="github-link"
             href="https://github.com/QwenLM/Qwen-MM-Plugins"
@@ -47,7 +59,7 @@ export function SiteHeader() {
       </div>
       <div className="documentation-bar">
         <BookOpen size={16} />
-        <Link href="/">Qwen MM Plugins documentation</Link>
+        <Link href="/docs/">Qwen MM Plugins documentation</Link>
         <span>main</span>
       </div>
     </header>

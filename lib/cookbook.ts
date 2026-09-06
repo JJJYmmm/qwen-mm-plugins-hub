@@ -45,19 +45,30 @@ export function nodeText(node: TextNode): string {
   return node.value || node.children?.map(nodeText).join('') || '';
 }
 
+/** Body and outline share the same GitHub-compatible heading IDs. */
+export function markdownHeadings() {
+  return (tree: MarkdownNode) => {
+    const headings = new GithubSlugger();
+    function visit(node: MarkdownNode) {
+      if (node.type === 'heading') {
+        node.data = {
+          ...node.data,
+          hProperties: { id: headings.slug(nodeText(node)) },
+        };
+      }
+      node.children?.forEach(visit);
+    }
+    visit(tree);
+  };
+}
+
 /** Move demo embeds out of paragraphs/strong tags, so the exported HTML remains valid. */
 export function cookbookEmbeds({ id }: { id: string }) {
   return (tree: MarkdownNode) => {
-    const headings = new GithubSlugger();
+    markdownHeadings()(tree);
     function visit(parent: MarkdownNode) {
       const children: MarkdownNode[] = [];
       for (const node of parent.children || []) {
-        if (node.type === 'heading') {
-          node.data = {
-            ...node.data,
-            hProperties: { id: headings.slug(nodeText(node)) },
-          };
-        }
         if (node.type === 'paragraph') {
           const media: MarkdownNode[] = [];
           function collect(n: MarkdownNode) {

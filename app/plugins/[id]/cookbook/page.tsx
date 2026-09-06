@@ -6,7 +6,7 @@ import cookbooks from '@/data/cookbooks.json';
 import { SiteHeader, SiteFooter } from '@/components/site-header';
 import { DocsShell } from '@/components/docs-shell';
 import { CookbookMarkdown } from '@/components/cookbook-markdown';
-import { CookbookToc } from '@/components/cookbook-toc';
+import { MarkdownToc } from '@/components/markdown-toc';
 import { DocBreadcrumb } from '@/components/doc-breadcrumb';
 
 export function generateStaticParams() {
@@ -68,7 +68,7 @@ export default async function CookbookPage({
               </section>
             </div>
             <aside className="detail-sidebar">
-              <CookbookToc markdown={book.markdown} id={id} />
+              <MarkdownToc markdown={book.markdown} top="cookbook-content" />
             </aside>
           </div>
         </main>

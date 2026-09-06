@@ -958,6 +958,50 @@
   align-items: center;
   margin: 24px 0 10px;
 }
+.documentation-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.documentation-heading .doc-breadcrumb {
+  margin: 0;
+}
+.documentation-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+#documentation-content {
+  scroll-margin-top: calc(var(--docs-header-height) + 20px);
+}
+.documentation-pagination {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 48px;
+  padding-top: 24px;
+}
+.documentation-pagination a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #2563eb;
+}
+.documentation-pagination a:nth-child(2) {
+  justify-self: end;
+  text-align: right;
+}
+.documentation-pagination small {
+  display: block;
+  color: #6b7280;
+  font-size: 0.8125rem;
+}
 .cookbook-heading > span {
   font-size: 0.8125rem;
   letter-spacing: 0.08em;

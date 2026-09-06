@@ -13,6 +13,9 @@ const { plugins, contributors } = JSON.parse(
   await readFile('data/catalog.json', 'utf8'),
 );
 const cookbooks = JSON.parse(await readFile('data/cookbooks.json', 'utf8'));
+const docs = JSON.parse(await readFile('data/docs.json', 'utf8'));
+const documentationRoute = (page) =>
+  page.slug === 'installation' ? 'docs' : `docs/${page.slug}`;
 // Vinext's trailingSlash export currently redirects its internal RSC requests.
 // Export without redirects, then provide directory indexes for portable URLs.
 for (const { id } of plugins) {
@@ -26,6 +29,14 @@ for (const { id } of plugins) {
   await copyFile(
     path.join(destination, 'cookbook.html'),
     path.join(destination, 'cookbook/index.html'),
+  );
+}
+for (const page of docs.pages) {
+  const route = documentationRoute(page);
+  await mkdir(path.join(root, route), { recursive: true });
+  await copyFile(
+    path.join(root, route + '.html'),
+    path.join(root, route, 'index.html'),
   );
 }
 await writeFile(path.join(root, '.nojekyll'), '');
@@ -46,12 +57,27 @@ for (const file of [
   'index.html',
   ...plugins.map((p) => `plugins/${p.id}/index.html`),
   ...plugins.map((p) => `plugins/${p.id}/cookbook/index.html`),
+  ...docs.pages.map((page) => `${documentationRoute(page)}/index.html`),
 ]) {
   const html = await readFile(path.join(root, file), 'utf8');
   if (html.includes('id="__next_error__"'))
     throw new Error(`Error page exported: ${file}`);
   if (!html.includes(`action="${prefix}/"`))
     throw new Error(`Documentation search has the wrong destination: ${file}`);
+  const mainNav = html.match(
+    /<nav\b[^>]*aria-label="Main navigation"[^>]*>([\s\S]*?)<\/nav>/,
+  )?.[1];
+  const activeMain = [
+    ...(mainNav || '').matchAll(/<a\b[^>]*aria-current="page"[^>]*>/g),
+  ];
+  if (
+    !mainNav?.includes(`href="${prefix}/docs/"`) ||
+    activeMain.length !== 1 ||
+    !activeMain[0][0].includes(
+      `href="${prefix}${file.startsWith('docs/') ? '/docs/' : '/'}"`,
+    )
+  )
+    throw new Error(`Incorrect Docs / Plugins header navigation: ${file}`);
   if (
     !html.includes('class="brand-mark"') ||
     !html.includes(`src="${prefix}/favicon.svg"`)
@@ -198,6 +224,64 @@ for (const file of [
           `Prominent Cookbook link missing or incorrect: ${file}`,
         );
     }
+  } else if (file.startsWith('docs/')) {
+    const page = docs.pages.find(
+      (page) => file === `${documentationRoute(page)}/index.html`,
+    );
+    const nav = html.match(
+      /<nav\b[^>]*data-documentation-navigation="[^"]+"[^>]*>([\s\S]*?)<\/nav>/,
+    )?.[1];
+    const active = [
+      ...(nav || '').matchAll(/<a\b[^>]*aria-current="page"[^>]*>/g),
+    ];
+    if (
+      !html.includes('id="documentation-content"') ||
+      !html.includes(`href="${page.sourceUrl}"`) ||
+      active.length !== 1 ||
+      !active[0][0].includes(`href="${prefix}/${documentationRoute(page)}/"`)
+    )
+      throw new Error(
+        `Documentation content, source or active navigation missing: ${file}`,
+      );
+    for (const entry of docs.pages) {
+      if (!nav.includes(`href="${prefix}/${documentationRoute(entry)}/"`))
+        throw new Error(
+          `Documentation page missing from sidebar: ${entry.slug}`,
+        );
+    }
+    const toc = html.match(
+      /<nav\b[^>]*aria-label="On this page"[^>]*>([\s\S]*?)<\/nav>/,
+    )?.[1];
+    if (!toc?.includes('href="#documentation-content"'))
+      throw new Error(`Documentation outline missing: ${file}`);
+    if (
+      /href="https:\/\/github\.com\/QwenLM\/Qwen-MM-Plugins\/blob\/main\/docs\/en\//.test(
+        html,
+      )
+    )
+      throw new Error(
+        `Documentation still links to an imported page on GitHub: ${file}`,
+      );
+    for (const [, href] of html.matchAll(/href="([^"]+)"/g)) {
+      const url = new URL(
+        href.replaceAll('&amp;', '&'),
+        `https://hub.local${prefix}/${documentationRoute(page)}/`,
+      );
+      if (
+        url.origin !== 'https://hub.local' ||
+        !url.pathname.startsWith(`${prefix}/docs/`)
+      )
+        continue;
+      const destination = await readFile(
+        path.join(root, url.pathname.slice(prefix.length), 'index.html'),
+        'utf8',
+      );
+      if (
+        url.hash &&
+        !destination.includes(`id="${decodeURIComponent(url.hash.slice(1))}"`)
+      )
+        throw new Error(`Broken documentation anchor: ${file}: ${href}`);
+    }
   } else {
     if (
       html.includes('class="card-token-estimate"') ||
@@ -231,5 +315,5 @@ for (const file of [
   }
 }
 console.log(
-  `Verified ${plugins.length * 2 + 1} static pages, documentation navigation, cookbook media, token estimates, search destinations, and script, style, and font assets.`,
+  `Verified ${plugins.length * 2 + docs.pages.length + 1} static pages, documentation navigation and anchors, cookbook media, token estimates, search destinations, and script, style, and font assets.`,
 );
