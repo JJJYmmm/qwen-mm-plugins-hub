@@ -58,6 +58,7 @@ export default async function PluginPage({
     <PluginDetail
       plugin={plugin as unknown as Plugin}
       contributors={catalog.contributors}
+      tokenizer={catalog.tokenizer}
       navigation={catalog.plugins.map(({ id, title, category }) => ({
         id,
         title,

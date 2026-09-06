@@ -27,6 +27,7 @@ import { SiteHeader, SiteFooter } from '@/components/site-header';
 import { PluginIcon } from '@/components/plugin-icon';
 import {
   filterPlugins,
+  formatTokens,
   type PluginSummary,
   type Contributor,
 } from '@/lib/catalog';
@@ -35,10 +36,12 @@ export function Catalog({
   plugins,
   contributors,
   categories,
+  tokenizerLabel,
 }: {
   plugins: PluginSummary[];
   contributors: Record<string, Contributor>;
   categories: string[];
+  tokenizerLabel: string;
 }) {
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('');
@@ -332,6 +335,21 @@ export function Catalog({
                       </button>
                     ))}
                   </div>
+                  <Link
+                    className="card-token-estimate"
+                    href={`/plugins/${p.id}/#tokens`}
+                    title={`Estimated content tokens, using the ${tokenizerLabel} tokenizer. Excludes client wrappers and runtime content.`}
+                  >
+                    <span>
+                      Skill ≈ {formatTokens(p.tokenEstimate.skillFull)}
+                    </span>
+                    <span>
+                      Tools ≈ {formatTokens(p.tokenEstimate.toolsTotal)}
+                    </span>
+                    <span className="token-model-label">
+                      {tokenizerLabel} tokens
+                    </span>
+                  </Link>
                   <div className="card-bottom">
                     <Link
                       className="card-content-link"

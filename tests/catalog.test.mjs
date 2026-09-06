@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
   filterPlugins,
+  formatTokens,
   schemaType,
   skillExcerpt,
   skillFileTree,
@@ -137,6 +138,35 @@ test('Skill-only capabilities are not represented as MCP servers', () => {
   const education = plugins.find((p) => p.id === 'edu-agent');
   assert.equal(education.kind, 'Skill only');
   assert.equal(education.tools.length, 0);
+  assert.equal(education.tokenEstimate.toolsTotal, 0);
+});
+
+test('token estimates use a pinned reference and retain the exact counted definitions', () => {
+  assert.equal(catalog.tokenizer.label, 'Qwen3.5');
+  assert.equal(catalog.tokenizer.modelId, 'Qwen/Qwen3.5-9B');
+  assert.match(catalog.tokenizer.revision, /^[a-f0-9]{40}$/);
+  assert.match(catalog.tokenizer.sha256, /^[a-f0-9]{64}$/);
+  assert(catalog.tokenizer.sourceUrl.includes(catalog.tokenizer.revision));
+  assert.equal(catalog.tokenizer.addSpecialTokens, false);
+  for (const plugin of plugins) {
+    for (const count of Object.values(plugin.tokenEstimate)) {
+      assert(Number.isInteger(count) && count >= 0);
+    }
+    assert.equal(
+      plugin.tokenEstimate.toolsTotal,
+      plugin.tools.reduce((sum, t) => sum + t.tokenCount, 0),
+    );
+    for (const tool of plugin.tools) {
+      assert(Number.isInteger(tool.tokenCount) && tool.tokenCount > 0);
+      assert.deepEqual(JSON.parse(tool.definitionText), {
+        name: tool.name,
+        description: tool.description,
+        inputSchema: tool.inputSchema,
+      });
+    }
+  }
+  assert.equal(formatTokens(18842), '18,842');
+  assert.equal(formatTokens(0), '0');
 });
 
 test('parameter types preserve unions and nested arrays', () => {

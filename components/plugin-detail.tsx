@@ -28,6 +28,7 @@ import { SiteHeader, SiteFooter } from '@/components/site-header';
 import { PluginIcon } from '@/components/plugin-icon';
 import { CopyButton } from '@/components/copy-button';
 import { SkillFiles } from '@/components/skill-files';
+import { TokenEstimate } from '@/components/token-estimate';
 import { DocsShell, type DocNavPlugin } from '@/components/docs-shell';
 import {
   Collapsible,
@@ -36,10 +37,12 @@ import {
 } from '@/components/ui/collapsible';
 import {
   schemaType,
+  formatTokens,
   skillExcerpt,
   type Plugin,
   type Contributor,
   type Tool,
+  type TokenizerInfo,
 } from '@/lib/catalog';
 
 const installCommand =
@@ -48,18 +51,16 @@ const installCommand =
 function ToolDefinition({
   tool,
   initialOpen,
+  tokenizerLabel,
 }: {
   tool: Tool;
   initialOpen: boolean;
+  tokenizerLabel: string;
 }) {
   const [open, setOpen] = useState(initialOpen);
   const schema = tool.inputSchema;
   const fields = Object.entries(schema.properties || {});
-  const definition = JSON.stringify(
-    { name: tool.name, description: tool.description, inputSchema: schema },
-    null,
-    2,
-  );
+  const definition = tool.definitionText;
   return (
     <details
       id={`tool-${tool.name}`}
@@ -76,6 +77,12 @@ function ToolDefinition({
       <div className="tool-body">
         <p>{tool.description}</p>
         <div className="tool-actions">
+          <span
+            className="tool-token-count"
+            title={`${tokenizerLabel} tokens for the copied definition JSON`}
+          >
+            ≈ {formatTokens(tool.tokenCount)} tokens
+          </span>
           <a href={tool.sourceUrl}>
             View source <ArrowUpRight size={13} />
           </a>
@@ -146,6 +153,7 @@ export function PluginDetail({
   skillFullPreview,
   prerequisitesPreview,
   navigation,
+  tokenizer,
 }: {
   plugin: Plugin;
   contributors: Record<string, Contributor>;
@@ -153,6 +161,7 @@ export function PluginDetail({
   skillFullPreview: ReactNode;
   prerequisitesPreview: ReactNode;
   navigation: DocNavPlugin[];
+  tokenizer: TokenizerInfo;
 }) {
   const [tab, setTab] = useState('skill');
   const [skillView, setSkillView] = useState('preview');
@@ -180,6 +189,8 @@ export function PluginDetail({
               ?.scrollIntoView({ block: 'start' }),
           100,
         );
+      } else if (hash === 'tokens') {
+        document.getElementById('tokens')?.scrollIntoView({ block: 'start' });
       } else if (['skill', 'tools', 'install'].includes(hash)) {
         setTab(hash);
         window.setTimeout(
@@ -297,6 +308,7 @@ export function PluginDetail({
                 )}
                 <a href="#install">Why can these differ?</a>
               </div>
+              <TokenEstimate estimate={p.tokenEstimate} tokenizer={tokenizer} />
               <section id="plugin-content" className="detail-main">
                 <Tabs
                   value={tab}
@@ -430,6 +442,7 @@ export function PluginDetail({
                           <ToolDefinition
                             key={tool.name + linkedTool}
                             tool={tool}
+                            tokenizerLabel={tokenizer.label}
                             initialOpen={
                               linkedTool === `tool-${tool.name}` ||
                               (!linkedTool && i === 0)
@@ -569,6 +582,7 @@ export function PluginDetail({
             <aside className="detail-sidebar">
               <nav className="docs-toc" aria-label="On this page">
                 <h2>On this page</h2>
+                <a href="#tokens">Token estimates</a>
                 <a
                   href="#skill"
                   aria-current={tab === 'skill' ? 'location' : undefined}

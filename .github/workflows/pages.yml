@@ -34,9 +34,11 @@ jobs:
           node-version: '24'
           cache: npm
       - name: Install catalog export dependencies
-        run: pip install -e '.sources/upstream[omni-memory]' PyYAML
+        run: pip install -e '.sources/upstream[omni-memory]' -r scripts/requirements-export.txt
       - name: Generate Skills and definitions from upstream main
         run: python scripts/export_catalog.py --source .sources/upstream
+      - name: Verify token estimates offline
+        run: python -m unittest discover -s tests -p 'test_token_estimates.py'
       - run: npm ci
       - run: npm test
       - uses: actions/configure-pages@v5

@@ -106,7 +106,9 @@
           },
           "sourcePath": "src/capabilities/core/qwen_mm_plugins_core/producers/crop.py",
           "sourceLine": 40,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/core/qwen_mm_plugins_core/producers/crop.py#L40"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/core/qwen_mm_plugins_core/producers/crop.py#L40",
+          "definitionText": "{\n  \"name\": \"crop\",\n  \"description\": \"Crop a rectangular region from an image. Saves the cropped result to disk and returns a preview. Coordinates are normalized (0-1000), same as grounding output.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"image_path\": {\n        \"description\": \"Absolute path to the source image file\",\n        \"type\": \"string\"\n      },\n      \"box\": {\n        \"description\": \"Crop region as [x1, y1, x2, y2] in normalized coordinates (0-1000)\",\n        \"items\": {\n          \"type\": \"integer\"\n        },\n        \"maxItems\": 4,\n        \"minItems\": 4,\n        \"type\": \"array\"\n      },\n      \"output_path\": {\n        \"description\": \"Where to save the cropped image. Defaults to {stem}_cropped.{ext} next to the original.\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"image_path\",\n      \"box\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 262
         },
         {
           "name": "draw_bbox",
@@ -159,7 +161,9 @@
           },
           "sourcePath": "src/capabilities/core/qwen_mm_plugins_core/producers/draw_bbox.py",
           "sourceLine": 61,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/core/qwen_mm_plugins_core/producers/draw_bbox.py#L61"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/core/qwen_mm_plugins_core/producers/draw_bbox.py#L61",
+          "definitionText": "{\n  \"name\": \"draw_bbox\",\n  \"description\": \"Draw bounding boxes on an image. Saves the annotated result to disk and returns a preview. Coordinates are normalized (0-1000), same as grounding output.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"image_path\": {\n        \"description\": \"Absolute path to the source image file\",\n        \"type\": \"string\"\n      },\n      \"bboxes\": {\n        \"description\": \"List of bounding boxes to draw\",\n        \"items\": {\n          \"properties\": {\n            \"bbox\": {\n              \"description\": \"[x1, y1, x2, y2] in normalized coordinates (0-1000)\",\n              \"items\": {\n                \"type\": \"integer\"\n              },\n              \"maxItems\": 4,\n              \"minItems\": 4,\n              \"type\": \"array\"\n            },\n            \"label\": {\n              \"description\": \"Optional label text displayed above the box\",\n              \"type\": \"string\"\n            },\n            \"color\": {\n              \"description\": \"Optional box color as hex string (e.g. '#FF0000'). Cycles through a default palette if omitted.\",\n              \"type\": \"string\"\n            }\n          },\n          \"required\": [\n            \"bbox\"\n          ],\n          \"type\": \"object\"\n        },\n        \"type\": \"array\"\n      },\n      \"output_path\": {\n        \"description\": \"Where to save the annotated image. Defaults to {stem}_annotated.{ext} next to the original.\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"image_path\",\n      \"bboxes\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 410
         },
         {
           "name": "media_info",
@@ -183,7 +187,9 @@
           },
           "sourcePath": "src/capabilities/core/qwen_mm_plugins_core/readers/media_info.py",
           "sourceLine": 174,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/core/qwen_mm_plugins_core/readers/media_info.py#L174"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/core/qwen_mm_plugins_core/readers/media_info.py#L174",
+          "definitionText": "{\n  \"name\": \"media_info\",\n  \"description\": \"Read full metadata from a video/audio file via ffprobe: container format, duration, file size, overall bitrate, chapters, and every stream — video (codec/profile, resolution, aspect ratio, fps, pixel format, bitrate, frame count, rotation, color space), audio (codec, sample rate, channels/layout, bitrate), subtitles, and per-stream language/disposition. Use this before any editing/clipping task to learn the source properties; it reads only metadata, so it is fast even on huge files.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"path\": {\n        \"description\": \"Absolute path to the media file (video or audio)\",\n        \"type\": \"string\"\n      },\n      \"raw\": {\n        \"default\": false,\n        \"description\": \"Also return the raw ffprobe JSON (format + streams + chapters) for fields not covered by the summary. Default: false\",\n        \"type\": \"boolean\"\n      }\n    },\n    \"required\": [\n      \"path\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 252
         },
         {
           "name": "read_image",
@@ -212,7 +218,9 @@
           },
           "sourcePath": "src/capabilities/core/qwen_mm_plugins_core/readers/image.py",
           "sourceLine": 33,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/core/qwen_mm_plugins_core/readers/image.py#L33"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/core/qwen_mm_plugins_core/readers/image.py#L33",
+          "definitionText": "{\n  \"name\": \"read_image\",\n  \"description\": \"Read an image with model-optimized dynamic resolution. Automatically resizes to fit the target model's patch grid, balancing resolution and detail preservation. Returns the resized image for model consumption.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"image_path\": {\n        \"description\": \"Absolute path to the image file\",\n        \"type\": \"string\"\n      },\n      \"budget\": {\n        \"default\": \"normal\",\n        \"description\": \"Resolution preset: small (~512×512), normal (~1024×1024), large (~1448×1448).\",\n        \"enum\": [\n          \"small\",\n          \"normal\",\n          \"large\"\n        ],\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"image_path\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 220
         },
         {
           "name": "read_video",
@@ -265,7 +273,9 @@
           },
           "sourcePath": "src/capabilities/core/qwen_mm_plugins_core/readers/video.py",
           "sourceLine": 74,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/core/qwen_mm_plugins_core/readers/video.py#L74"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/core/qwen_mm_plugins_core/readers/video.py#L74",
+          "definitionText": "{\n  \"name\": \"read_video\",\n  \"description\": \"Extract frames from a video file with dynamic resolution and FPS. When fps=0 (default), automatically selects the best sampling rate based on video duration. Resolution is automatically adjusted to fit the patch grid. For full source properties (codec, bitrate, native fps, rotation, VFR, audio tracks) — and before any clip/edit task — run media_info first.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Absolute path to the video file\",\n        \"type\": \"string\"\n      },\n      \"fps\": {\n        \"default\": 0,\n        \"description\": \"Sampling FPS. 0 = auto-detect based on duration (recommended). Default: 0\",\n        \"type\": \"number\"\n      },\n      \"max_frames\": {\n        \"default\": 600,\n        \"description\": \"Maximum frames to extract (capped at 600). Actual count may be lower or stripped depending on video length and response size limits.\",\n        \"type\": \"integer\"\n      },\n      \"budget\": {\n        \"default\": \"normal\",\n        \"description\": \"Per-frame resolution preset: small (~288×288), normal (~512×512), large (~1024×1024).\",\n        \"enum\": [\n          \"small\",\n          \"normal\",\n          \"large\"\n        ],\n        \"type\": \"string\"\n      },\n      \"start_time\": {\n        \"description\": \"Start time — seconds or a clock string ('MM:SS'/'HH:MM:SS'). Default: 0 (beginning).\",\n        \"type\": [\n          \"number\",\n          \"string\"\n        ]\n      },\n      \"end_time\": {\n        \"description\": \"End time — seconds or a clock string ('MM:SS'/'HH:MM:SS'). Default: end of video.\",\n        \"type\": [\n          \"number\",\n          \"string\"\n        ]\n      }\n    },\n    \"required\": [\n      \"video_path\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 496
         },
         {
           "name": "save_view",
@@ -316,7 +326,9 @@
           },
           "sourcePath": "src/capabilities/core/qwen_mm_plugins_core/producers/save_view.py",
           "sourceLine": 65,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/core/qwen_mm_plugins_core/producers/save_view.py#L65"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/core/qwen_mm_plugins_core/producers/save_view.py#L65",
+          "definitionText": "{\n  \"name\": \"save_view\",\n  \"description\": \"Materialize one or more views of a source as standalone image FILES and return their paths (+ previews). For a document (PDF/SVG/XPS, and PPTX/DOCX/XLSX/LaTeX via conversion), pass `pages` (a range like '1', '1-5', '2,4,7') to render those pages/slides; for a video, pass `times` (a list of seconds) for those frames. Use this to turn document pages or video frames into image files you can then feed to crop / draw_bbox / grounding / ocr / image_search / segmentation.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"file_path\": {\n        \"description\": \"Absolute path to the source document or video.\",\n        \"type\": \"string\"\n      },\n      \"pages\": {\n        \"description\": \"Page range for documents, e.g. '1', '1-5', '2,4,7'. Default: '1'. Ignored for video.\",\n        \"type\": \"string\"\n      },\n      \"times\": {\n        \"description\": \"Timestamps for video frames — seconds (52, 58.5) or a clock string ('MM:SS'/'HH:MM:SS'). Required for video. Ignored for docs.\",\n        \"items\": {\n          \"type\": [\n            \"number\",\n            \"string\"\n          ]\n        },\n        \"type\": \"array\"\n      },\n      \"dpi\": {\n        \"description\": \"Render resolution for document pages (default 200). Ignored for video (native).\",\n        \"type\": \"integer\"\n      },\n      \"budget\": {\n        \"default\": \"normal\",\n        \"description\": \"Resolution of the returned previews (the saved files are always full/native).\",\n        \"enum\": [\n          \"small\",\n          \"normal\",\n          \"large\"\n        ],\n        \"type\": \"string\"\n      },\n      \"output_dir\": {\n        \"description\": \"Directory to write the images to. Default: next to the source file.\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"file_path\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 520
         },
         {
           "name": "visualize",
@@ -354,7 +366,9 @@
           },
           "sourcePath": "src/capabilities/core/qwen_mm_plugins_core/visualizers/visualize.py",
           "sourceLine": 53,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/core/qwen_mm_plugins_core/visualizers/visualize.py#L53"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/core/qwen_mm_plugins_core/visualizers/visualize.py#L53",
+          "definitionText": "{\n  \"name\": \"visualize\",\n  \"description\": \"Visualize any supported file for model consumption. Renders documents (PDF, DOCX, PPTX, XLSX, CSV), code files (syntax-highlighted), SVG, DrawIO diagrams, subtitles (SRT/VTT), NIfTI medical volumes, images, and videos as visual output. Automatically detects file type and applies the appropriate renderer.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"file_path\": {\n        \"description\": \"Absolute path to the file to visualize.\",\n        \"type\": \"string\"\n      },\n      \"pages\": {\n        \"description\": \"Page range for multi-page documents (e.g. '1-5', '3', '1,3,5-8'). 1-based. Default: first 20 pages.\",\n        \"type\": \"string\"\n      },\n      \"budget\": {\n        \"default\": \"large\",\n        \"description\": \"Resolution preset per page/image: small (~512x512), normal (~1024x1024), large (~1448x1448).\",\n        \"enum\": [\n          \"small\",\n          \"normal\",\n          \"large\"\n        ],\n        \"type\": \"string\"\n      },\n      \"max_pages\": {\n        \"default\": 20,\n        \"description\": \"Maximum number of pages to render (default 20).\",\n        \"type\": \"integer\"\n      }\n    },\n    \"required\": [\n      \"file_path\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 367
         }
       ],
       "kind": "Skill + MCP",
@@ -386,7 +400,12 @@
         "url": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/",
         "path": "src/capabilities/core"
       },
-      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/core/usage.md"
+      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/core/usage.md",
+      "tokenEstimate": {
+        "skillFull": 1334,
+        "skillMetadata": 67,
+        "toolsTotal": 2527
+      }
     },
     {
       "name": "qwen-mm-plugins-api",
@@ -463,7 +482,9 @@
           },
           "sourcePath": "src/capabilities/api/qwen_mm_plugins_api/vl/grounding.py",
           "sourceLine": 105,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/vl/grounding.py#L105"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/vl/grounding.py#L105",
+          "definitionText": "{\n  \"name\": \"grounding\",\n  \"description\": \"Detect and locate objects in an image using a vision-language model. Returns bounding box coordinates mapped to original image pixel dimensions. Optionally draws boxes on the image and returns the annotated image.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"image_path\": {\n        \"description\": \"Absolute path to the image file\",\n        \"type\": \"string\"\n      },\n      \"prompt\": {\n        \"description\": \"What to detect (e.g., 'all cats', 'the red car', 'every person')\",\n        \"type\": \"string\"\n      },\n      \"model\": {\n        \"description\": \"Model id override. Defaults to QWEN_MM_API_VL_MODEL, then 'qwen3.7-plus'.\",\n        \"type\": \"string\"\n      },\n      \"return_img\": {\n        \"default\": false,\n        \"description\": \"Return annotated image with bounding boxes drawn\",\n        \"type\": \"boolean\"\n      },\n      \"api_key\": {\n        \"description\": \"API key (defaults to DASHSCOPE_API_KEY)\",\n        \"type\": \"string\"\n      },\n      \"base_url\": {\n        \"description\": \"API base URL (defaults to DASHSCOPE_BASE_URL)\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"image_path\",\n      \"prompt\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 336
         },
         {
           "name": "ocr",
@@ -498,7 +519,9 @@
           },
           "sourcePath": "src/capabilities/api/qwen_mm_plugins_api/vl/ocr.py",
           "sourceLine": 40,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/vl/ocr.py#L40"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/vl/ocr.py#L40",
+          "definitionText": "{\n  \"name\": \"ocr\",\n  \"description\": \"Extract text from an image using a vision-language model. Supports printed text, handwriting, documents, signs, and more. Returns the recognized text content.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"image_path\": {\n        \"description\": \"Absolute path to the image file\",\n        \"type\": \"string\"\n      },\n      \"prompt\": {\n        \"description\": \"Custom OCR instruction. Default extracts all visible text. Override to focus on specific regions or languages.\",\n        \"type\": \"string\"\n      },\n      \"model\": {\n        \"description\": \"Model id override. Defaults to QWEN_MM_API_VL_MODEL, then 'qwen3.7-plus'.\",\n        \"type\": \"string\"\n      },\n      \"api_key\": {\n        \"description\": \"API key (defaults to DASHSCOPE_API_KEY)\",\n        \"type\": \"string\"\n      },\n      \"base_url\": {\n        \"description\": \"API base URL (defaults to DASHSCOPE_BASE_URL)\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"image_path\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 283
         },
         {
           "name": "omni_asr",
@@ -538,7 +561,9 @@
           },
           "sourcePath": "src/capabilities/api/qwen_mm_plugins_api/omni/omni_asr.py",
           "sourceLine": 46,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/omni/omni_asr.py#L46"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/omni/omni_asr.py#L46",
+          "definitionText": "{\n  \"name\": \"omni_asr\",\n  \"description\": \"Transcribe all speech in an audio/video file into ONE continuous plain-text string, with no timestamps, using the Qwen-Omni model. For timestamps use omni_asr_timestamped; for speaker labels use omni_multi_speaker_asr. A local file travels inline, where the endpoint caps a media item at 10 MB of base64, so the audio is downmixed to 16 kHz mono and MP3-compressed at a duration-fitted bitrate when needed — good for roughly 55 min. For longer media pass an http(s)/OSS URL or transcribe in parts.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"file_path\": {\n        \"description\": \"Absolute path to a local audio/video file, or an http(s)/OSS URL.\",\n        \"type\": \"string\"\n      },\n      \"language\": {\n        \"description\": \"Spoken-language hint (zh, en, ja, …). Auto-detected if omitted.\",\n        \"type\": \"string\"\n      },\n      \"model\": {\n        \"description\": \"Omni model id override. Defaults to QWEN_MM_API_OMNI_MODEL, then qwen3.5-omni-plus.\",\n        \"type\": \"string\"\n      },\n      \"api_key\": {\n        \"description\": \"DashScope API key (defaults to DASHSCOPE_API_KEY).\",\n        \"type\": \"string\"\n      },\n      \"base_url\": {\n        \"description\": \"OpenAI-compatible base URL override.\",\n        \"type\": \"string\"\n      },\n      \"dry_run\": {\n        \"default\": false,\n        \"description\": \"Return the request that would be sent, without calling the API.\",\n        \"type\": \"boolean\"\n      }\n    },\n    \"required\": [\n      \"file_path\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 434
         },
         {
           "name": "omni_asr_timestamped",
@@ -596,7 +621,9 @@
           },
           "sourcePath": "src/capabilities/api/qwen_mm_plugins_api/omni/omni_asr_timestamped.py",
           "sourceLine": 50,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/omni/omni_asr_timestamped.py#L50"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/omni/omni_asr_timestamped.py#L50",
+          "definitionText": "{\n  \"name\": \"omni_asr_timestamped\",\n  \"description\": \"Transcribe speech with controllable-granularity timestamps (sentence- or word-level) using the Qwen-Omni model. Returns segments with start/end seconds plus an SRT rendering. A local file travels inline, where the endpoint caps a media item at 10 MB of base64, so the audio is downmixed to 16 kHz mono and MP3-compressed at a duration-fitted bitrate when needed — good for roughly 55 min. For longer media pass an http(s)/OSS URL or transcribe in parts.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"file_path\": {\n        \"description\": \"Absolute path to a local audio/video file, or an http(s)/OSS URL.\",\n        \"type\": \"string\"\n      },\n      \"granularity\": {\n        \"default\": \"sentence\",\n        \"description\": \"Timestamp granularity: 'sentence' (default) or 'word'.\",\n        \"enum\": [\n          \"sentence\",\n          \"word\"\n        ],\n        \"type\": \"string\"\n      },\n      \"format\": {\n        \"default\": \"json\",\n        \"description\": \"Primary output: 'json' (default) or 'srt'.\",\n        \"enum\": [\n          \"json\",\n          \"srt\"\n        ],\n        \"type\": \"string\"\n      },\n      \"language\": {\n        \"description\": \"Spoken-language hint (zh, en, ja, …). Auto-detected if omitted.\",\n        \"type\": \"string\"\n      },\n      \"model\": {\n        \"description\": \"Omni model id override. Defaults to QWEN_MM_API_OMNI_MODEL, then qwen3.5-omni-plus.\",\n        \"type\": \"string\"\n      },\n      \"api_key\": {\n        \"description\": \"DashScope API key (defaults to DASHSCOPE_API_KEY).\",\n        \"type\": \"string\"\n      },\n      \"base_url\": {\n        \"description\": \"OpenAI-compatible base URL override.\",\n        \"type\": \"string\"\n      },\n      \"dry_run\": {\n        \"default\": false,\n        \"description\": \"Return the request that would be sent, without calling the API.\",\n        \"type\": \"boolean\"\n      }\n    },\n    \"required\": [\n      \"file_path\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 554
         },
         {
           "name": "omni_av_caption",
@@ -640,7 +667,9 @@
           },
           "sourcePath": "src/capabilities/api/qwen_mm_plugins_api/omni/omni_av_caption.py",
           "sourceLine": 106,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/omni/omni_av_caption.py#L106"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/omni/omni_av_caption.py#L106",
+          "definitionText": "{\n  \"name\": \"omni_av_caption\",\n  \"description\": \"Produce a detailed Markdown report of an audio/video using the Qwen-Omni model (reads both the video frames and the audio track): a timestamped storyline, all visible text, a speaker-attributed transcript, plus flags for content inappropriate for minors with a compliance-alert table and a final safety assessment. A local file is uploaded inline, where the endpoint caps a media item at 10 MB of base64, so it is transcoded to fit — about 9 min at the default 1 fps / 448² sampling. A longer local video is delivered another way automatically: uploaded to OSS when OSS_* is configured (no size limit), else split into sampled frames plus its full audio track. Passing an http(s)/OSS URL skips all of that (fetched and sampled server-side); for hour-scale video use video-memory. Use dry_run=true to preview the request payload without calling.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"file_path\": {\n        \"description\": \"Absolute path to a local audio/video file, or an http(s)/OSS URL.\",\n        \"type\": \"string\"\n      },\n      \"fps\": {\n        \"description\": \"Video sampling fps (default 1.0). Higher = finer temporal detail, more tokens, and a larger upload — which shortens the maximum uploadable length.\",\n        \"type\": \"number\"\n      },\n      \"max_pixels\": {\n        \"description\": \"Per-frame pixel budget (default 200704 ≈ 448²).\",\n        \"type\": \"integer\"\n      },\n      \"model\": {\n        \"description\": \"Omni model id override. Defaults to QWEN_MM_API_OMNI_MODEL, then qwen3.5-omni-plus.\",\n        \"type\": \"string\"\n      },\n      \"api_key\": {\n        \"description\": \"DashScope API key (defaults to DASHSCOPE_API_KEY).\",\n        \"type\": \"string\"\n      },\n      \"base_url\": {\n        \"description\": \"OpenAI-compatible base URL override.\",\n        \"type\": \"string\"\n      },\n      \"dry_run\": {\n        \"default\": false,\n        \"description\": \"Return the request that would be sent, without calling the API.\",\n        \"type\": \"boolean\"\n      }\n    },\n    \"required\": [\n      \"file_path\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 555
         },
         {
           "name": "omni_av_counting",
@@ -689,7 +718,9 @@
           },
           "sourcePath": "src/capabilities/api/qwen_mm_plugins_api/omni/omni_av_counting.py",
           "sourceLine": 57,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/omni/omni_av_counting.py#L57"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/omni/omni_av_counting.py#L57",
+          "definitionText": "{\n  \"name\": \"omni_av_counting\",\n  \"description\": \"Count how many times a specified event/object/action occurs in an audio/video, returning the total count and the timestamp of each occurrence, using the Qwen-Omni model (reads frames + audio). A local file is uploaded inline, where the endpoint caps a media item at 10 MB of base64, so it is transcoded to fit — about 9 min at the default 1 fps / 448² sampling (less at a higher fps). A longer local video is delivered another way automatically: uploaded to OSS when OSS_* is configured (no size limit), else split into sampled frames plus its full audio track — at which point the frame spacing bounds how finely occurrences can be separated. Passing an http(s)/OSS URL keeps full sampling (fetched server-side), as does counting over a trimmed clip.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"file_path\": {\n        \"description\": \"Absolute path to a local audio/video file, or an http(s)/OSS URL.\",\n        \"type\": \"string\"\n      },\n      \"target\": {\n        \"description\": \"What to count, in natural language (e.g. 'times a car passes', 'goals scored', 'the word yes').\",\n        \"type\": \"string\"\n      },\n      \"fps\": {\n        \"description\": \"Video sampling fps (default 1.0). Raise for fast/frequent events — at the cost of a larger upload, which shortens the maximum uploadable length.\",\n        \"type\": \"number\"\n      },\n      \"max_pixels\": {\n        \"description\": \"Per-frame pixel budget (default 200704 ≈ 448²).\",\n        \"type\": \"integer\"\n      },\n      \"model\": {\n        \"description\": \"Omni model id override. Defaults to QWEN_MM_API_OMNI_MODEL, then qwen3.5-omni-plus.\",\n        \"type\": \"string\"\n      },\n      \"api_key\": {\n        \"description\": \"DashScope API key (defaults to DASHSCOPE_API_KEY).\",\n        \"type\": \"string\"\n      },\n      \"base_url\": {\n        \"description\": \"OpenAI-compatible base URL override.\",\n        \"type\": \"string\"\n      },\n      \"dry_run\": {\n        \"default\": false,\n        \"description\": \"Return the request that would be sent, without calling the API.\",\n        \"type\": \"boolean\"\n      }\n    },\n    \"required\": [\n      \"file_path\",\n      \"target\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 594
         },
         {
           "name": "omni_av_grounding",
@@ -742,7 +773,9 @@
           },
           "sourcePath": "src/capabilities/api/qwen_mm_plugins_api/omni/omni_av_grounding.py",
           "sourceLine": 57,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/omni/omni_av_grounding.py#L57"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/omni/omni_av_grounding.py#L57",
+          "definitionText": "{\n  \"name\": \"omni_av_grounding\",\n  \"description\": \"Temporal grounding: given a text query, locate the time segment(s) in an audio/video where it occurs, returning start/end seconds per match, using the Qwen-Omni model (reads frames + audio). This is temporal (WHEN) localization — for spatial (WHERE in a frame) use core's grounding tool. A local file is uploaded inline, where the endpoint caps a media item at 10 MB of base64, so it is transcoded to fit — about 9 min at the default 1 fps / 448² sampling. A longer local video is delivered another way automatically: uploaded to OSS when OSS_* is configured (no size limit), else split into sampled frames plus its full audio track — at which point the frame spacing bounds visual timestamp precision (the audio timeline stays continuous). Passing an http(s)/OSS URL keeps full sampling (fetched server-side), as does grounding within a trimmed clip.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"file_path\": {\n        \"description\": \"Absolute path to a local audio/video file, or an http(s)/OSS URL.\",\n        \"type\": \"string\"\n      },\n      \"query\": {\n        \"description\": \"What to locate, in natural language (e.g. 'the goal celebration', 'when the speaker mentions pricing').\",\n        \"type\": \"string\"\n      },\n      \"top_k\": {\n        \"description\": \"Max number of matching segments to return (default: all found).\",\n        \"type\": \"integer\"\n      },\n      \"fps\": {\n        \"description\": \"Video sampling fps (default 1.0).\",\n        \"type\": \"number\"\n      },\n      \"max_pixels\": {\n        \"description\": \"Per-frame pixel budget (default 200704 ≈ 448²).\",\n        \"type\": \"integer\"\n      },\n      \"model\": {\n        \"description\": \"Omni model id override. Defaults to QWEN_MM_API_OMNI_MODEL, then qwen3.5-omni-plus.\",\n        \"type\": \"string\"\n      },\n      \"api_key\": {\n        \"description\": \"DashScope API key (defaults to DASHSCOPE_API_KEY).\",\n        \"type\": \"string\"\n      },\n      \"base_url\": {\n        \"description\": \"OpenAI-compatible base URL override.\",\n        \"type\": \"string\"\n      },\n      \"dry_run\": {\n        \"default\": false,\n        \"description\": \"Return the request that would be sent, without calling the API.\",\n        \"type\": \"boolean\"\n      }\n    },\n    \"required\": [\n      \"file_path\",\n      \"query\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 629
         },
         {
           "name": "omni_multi_speaker_asr",
@@ -795,7 +828,9 @@
           },
           "sourcePath": "src/capabilities/api/qwen_mm_plugins_api/omni/omni_multi_speaker_asr.py",
           "sourceLine": 52,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/omni/omni_multi_speaker_asr.py#L52"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/omni/omni_multi_speaker_asr.py#L52",
+          "definitionText": "{\n  \"name\": \"omni_multi_speaker_asr\",\n  \"description\": \"Transcribe multi-speaker speech with speaker diarization: distinguishes and labels different speakers, with start/end timestamps per segment, using the Qwen-Omni model. Returns diarized segments plus an SRT rendering with speaker tags. A local file travels inline, where the endpoint caps a media item at 10 MB of base64, so the audio is downmixed to 16 kHz mono and MP3-compressed at a duration-fitted bitrate when needed — good for roughly 55 min. For longer media pass an http(s)/OSS URL or transcribe in parts.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"file_path\": {\n        \"description\": \"Absolute path to a local audio/video file, or an http(s)/OSS URL.\",\n        \"type\": \"string\"\n      },\n      \"num_speakers\": {\n        \"description\": \"Expected number of speakers, if known — a hint to guide diarization.\",\n        \"type\": \"integer\"\n      },\n      \"format\": {\n        \"default\": \"json\",\n        \"description\": \"Primary output: 'json' (default) or 'srt'.\",\n        \"enum\": [\n          \"json\",\n          \"srt\"\n        ],\n        \"type\": \"string\"\n      },\n      \"language\": {\n        \"description\": \"Spoken-language hint (zh, en, ja, …). Auto-detected if omitted.\",\n        \"type\": \"string\"\n      },\n      \"model\": {\n        \"description\": \"Omni model id override. Defaults to QWEN_MM_API_OMNI_MODEL, then qwen3.5-omni-plus.\",\n        \"type\": \"string\"\n      },\n      \"api_key\": {\n        \"description\": \"DashScope API key (defaults to DASHSCOPE_API_KEY).\",\n        \"type\": \"string\"\n      },\n      \"base_url\": {\n        \"description\": \"OpenAI-compatible base URL override.\",\n        \"type\": \"string\"\n      },\n      \"dry_run\": {\n        \"default\": false,\n        \"description\": \"Return the request that would be sent, without calling the API.\",\n        \"type\": \"boolean\"\n      }\n    },\n    \"required\": [\n      \"file_path\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 540
         },
         {
           "name": "omni_music_caption",
@@ -831,7 +866,9 @@
           },
           "sourcePath": "src/capabilities/api/qwen_mm_plugins_api/omni/omni_music_caption.py",
           "sourceLine": 68,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/omni/omni_music_caption.py#L68"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/omni/omni_music_caption.py#L68",
+          "definitionText": "{\n  \"name\": \"omni_music_caption\",\n  \"description\": \"Analyze a music track and return structured tags (genre, moods, instruments, key, time signature, vocal profile) plus a dense English caption suitable as a music-generation prompt, using the Qwen-Omni model. Whole-track global analysis — NO timestamps or per-section breakdown. Extracts the audio track if given a video. An audio file that fits the endpoint's inline cap (10 MB of base64) is sent untouched; a longer one is downmixed to 16 kHz mono MP3 to fit, which costs some fidelity — pass an http(s)/OSS URL to avoid that.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"file_path\": {\n        \"description\": \"Absolute path to a local music audio/video file, or an http(s)/OSS URL.\",\n        \"type\": \"string\"\n      },\n      \"model\": {\n        \"description\": \"Omni model id override. Defaults to QWEN_MM_API_OMNI_MODEL, then qwen3.5-omni-plus.\",\n        \"type\": \"string\"\n      },\n      \"api_key\": {\n        \"description\": \"DashScope API key (defaults to DASHSCOPE_API_KEY).\",\n        \"type\": \"string\"\n      },\n      \"base_url\": {\n        \"description\": \"OpenAI-compatible base URL override.\",\n        \"type\": \"string\"\n      },\n      \"dry_run\": {\n        \"default\": false,\n        \"description\": \"Return the request that would be sent, without calling the API.\",\n        \"type\": \"boolean\"\n      }\n    },\n    \"required\": [\n      \"file_path\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 393
         },
         {
           "name": "segmentation",
@@ -859,7 +896,9 @@
           },
           "sourcePath": "src/capabilities/api/qwen_mm_plugins_api/others/segmentation.py",
           "sourceLine": 32,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/others/segmentation.py#L32"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/others/segmentation.py#L32",
+          "definitionText": "{\n  \"name\": \"segmentation\",\n  \"description\": \"Segment objects in an image using a SAM3 server. Provide a text prompt describing what to segment. Returns mask metadata and a visualization image with masks overlaid.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"image_path\": {\n        \"description\": \"Absolute path to the image file\",\n        \"type\": \"string\"\n      },\n      \"prompt\": {\n        \"description\": \"What to segment (e.g., 'the cat', 'blue car', 'all people')\",\n        \"type\": \"string\"\n      },\n      \"server\": {\n        \"description\": \"SAM3 server URL (defaults to SAM3_SERVER_URL env var)\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"image_path\",\n      \"prompt\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 208
         },
         {
           "name": "transcribe_audio",
@@ -914,7 +953,9 @@
           },
           "sourcePath": "src/capabilities/api/qwen_mm_plugins_api/others/asr.py",
           "sourceLine": 196,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/others/asr.py#L196"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/others/asr.py#L196",
+          "definitionText": "{\n  \"name\": \"transcribe_audio\",\n  \"description\": \"Transcribe speech from an audio or video file using DashScope Qwen3-ASR (27 languages, automatic language detection). Extracts audio automatically from video files. Supports time range selection. Returns timestamped subtitles in SRT, plain text, or raw JSON format. Long files are automatically chunked into segments for processing.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"file_path\": {\n        \"description\": \"Absolute path to a local audio or video file.\",\n        \"type\": \"string\"\n      },\n      \"model\": {\n        \"default\": \"qwen3-asr-flash\",\n        \"description\": \"ASR model. Default: qwen3-asr-flash (supports local files, ≤5min per chunk).\",\n        \"type\": \"string\"\n      },\n      \"start_time\": {\n        \"description\": \"Start time in seconds. Default: 0.\",\n        \"type\": \"number\"\n      },\n      \"end_time\": {\n        \"description\": \"End time in seconds. Default: end of file. Max range: 1 hour.\",\n        \"type\": \"number\"\n      },\n      \"format\": {\n        \"default\": \"srt\",\n        \"description\": \"Output format: srt (timestamped subtitles), text (plain text), json (raw).\",\n        \"enum\": [\n          \"srt\",\n          \"text\",\n          \"json\"\n        ],\n        \"type\": \"string\"\n      },\n      \"language\": {\n        \"description\": \"Language hint for better accuracy (zh, en, ja, ko, fr, de, es, ru, …). Auto-detected if omitted.\",\n        \"type\": \"string\"\n      },\n      \"enable_itn\": {\n        \"default\": true,\n        \"description\": \"Inverse text normalization: format numbers/dates/times. Default: true.\",\n        \"type\": \"boolean\"\n      },\n      \"api_key\": {\n        \"description\": \"DashScope API key (defaults to DASHSCOPE_API_KEY).\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"file_path\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 514
         },
         {
           "name": "vision_chat",
@@ -981,7 +1022,9 @@
           },
           "sourcePath": "src/capabilities/api/qwen_mm_plugins_api/vl/vision_chat.py",
           "sourceLine": 62,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/vl/vision_chat.py#L62"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/api/qwen_mm_plugins_api/vl/vision_chat.py#L62",
+          "definitionText": "{\n  \"name\": \"vision_chat\",\n  \"description\": \"Chat with a vision-language model about images and videos via DashScope. Local videos are sampled into inline frames, so per request keep ≤ 250 items total (frames + images) and fps = frames / duration within [0.1, 10] — set video_max_frames to the video's length; for videos over ~40 min use read_video instead. Remote video URLs are handled server-side. When OSS is configured (OSS_AK/OSS_SK/OSS_ENDPOINT/OSS_BUCKET) a local video is uploaded and sampled server-side instead, lifting the inline frame cap (still bounded by the model's server-side video-duration limit, e.g. 2 h for qwen3.7-plus). Use dry_run=true to preview the request payload without calling.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"model\": {\n        \"description\": \"Model id override. Defaults to QWEN_MM_API_VL_MODEL, then 'qwen3.7-plus'.\",\n        \"type\": \"string\"\n      },\n      \"text\": {\n        \"default\": \"Describe the visual content.\",\n        \"description\": \"Text prompt (default: 'Describe the visual content.')\",\n        \"type\": \"string\"\n      },\n      \"images\": {\n        \"description\": \"Image URLs, data URLs, or local file paths\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"type\": \"array\"\n      },\n      \"videos\": {\n        \"description\": \"Video URLs or local file paths. Local files are auto-extracted into frames.\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"type\": \"array\"\n      },\n      \"base_url\": {\n        \"description\": \"API base URL (defaults to DASHSCOPE_BASE_URL)\",\n        \"type\": \"string\"\n      },\n      \"api_key\": {\n        \"description\": \"API key (defaults to DASHSCOPE_API_KEY)\",\n        \"type\": \"string\"\n      },\n      \"max_tokens\": {\n        \"default\": 2048,\n        \"description\": \"Maximum tokens in response (default: 2048)\",\n        \"type\": \"integer\"\n      },\n      \"temperature\": {\n        \"description\": \"Sampling temperature\",\n        \"type\": \"number\"\n      },\n      \"dry_run\": {\n        \"default\": false,\n        \"description\": \"If true, return the request payload without calling the endpoint\",\n        \"type\": \"boolean\"\n      },\n      \"vl_high_resolution_images\": {\n        \"default\": false,\n        \"description\": \"Request an image token limit of 16384 (up to 16M pixels). Overrides max_pixels; endpoints that reject this optional hint fall back to their default image resolution.\",\n        \"type\": \"boolean\"\n      },\n      \"video_max_frames\": {\n        \"default\": 128,\n        \"description\": \"Max frames to extract from a local video. Default 128 (max 250); see the tool description for the 250-item and fps limits.\",\n        \"type\": \"integer\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 737
         }
       ],
       "kind": "Skill + MCP",
@@ -1013,7 +1056,12 @@
         "url": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/",
         "path": "src/capabilities/api"
       },
-      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/api/usage.md"
+      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/api/usage.md",
+      "tokenEstimate": {
+        "skillFull": 1638,
+        "skillMetadata": 123,
+        "toolsTotal": 5777
+      }
     },
     {
       "name": "qwen-mm-plugins-search",
@@ -1077,7 +1125,9 @@
           },
           "sourcePath": "src/capabilities/search/qwen_mm_plugins_search/tools/image_search.py",
           "sourceLine": 145,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/search/qwen_mm_plugins_search/tools/image_search.py#L145"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/search/qwen_mm_plugins_search/tools/image_search.py#L145",
+          "definitionText": "{\n  \"name\": \"image_search\",\n  \"description\": \"Reverse image search using an image file path (or a public image URL). Returns similar images with their source URLs, titles, and descriptions. Local images require allow_public_upload=true and are uploaded to the third-party public host uguu.se; their contents leave the machine and become publicly accessible. Use this (and/or web_search) to CONFIRM any specific identification — model/species/place/person/event — before you answer; appearance alone is not proof. Grab the frame to search with save_view (don't run ffmpeg yourself).\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"image_path\": {\n        \"description\": \"Absolute path to the image file to search, OR a public http(s) image URL.\",\n        \"type\": \"string\"\n      },\n      \"bbox\": {\n        \"description\": \"Bounding box [x1, y1, x2, y2] in relative coordinates (0-1000). Optional.\",\n        \"items\": {\n          \"type\": \"number\"\n        },\n        \"maxItems\": 4,\n        \"minItems\": 4,\n        \"type\": \"array\"\n      },\n      \"api_key\": {\n        \"description\": \"Serper API key (defaults to SERPER_API_KEY).\",\n        \"type\": \"string\"\n      },\n      \"allow_public_upload\": {\n        \"default\": false,\n        \"description\": \"Explicit consent to upload a local image (or cropped copy) to the third-party public host uguu.se. Required whenever image_path is local or bbox requires re-uploading a public URL.\",\n        \"type\": \"boolean\"\n      }\n    },\n    \"required\": [\n      \"image_path\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 401
         },
         {
           "name": "web_extractor",
@@ -1109,7 +1159,9 @@
           },
           "sourcePath": "src/capabilities/search/qwen_mm_plugins_search/tools/web_extractor.py",
           "sourceLine": 31,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/search/qwen_mm_plugins_search/tools/web_extractor.py#L31"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/search/qwen_mm_plugins_search/tools/web_extractor.py#L31",
+          "definitionText": "{\n  \"name\": \"web_extractor\",\n  \"description\": \"Crawl and extract content from web pages, with optional summarization. Returns the extracted text or a summary focused on the specified goal.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"urls\": {\n        \"description\": \"URLs to crawl and extract content from.\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"minItems\": 1,\n        \"type\": \"array\"\n      },\n      \"goal\": {\n        \"description\": \"What information to extract or focus on.\",\n        \"type\": \"string\"\n      },\n      \"api_key\": {\n        \"description\": \"API key for the selected search backend (defaults to its backend-specific environment key).\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"urls\",\n      \"goal\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 221
         },
         {
           "name": "web_search",
@@ -1135,7 +1187,9 @@
           },
           "sourcePath": "src/capabilities/search/qwen_mm_plugins_search/tools/web_search.py",
           "sourceLine": 44,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/search/qwen_mm_plugins_search/tools/web_search.py#L44"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/search/qwen_mm_plugins_search/tools/web_search.py#L44",
+          "definitionText": "{\n  \"name\": \"web_search\",\n  \"description\": \"Search the internet for text information. Returns search results with titles, snippets, and URLs.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"queries\": {\n        \"description\": \"List of search queries to execute.\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"type\": \"array\"\n      },\n      \"api_key\": {\n        \"description\": \"API key for the selected search backend (defaults to its backend-specific environment key).\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"queries\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 165
         }
       ],
       "kind": "Skill + MCP",
@@ -1166,7 +1220,12 @@
         "url": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/",
         "path": "src/capabilities/search"
       },
-      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/search/usage.md"
+      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/search/usage.md",
+      "tokenEstimate": {
+        "skillFull": 555,
+        "skillMetadata": 89,
+        "toolsTotal": 787
+      }
     },
     {
       "name": "qwen-mm-plugins-video-memory",
@@ -1278,7 +1337,9 @@
           },
           "sourcePath": "src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/enumerate_events.py",
           "sourceLine": 54,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/enumerate_events.py#L54"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/enumerate_events.py#L54",
+          "definitionText": "{\n  \"name\": \"enumerate_events\",\n  \"description\": \"Enumerate ALL matching event instances in time order — built for COUNTING and 'how many times / list every occurrence' questions. Unlike search_nodes (top-k best matches), this returns every node above a similarity threshold, deduplicated and sorted by start time, in a compact format. Protocol for counting: 1) Call this with a descriptive statement of the target event. 2) Review the time-ordered list; merge adjacent entries that describe the same real occurrence. 3) Verify borderline or ambiguous entries with read_video at their time ranges. 4) If the expected count seems higher than returned matches, retry with lower min_cosine and also try alternative phrasings of the event. Never count from a single top-10 search — recurring events are spread across the whole video.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Path to the video file. Memory auto-loaded from <video_path>.memory/\",\n        \"type\": \"string\"\n      },\n      \"query\": {\n        \"description\": \"Descriptive statement of the recurring event to enumerate (NOT a question). e.g. 'the player drinks wine from a gourd to restore health'.\",\n        \"type\": \"string\"\n      },\n      \"min_cosine\": {\n        \"default\": 0.5,\n        \"description\": \"Minimum cosine similarity to keep a match (default 0.5). Lower it (e.g. 0.4) if you suspect instances are missing; raise it (e.g. 0.6) if results contain many false positives.\",\n        \"type\": \"number\"\n      },\n      \"max_results\": {\n        \"default\": 120,\n        \"description\": \"Maximum matches to return (cap 300).\",\n        \"type\": \"integer\"\n      },\n      \"node_types\": {\n        \"description\": \"Node types to enumerate (default ['event']). Use ['entity'] to enumerate objects/people.\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"type\": \"array\"\n      }\n    },\n    \"required\": [\n      \"query\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 504
         },
         {
           "name": "get_macro_events",
@@ -1305,7 +1366,9 @@
           },
           "sourcePath": "src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/get_macro_events.py",
           "sourceLine": 34,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/get_macro_events.py#L34"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/get_macro_events.py#L34",
+          "definitionText": "{\n  \"name\": \"get_macro_events\",\n  \"description\": \"Get Macro Event list (detailed events within a Super Event). Each macro event has macro_id, time_range, label, key_entities, summary. When to use: You know which SuperEvent is relevant but need to find the right MacroEvent within it. If super_id is omitted, lists ALL macro events.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Path to the video file. Memory auto-loaded from <video_path>.memory/\",\n        \"type\": \"string\"\n      },\n      \"super_id\": {\n        \"description\": \"Filter by super event ID, e.g. 'super_01'. Optional — omit to list all.\",\n        \"type\": \"string\"\n      },\n      \"macro_ids\": {\n        \"description\": \"List of specific macro IDs to retrieve, e.g. ['macro_0001', 'macro_0002'].\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"type\": \"array\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 264
         },
         {
           "name": "get_subgraph",
@@ -1328,7 +1391,9 @@
           },
           "sourcePath": "src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/get_subgraph.py",
           "sourceLine": 31,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/get_subgraph.py#L31"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/get_subgraph.py#L31",
+          "definitionText": "{\n  \"name\": \"get_subgraph\",\n  \"description\": \"Get detailed subgraph for a specific Macro Event. THIS IS THE MOST INFORMATION-RICH TOOL. Returns: Entities (name, type, attributes, visual features), Events (label, description, time), OCR texts (on-screen text), Key relations (CAUSAL/SPATIAL + key semantic links). When to use: Already identified the relevant macro_id, need full details. Always identify the macro_id first via search or navigation before calling this.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Path to the video file. Memory auto-loaded from <video_path>.memory/\",\n        \"type\": \"string\"\n      },\n      \"macro_id\": {\n        \"description\": \"The macro_id to get the subgraph for (e.g. 'macro_0001').\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"macro_id\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 238
         },
         {
           "name": "get_summary",
@@ -1344,7 +1409,9 @@
           },
           "sourcePath": "src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/get_summary.py",
           "sourceLine": 28,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/get_summary.py#L28"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/get_summary.py#L28",
+          "definitionText": "{\n  \"name\": \"get_summary\",\n  \"description\": \"Get the video-level root summary. Returns: title, description, themes, key entities, and emotional tone. When to use: You need a quick overview of the entire video before drilling down, or the user asks 'What is this video about?'\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Path to the video file. Memory auto-loaded from <video_path>.memory/\",\n        \"type\": \"string\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 136
         },
         {
           "name": "get_super_events",
@@ -1360,7 +1427,9 @@
           },
           "sourcePath": "src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/get_super_events.py",
           "sourceLine": 29,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/get_super_events.py#L29"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/get_super_events.py#L29",
+          "definitionText": "{\n  \"name\": \"get_super_events\",\n  \"description\": \"List all Super Events (high-level narrative arcs). Each entry has: super_id, label, time_range, key_entities, description, num_macros. When to use: You need to understand the overall structure of the video, identify which story arc is relevant, or the user asks about the video's main sections or chapters.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Path to the video file. Memory auto-loaded from <video_path>.memory/\",\n        \"type\": \"string\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 151
         },
         {
           "name": "search_asr_text",
@@ -1388,7 +1457,9 @@
           },
           "sourcePath": "src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/search_asr_text.py",
           "sourceLine": 30,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/search_asr_text.py#L30"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/search_asr_text.py#L30",
+          "definitionText": "{\n  \"name\": \"search_asr_text\",\n  \"description\": \"Semantic search over ASR transcript text (speech, dialogue, narration). When to use: Question asks about spoken content, dialogue, narration, or any audio/verbal information in the video. Returns matching transcript segments with timestamps and macro event context.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Path to the video file. Memory auto-loaded from <video_path>.memory/\",\n        \"type\": \"string\"\n      },\n      \"query\": {\n        \"description\": \"Search text for spoken content, e.g. 'discussing weather', 'mentions recipe'.\",\n        \"type\": \"string\"\n      },\n      \"top_k\": {\n        \"default\": 10,\n        \"description\": \"Number of results to return (default: 10).\",\n        \"type\": \"integer\"\n      }\n    },\n    \"required\": [\n      \"query\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 240
         },
         {
           "name": "search_by_time",
@@ -1420,7 +1491,9 @@
           },
           "sourcePath": "src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/search_by_time.py",
           "sourceLine": 40,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/search_by_time.py#L40"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/search_by_time.py#L40",
+          "definitionText": "{\n  \"name\": \"search_by_time\",\n  \"description\": \"Find macro events covering a time range. Returns MacroEvent list with time ranges, parent SuperEvent labels, and key entities. When to use: Question references a specific time or time range in the video. For EgoLife: use start_time/end_time in 'DAY{N} HH:MM:SS' format (e.g. 'DAY1 11:09:42', 'DAY3 15:30:00'). For other datasets: use start_sec/end_sec in seconds. Note: returns macro event summaries, not subgraph details. Always follow up with get_subgraph if you need entity/event details.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Path to the video file. Memory auto-loaded from <video_path>.memory/\",\n        \"type\": \"string\"\n      },\n      \"start_sec\": {\n        \"description\": \"Start of time window in seconds from video start.\",\n        \"type\": \"number\"\n      },\n      \"end_sec\": {\n        \"description\": \"End of time window in seconds from video start.\",\n        \"type\": \"number\"\n      },\n      \"start_time\": {\n        \"description\": \"Start time in 'DAY{N} HH:MM:SS' format (e.g. 'DAY1 11:09:42'). Use for EgoLife.\",\n        \"type\": \"string\"\n      },\n      \"end_time\": {\n        \"description\": \"End time in 'DAY{N} HH:MM:SS' format (e.g. 'DAY1 12:00:00'). Use for EgoLife.\",\n        \"type\": \"string\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 410
         },
         {
           "name": "search_nodes",
@@ -1455,7 +1528,9 @@
           },
           "sourcePath": "src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/search_nodes.py",
           "sourceLine": 57,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/search_nodes.py#L57"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/search_nodes.py#L57",
+          "definitionText": "{\n  \"name\": \"search_nodes\",\n  \"description\": \"Semantic search over Entity and Event nodes by embedding similarity (excludes OCRText — use search_ocr_text for on-screen text). Returns top-k results with relevance scores and ego-graph context. When to use: You need to find specific events, actions, or entities but don't know which macro to look at. Query Construction Guide: Write a DESCRIPTIVE STATEMENT about the target event, NOT a question — the embedding matches event descriptions, not questions. Extract key entities and actions from the question (person names, action types, objects). Extract SHARED information from all options — keywords/phrases that appear across multiple options are the most reliable retrieval signal. EXCLUDE speculative differing details from options — if options disagree on a specific detail (e.g., different numbers, different names), do NOT pick one; instead describe the event type neutrally. Good: 'A player scores with an alley-oop dunk' — descriptive, captures the shared event type. Bad: 'Which player scored the alley-oop?' — question format, poor match with event descriptions. Good: 'A foul is committed on a specific player by an opposing player, leading to free throws' — captures shared info from options (foul + free throws) while staying neutral on the differing detail. Bad: 'Australia No. 7 fouled' — picks one specific option's detail, may mislead if wrong.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Path to the video file. Memory auto-loaded from <video_path>.memory/\",\n        \"type\": \"string\"\n      },\n      \"query\": {\n        \"description\": \"Descriptive statement for semantic search (NOT a question). Combine key entities, actions, and shared option info into a complete sentence.\",\n        \"type\": \"string\"\n      },\n      \"top_k\": {\n        \"default\": 10,\n        \"description\": \"Number of results to return (default: 10).\",\n        \"type\": \"integer\"\n      },\n      \"node_types\": {\n        \"description\": \"Filter by node type (lowercase). Valid values: 'event', 'entity', 'on_screen_text'. e.g. ['event'], ['entity'].\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"type\": \"array\"\n      }\n    },\n    \"required\": [\n      \"query\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 547
         },
         {
           "name": "search_ocr_text",
@@ -1483,7 +1558,9 @@
           },
           "sourcePath": "src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/search_ocr_text.py",
           "sourceLine": 31,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/search_ocr_text.py#L31"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-memory/qwen_mm_plugins_video_memory/tools/search_ocr_text.py#L31",
+          "definitionText": "{\n  \"name\": \"search_ocr_text\",\n  \"description\": \"Semantic search over OCR text nodes only (on-screen text: scores, names, graphics, jersey numbers, broadcast overlays). When to use: Question asks about on-screen information (scores, player stats, quarter info, jersey names/numbers, broadcast graphics). Do NOT use search_nodes for these — OCR text is excluded from search_nodes.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Path to the video file. Memory auto-loaded from <video_path>.memory/\",\n        \"type\": \"string\"\n      },\n      \"query\": {\n        \"description\": \"Search text, e.g. 'scoreboard', 'third quarter score', 'jersey number'.\",\n        \"type\": \"string\"\n      },\n      \"top_k\": {\n        \"default\": 10,\n        \"description\": \"Number of results to return (default: 10).\",\n        \"type\": \"integer\"\n      }\n    },\n    \"required\": [\n      \"query\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 258
         }
       ],
       "kind": "Skill + MCP",
@@ -1514,7 +1591,12 @@
         "url": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/",
         "path": "src/capabilities/video-memory"
       },
-      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/video-memory/usage.md"
+      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/video-memory/usage.md",
+      "tokenEstimate": {
+        "skillFull": 2089,
+        "skillMetadata": 71,
+        "toolsTotal": 2748
+      }
     },
     {
       "name": "qwen-mm-plugins-omni-memory",
@@ -1606,7 +1688,9 @@
           },
           "sourcePath": "src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/get_memory_overview.py",
           "sourceLine": 48,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/get_memory_overview.py#L48"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/get_memory_overview.py#L48",
+          "definitionText": "{\n  \"name\": \"get_memory_overview\",\n  \"description\": \"The vocabulary a retrieval plan is written from: the cast of people (person_id, name, appearance, and also_heard_as for anyone still unnamed) and the COMPLETE directory of semantic fact keys. Read this before plan_and_search — fact keys are an exact lookup, so a plan that names none comes back with no facts. One call covers every later question about the same video. `scene_env_available` only says a scene container exists; ask for the items with plan_and_search(include_scene=True).\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Absolute path to the source video; memory is read from <video_path>.memory/.\",\n        \"type\": \"string\"\n      },\n      \"namespace\": {\n        \"description\": \"Memory name. Pass video_path too when MEM_LOCAL_DIR is unset; otherwise the memory is read from the configured shared root.\",\n        \"type\": \"string\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 239
         },
         {
           "name": "get_memory_status",
@@ -1626,7 +1710,9 @@
           },
           "sourcePath": "src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/get_memory_status.py",
           "sourceLine": 145,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/get_memory_status.py#L145"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/get_memory_status.py#L145",
+          "definitionText": "{\n  \"name\": \"get_memory_status\",\n  \"description\": \"Does a memory exist, is it COMPLETE, and does this video even need one? Call this before anything else: it tells you whether to build, resume an interrupted build, watch the video directly instead, or start querying. An interrupted build leaves a library that looks normal but is truncated, so the extracted-clip count is checked against the slice plan. When no memory exists it also reports the source video's `duration_min` and a `next_step` that applies the length routing — short videos are answered by watch_and_answer without building anything.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Absolute path to the source video; memory is read from <video_path>.memory/.\",\n        \"type\": \"string\"\n      },\n      \"namespace\": {\n        \"description\": \"Memory name. Pass video_path too when MEM_LOCAL_DIR is unset; otherwise the memory is read from the configured shared root.\",\n        \"type\": \"string\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 246
         },
         {
           "name": "get_moment",
@@ -1656,7 +1742,9 @@
           },
           "sourcePath": "src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/get_moment.py",
           "sourceLine": 99,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/get_moment.py#L99"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/get_moment.py#L99",
+          "definitionText": "{\n  \"name\": \"get_moment\",\n  \"description\": \"Full detail for one or more clips — the most information-dense read. Returns the visual caption, every spoken line with its speaker, who is present and what they are doing, acoustic events, scene changes, and the path to the 30s clip file itself. Reach for this when a moment brief from plan_and_search or get_timeline is too coarse.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Absolute path to the source video; memory is read from <video_path>.memory/.\",\n        \"type\": \"string\"\n      },\n      \"namespace\": {\n        \"description\": \"Memory name. Pass video_path too when MEM_LOCAL_DIR is unset; otherwise the memory is read from the configured shared root.\",\n        \"type\": \"string\"\n      },\n      \"idxs\": {\n        \"description\": \"Clip indices to expand, from search_* or get_timeline.\",\n        \"items\": {\n          \"type\": \"integer\"\n        },\n        \"type\": \"array\"\n      }\n    },\n    \"required\": [\n      \"idxs\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 277
         },
         {
           "name": "get_people",
@@ -1680,7 +1768,9 @@
           },
           "sourcePath": "src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/get_people.py",
           "sourceLine": 62,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/get_people.py#L62"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/get_people.py#L62",
+          "definitionText": "{\n  \"name\": \"get_people\",\n  \"description\": \"Person dossiers: canonical person_id, resolved name, appearance, when they are on screen, how much they speak, and the semantic facts attached to them. Identities are carried across overlapping clips, so the same person keeps one person_id for the whole video.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Absolute path to the source video; memory is read from <video_path>.memory/.\",\n        \"type\": \"string\"\n      },\n      \"namespace\": {\n        \"description\": \"Memory name. Pass video_path too when MEM_LOCAL_DIR is unset; otherwise the memory is read from the configured shared root.\",\n        \"type\": \"string\"\n      },\n      \"person_id\": {\n        \"description\": \"Canonical id such as P001. Omit to get every person in the video.\",\n        \"type\": \"string\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 230
         },
         {
           "name": "get_person_dialogue",
@@ -1719,7 +1809,9 @@
           },
           "sourcePath": "src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/get_person_dialogue.py",
           "sourceLine": 56,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/get_person_dialogue.py#L56"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/get_person_dialogue.py#L56",
+          "definitionText": "{\n  \"name\": \"get_person_dialogue\",\n  \"description\": \"Everything one person said, in time order, with timestamps and tone. Use this for 'what did X say', 'did X mention Y', 'who said Z'. Each line was bound to its speaker by the omni model from lip movement and who is visibly speaking, so attribution survives overlapping speech and similar voices.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Absolute path to the source video; memory is read from <video_path>.memory/.\",\n        \"type\": \"string\"\n      },\n      \"namespace\": {\n        \"description\": \"Memory name. Pass video_path too when MEM_LOCAL_DIR is unset; otherwise the memory is read from the configured shared root.\",\n        \"type\": \"string\"\n      },\n      \"person_id\": {\n        \"default\": \"\",\n        \"description\": \"Canonical id such as P001 (see get_memory_overview / get_people). Empty means every speaker, in time order.\",\n        \"type\": \"string\"\n      },\n      \"start_sec\": {\n        \"description\": \"Optional time window start.\",\n        \"type\": \"number\"\n      },\n      \"end_sec\": {\n        \"description\": \"Optional time window end.\",\n        \"type\": \"number\"\n      },\n      \"limit\": {\n        \"default\": 200,\n        \"maximum\": 1000,\n        \"minimum\": 1,\n        \"type\": \"integer\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 362
         },
         {
           "name": "get_timeline",
@@ -1751,7 +1843,9 @@
           },
           "sourcePath": "src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/get_timeline.py",
           "sourceLine": 44,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/get_timeline.py#L44"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/get_timeline.py#L44",
+          "definitionText": "{\n  \"name\": \"get_timeline\",\n  \"description\": \"Moments within a time window, in order — one brief per 30s clip (caption, who is present, how many lines were spoken). Use it for 'what happens around 12:30' or to walk a stretch of the video; then call get_moment on the interesting idxs.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Absolute path to the source video; memory is read from <video_path>.memory/.\",\n        \"type\": \"string\"\n      },\n      \"namespace\": {\n        \"description\": \"Memory name. Pass video_path too when MEM_LOCAL_DIR is unset; otherwise the memory is read from the configured shared root.\",\n        \"type\": \"string\"\n      },\n      \"start_sec\": {\n        \"default\": 0,\n        \"description\": \"Window start in video seconds.\",\n        \"minimum\": 0,\n        \"type\": \"number\"\n      },\n      \"end_sec\": {\n        \"default\": 0,\n        \"description\": \"Window end in video seconds. 0 means through the end of the video.\",\n        \"minimum\": 0,\n        \"type\": \"number\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 302
         },
         {
           "name": "plan_and_search",
@@ -1818,7 +1912,9 @@
           },
           "sourcePath": "src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/plan_and_search.py",
           "sourceLine": 119,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/plan_and_search.py#L119"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/plan_and_search.py#L119",
+          "definitionText": "{\n  \"name\": \"plan_and_search\",\n  \"description\": \"Run ONE retrieval from a plan you decide, fusing the memory containers: people, stable facts, moments and (on request) environment, plus a ready-to-read evidence text and the clips worth re-watching. **This does not answer the question — it returns evidence for you to reason over.** Call get_memory_overview first: naming the right person_ids, fact keys and query angles is what makes the recall precise, and the keys are an exact lookup. Use this for open-ended questions; for a targeted one go straight to the matching tool (search_dialogue, search_facts, get_person_dialogue, get_timeline, …).\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Absolute path to the source video; memory is read from <video_path>.memory/.\",\n        \"type\": \"string\"\n      },\n      \"namespace\": {\n        \"description\": \"Memory name. Pass video_path too when MEM_LOCAL_DIR is unset; otherwise the memory is read from the configured shared root.\",\n        \"type\": \"string\"\n      },\n      \"question\": {\n        \"default\": \"\",\n        \"description\": \"The question you are trying to answer.\",\n        \"type\": \"string\"\n      },\n      \"people\": {\n        \"description\": \"person_ids whose dossier and moments are relevant, e.g. ['P001']. Take them from get_memory_overview. A person whose name is still null may carry `also_heard_as` — that is how a name someone says maps onto an anonymous id.\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"type\": \"array\"\n      },\n      \"fact_keys\": {\n        \"description\": \"Semantic keys to pull, e.g. ['Matthew/role']. EXACT lookup — pick them from get_memory_overview's semantic_key_directory. Name none and no facts come back; to find facts by content rather than by key, use search_facts.\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"type\": \"array\"\n      },\n      \"queries\": {\n        \"description\": \"Descriptive statements (not questions) to search moments with — 'someone offers to bring an umbrella', not 'who brought an umbrella?'. Several angles beat one long query. These also decide which clips come back in suggested_replay_idxs, so describe what to look for.\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"type\": \"array\"\n      },\n      \"time_ranges\": {\n        \"description\": \"Optional [[start_sec, end_sec], ...] if the question concerns a time span.\",\n        \"items\": {\n          \"items\": {\n            \"type\": \"number\"\n          },\n          \"type\": \"array\"\n        },\n        \"type\": \"array\"\n      },\n      \"include_scene\": {\n        \"default\": false,\n        \"description\": \"Also recall environment/layout items. Turn it on for 'where is X / what is in the room' questions — it is off by default because recalling scene for every question measured net-negative, so it is a deliberate pick rather than a freebie.\",\n        \"type\": \"boolean\"\n      },\n      \"top_k\": {\n        \"default\": 5,\n        \"maximum\": 20,\n        \"minimum\": 1,\n        \"type\": \"integer\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 786
         },
         {
           "name": "replay_and_answer",
@@ -1862,7 +1958,9 @@
           },
           "sourcePath": "src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/replay_and_answer.py",
           "sourceLine": 113,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/replay_and_answer.py#L113"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/replay_and_answer.py#L113",
+          "definitionText": "{\n  \"name\": \"replay_and_answer\",\n  \"description\": \"Re-watch specific source clips WITH THEIR AUDIO and have the omni model answer from what it actually sees and hears. Reach for this only when the stored memory cannot settle the question — reading detail back off the original video is the one thing the read-only tools cannot do. Watches at most 3 clips per call. Requires an omni model endpoint.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Absolute path to the source video; memory is read from <video_path>.memory/.\",\n        \"type\": \"string\"\n      },\n      \"namespace\": {\n        \"description\": \"Memory name. Pass video_path too when MEM_LOCAL_DIR is unset; otherwise the memory is read from the configured shared root.\",\n        \"type\": \"string\"\n      },\n      \"question\": {\n        \"description\": \"What to determine from watching the clips.\",\n        \"type\": \"string\"\n      },\n      \"idxs\": {\n        \"description\": \"Clip indices to re-watch, e.g. suggested_replay_idxs from plan_and_search or idxs from search_dialogue / get_timeline. At most 3 are watched per call — pick the most promising ones; extras come back in dropped_idxs.\",\n        \"items\": {\n          \"type\": \"integer\"\n        },\n        \"type\": \"array\"\n      },\n      \"evidence\": {\n        \"default\": \"\",\n        \"description\": \"Optional text context to give the model alongside the clips.\",\n        \"type\": \"string\"\n      },\n      \"model\": {\n        \"description\": \"Omni model for this call. Leave unset to use the configured default (qwen3.5-omni-plus). It need not match the model the memory was built with.\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"question\",\n      \"idxs\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 450
         },
         {
           "name": "search_dialogue",
@@ -1895,7 +1993,9 @@
           },
           "sourcePath": "src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/search_dialogue.py",
           "sourceLine": 45,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/search_dialogue.py#L45"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/search_dialogue.py#L45",
+          "definitionText": "{\n  \"name\": \"search_dialogue\",\n  \"description\": \"Search spoken lines and get them back WITH the speaker attached (person_id + resolved name). Use it when the question is about who said what, or to find the moment a topic was discussed. Unlike a standalone ASR index, every line here is already bound to a person that persists across the whole video.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Absolute path to the source video; memory is read from <video_path>.memory/.\",\n        \"type\": \"string\"\n      },\n      \"namespace\": {\n        \"description\": \"Memory name. Pass video_path too when MEM_LOCAL_DIR is unset; otherwise the memory is read from the configured shared root.\",\n        \"type\": \"string\"\n      },\n      \"query\": {\n        \"description\": \"What was said, phrased as a statement (e.g. 'someone offers to help with the dishes'), not as a question.\",\n        \"type\": \"string\"\n      },\n      \"top_k\": {\n        \"default\": 8,\n        \"maximum\": 20,\n        \"minimum\": 1,\n        \"type\": \"integer\"\n      }\n    },\n    \"required\": [\n      \"query\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 306
         },
         {
           "name": "search_facts",
@@ -1933,7 +2033,9 @@
           },
           "sourcePath": "src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/search_facts.py",
           "sourceLine": 108,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/search_facts.py#L108"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/search_facts.py#L108",
+          "definitionText": "{\n  \"name\": \"search_facts\",\n  \"description\": \"Stable semantic facts, induced across clips and kept de-duplicated (keys look like 'P001/identity/name' or 'event:room_tidying/plan'). Three ways in: query for semantic search, key_prefix to enumerate a branch, subject_id for one person. Prefer this over re-reading moments when the question is about a durable attribute, preference, role or relationship.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Absolute path to the source video; memory is read from <video_path>.memory/.\",\n        \"type\": \"string\"\n      },\n      \"namespace\": {\n        \"description\": \"Memory name. Pass video_path too when MEM_LOCAL_DIR is unset; otherwise the memory is read from the configured shared root.\",\n        \"type\": \"string\"\n      },\n      \"query\": {\n        \"description\": \"Semantic search over fact statements.\",\n        \"type\": \"string\"\n      },\n      \"key_prefix\": {\n        \"description\": \"List facts whose key starts with this. Keys are built from the canonical NAME, e.g. 'Matthew/' for everything known about Matthew, or 'event:' for all events; a person_id like 'P001/' also works and is mapped to that person's name. See get_memory_overview for the full key directory.\",\n        \"type\": \"string\"\n      },\n      \"subject_id\": {\n        \"description\": \"All facts whose subject is this person_id.\",\n        \"type\": \"string\"\n      },\n      \"top_k\": {\n        \"default\": 10,\n        \"maximum\": 20,\n        \"minimum\": 1,\n        \"type\": \"integer\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 414
         },
         {
           "name": "search_memory",
@@ -1966,7 +2068,9 @@
           },
           "sourcePath": "src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/search_memory.py",
           "sourceLine": 48,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/search_memory.py#L48"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/search_memory.py#L48",
+          "definitionText": "{\n  \"name\": \"search_memory\",\n  \"description\": \"Hybrid search (dense embeddings + keyword, RRF-fused) across all three containers at once: people, semantic facts, and moments. Start here for an open question; narrow down with search_dialogue / search_facts / get_timeline when you know which kind of evidence you need.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Absolute path to the source video; memory is read from <video_path>.memory/.\",\n        \"type\": \"string\"\n      },\n      \"namespace\": {\n        \"description\": \"Memory name. Pass video_path too when MEM_LOCAL_DIR is unset; otherwise the memory is read from the configured shared root.\",\n        \"type\": \"string\"\n      },\n      \"query\": {\n        \"description\": \"Descriptive statement of what you are looking for, not a question.\",\n        \"type\": \"string\"\n      },\n      \"top_k\": {\n        \"default\": 5,\n        \"maximum\": 20,\n        \"minimum\": 1,\n        \"type\": \"integer\"\n      }\n    },\n    \"required\": [\n      \"query\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 288
         },
         {
           "name": "watch_and_answer",
@@ -1994,7 +2098,9 @@
           },
           "sourcePath": "src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/watch_and_answer.py",
           "sourceLine": 180,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/watch_and_answer.py#L180"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/omni-memory/qwen_mm_plugins_omni_memory/tools/watch_and_answer.py#L180",
+          "definitionText": "{\n  \"name\": \"watch_and_answer\",\n  \"description\": \"Watch a SHORT audio-video in one pass and answer from it, with NO memory involved. Use it when the video is under ~10 minutes, or when the user has said they do not want a memory built and just wants a quick answer. Past ~30 minutes build a memory instead — this tool sends the whole video in a single request, so it cannot cover a long one no matter how the question is phrased. The video is re-encoded once and that copy is kept, so follow-up questions about the same video skip the re-encode. If the video will be asked about several times, a memory is cheaper: build it and use plan_and_search. When a watch cannot get through, the result carries fallback=\\\"build_memory\\\" and the exact command to run. Needs ffmpeg on PATH and an omni endpoint.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"video_path\": {\n        \"description\": \"Absolute path to the source video. No memory needs to exist.\",\n        \"type\": \"string\"\n      },\n      \"question\": {\n        \"description\": \"What to determine from watching the video.\",\n        \"type\": \"string\"\n      },\n      \"model\": {\n        \"description\": \"Omni model for this call. Leave unset to use the configured default (qwen3.5-omni-plus).\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"video_path\",\n      \"question\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 352
         }
       ],
       "kind": "Skill + MCP",
@@ -2026,7 +2132,12 @@
         "url": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/",
         "path": "src/capabilities/omni-memory"
       },
-      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/omni-memory/usage.md"
+      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/omni-memory/usage.md",
+      "tokenEstimate": {
+        "skillFull": 4851,
+        "skillMetadata": 69,
+        "toolsTotal": 4252
+      }
     },
     {
       "name": "qwen-mm-plugins-video-edit",
@@ -3884,7 +3995,9 @@
           },
           "sourcePath": "src/capabilities/video-edit/qwen_mm_plugins_video_edit/tools/happyhorse.py",
           "sourceLine": 224,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-edit/qwen_mm_plugins_video_edit/tools/happyhorse.py#L224"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-edit/qwen_mm_plugins_video_edit/tools/happyhorse.py#L224",
+          "definitionText": "{\n  \"name\": \"happyhorse\",\n  \"description\": \"Video generation and editing using HappyHorse models. Four modes: (1) text_to_video — generate video from text prompt (happyhorse-1.0-t2v); (2) image_to_video — animate a single image into video (happyhorse-1.0-i2v); (3) reference_to_video — generate video with 1-9 reference images fused as characters/objects (happyhorse-1.0-r2v, use [Image 1] etc. in prompt to reference them); (4) video_edit — edit an existing video with text instruction + optional reference images (happyhorse-1.0-video-edit). All modes are async — submit task then poll until completion (1-5 min typical).\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"mode\": {\n        \"description\": \"Operation mode. text_to_video: generate video from text description. image_to_video: animate a single input image (first frame) into video. reference_to_video: generate video with 1-9 reference images fused into the scene (use [Image 1], [Image 2] etc. in prompt to reference each image). video_edit: modify an existing video based on text instruction, optionally guided by reference images.\",\n        \"enum\": [\n          \"text_to_video\",\n          \"image_to_video\",\n          \"reference_to_video\",\n          \"video_edit\"\n        ],\n        \"type\": \"string\"\n      },\n      \"prompt\": {\n        \"description\": \"Text prompt (up to 2500 Chinese chars / 5000 non-Chinese). Required for all modes EXCEPT image_to_video (optional there). For reference_to_video: use [Image 1], [Image 2] etc. to reference images and describe what each depicts, e.g. 'the woman from [Image 1] runs on the beach'.\",\n        \"type\": \"string\"\n      },\n      \"image_url\": {\n        \"description\": \"Input image URL or base64 data for image_to_video mode. Required for image_to_video. This image becomes the first frame of the generated video. Requirements: JPEG/JPG/PNG/WEBP, width & height ≥300px, aspect ratio 1:2.5~2.5:1, ≤20MB. Output video aspect ratio follows the input image (ratio param is ignored).\",\n        \"type\": \"string\"\n      },\n      \"video_url\": {\n        \"description\": \"Input video URL for video_edit mode. Required for video_edit. Requirements: MP4/MOV (H.264), 3-60s duration (>15s auto-truncated to first 15s), long edge ≤4096px, short edge ≥360px, aspect ratio 1:2.5~2.5:1, ≤100MB, >8fps.\",\n        \"type\": \"string\"\n      },\n      \"reference_image_urls\": {\n        \"description\": \"Reference images for reference_to_video (1-9, required) or video_edit (0-5, optional). For reference_to_video: each image provides a character/object to fuse into the video. Prompt must use [Image 1], [Image 2] etc. to reference them by array order. For video_edit: style guidance or element replacement reference. Requirements: JPEG/JPG/PNG/WEBP, ≤20MB each. r2v: short edge ≥400px, recommend ≥720P. video_edit: width/height ≥300px.\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"type\": \"array\"\n      },\n      \"resolution\": {\n        \"default\": \"1080P\",\n        \"description\": \"Output video resolution. Default: '1080P'.\",\n        \"enum\": [\n          \"720P\",\n          \"1080P\"\n        ],\n        \"type\": \"string\"\n      },\n      \"ratio\": {\n        \"default\": \"16:9\",\n        \"description\": \"Aspect ratio for text_to_video and reference_to_video modes. Ignored for image_to_video (follows input image) and video_edit. Default: '16:9'.\",\n        \"enum\": [\n          \"16:9\",\n          \"9:16\",\n          \"1:1\",\n          \"4:3\",\n          \"3:4\",\n          \"4:5\",\n          \"5:4\",\n          \"21:9\",\n          \"9:21\"\n        ],\n        \"type\": \"string\"\n      },\n      \"duration\": {\n        \"default\": 5,\n        \"description\": \"Video duration in seconds for text_to_video, image_to_video, and reference_to_video modes. Range: 3-15. Default: 5. For video_edit: duration follows input video (≤15s).\",\n        \"type\": \"integer\"\n      },\n      \"audio_setting\": {\n        \"default\": \"auto\",\n        \"description\": \"Audio control for video_edit mode only. 'auto': model generates/modifies audio. 'origin': preserve original audio from input video. Default: 'auto'.\",\n        \"enum\": [\n          \"auto\",\n          \"origin\"\n        ],\n        \"type\": \"string\"\n      },\n      \"seed\": {\n        \"description\": \"Random seed [0, 2147483647] for reproducibility.\",\n        \"type\": \"integer\"\n      },\n      \"watermark\": {\n        \"default\": false,\n        \"description\": \"Whether to add watermark. Default: false.\",\n        \"type\": \"boolean\"\n      },\n      \"poll_interval\": {\n        \"default\": 15,\n        \"description\": \"Polling interval in seconds. Default: 15.\",\n        \"type\": \"integer\"\n      },\n      \"poll_timeout\": {\n        \"default\": 600,\n        \"description\": \"Max wait time in seconds. Default: 600.\",\n        \"type\": \"integer\"\n      },\n      \"output_dir\": {\n        \"description\": \"Directory to save generated video. If provided, downloads video to this directory. If omitted, returns URL only (valid 24h).\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"mode\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 1457
         },
         {
           "name": "qwen_image",
@@ -3957,7 +4070,9 @@
           },
           "sourcePath": "src/capabilities/video-edit/qwen_mm_plugins_video_edit/tools/qwen_image.py",
           "sourceLine": 273,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-edit/qwen_mm_plugins_video_edit/tools/qwen_image.py#L273"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-edit/qwen_mm_plugins_video_edit/tools/qwen_image.py#L273",
+          "definitionText": "{\n  \"name\": \"qwen_image\",\n  \"description\": \"Image generation, editing, and translation using Qwen-Image models. Three modes: (1) text_to_image — generate image from text prompt (sync, qwen-image-2.0-pro); (2) image_edit — edit an existing image with text instruction, supports up to 3 input images (sync, qwen-image-2.0-pro); (3) image_translate — translate text in an image while preserving layout (async, qwen-mt-image). All generated image URLs expire in 24 hours — download promptly.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"mode\": {\n        \"description\": \"Operation mode. text_to_image: generate from text prompt only. image_edit: modify existing image(s) with text instruction. image_translate: translate text in image preserving layout.\",\n        \"enum\": [\n          \"text_to_image\",\n          \"image_edit\",\n          \"image_translate\"\n        ],\n        \"type\": \"string\"\n      },\n      \"prompt\": {\n        \"description\": \"For text_to_image: image description prompt. For image_edit: editing instruction (e.g. 'convert to watercolor style'). Not used for image_translate.\",\n        \"type\": \"string\"\n      },\n      \"image_urls\": {\n        \"description\": \"Input image URL(s). For image_edit: 1-3 image URLs to edit/combine. For image_translate: exactly 1 image URL. Not used for text_to_image.\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"type\": \"array\"\n      },\n      \"size\": {\n        \"default\": \"1024*1024\",\n        \"description\": \"Output image size (width*height). Common options: '1024*1024' (square), '2048*2048' (hi-res square), '2688*1536' (16:9 landscape), '1536*2688' (9:16 portrait), '2368*1728' (4:3). Total pixels: 512*512 to 2048*2048. Default: '1024*1024'.\",\n        \"type\": \"string\"\n      },\n      \"negative_prompt\": {\n        \"default\": \"低分辨率，低画质，肢体畸形，画面过饱和\",\n        \"description\": \"Things to avoid in the generated image. Default: '低分辨率，低画质，肢体畸形，画面过饱和'. Only for text_to_image and image_edit modes.\",\n        \"type\": \"string\"\n      },\n      \"prompt_extend\": {\n        \"default\": true,\n        \"description\": \"Enable intelligent prompt rewriting for better results. Set to false when you need precise control. Default: true.\",\n        \"type\": \"boolean\"\n      },\n      \"seed\": {\n        \"description\": \"Random seed for reproducibility. Fix seed while iterating prompts to compare changes. Omit for random.\",\n        \"type\": \"integer\"\n      },\n      \"n\": {\n        \"default\": 1,\n        \"description\": \"Number of images to generate (1-4). Default: 1.\",\n        \"type\": \"integer\"\n      },\n      \"source_lang\": {\n        \"default\": \"zh\",\n        \"description\": \"Source language for image_translate mode. Options: zh, en, ja, ko, fr, de, es, ru, etc. Default: zh.\",\n        \"type\": \"string\"\n      },\n      \"target_lang\": {\n        \"default\": \"en\",\n        \"description\": \"Target language for image_translate mode. Options: zh, en, ja, ko, fr, de, es, ru, etc. Default: en.\",\n        \"type\": \"string\"\n      },\n      \"output_dir\": {\n        \"description\": \"Directory to save generated images. If provided, downloads images to this directory. If omitted, returns URLs only (valid 24h).\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"mode\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 956
         },
         {
           "name": "qwen_tts",
@@ -3990,7 +4105,9 @@
           },
           "sourcePath": "src/capabilities/video-edit/qwen_mm_plugins_video_edit/tools/qwen_tts.py",
           "sourceLine": 67,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-edit/qwen_mm_plugins_video_edit/tools/qwen_tts.py#L67"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-edit/qwen_mm_plugins_video_edit/tools/qwen_tts.py#L67",
+          "definitionText": "{\n  \"name\": \"qwen_tts\",\n  \"description\": \"Text-to-speech (TTS) using Qwen3-TTS-Flash via the DashScope SDK (dashscope.MultiModalConversation). Supports 10 languages and 44 system voices. Input: text + voice + language. Output: audio file URL (WAV, 24h validity). Max 512 tokens per call — split long text at sentence boundaries.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"text\": {\n        \"description\": \"Text to synthesize into speech. Max ~512 tokens per call. For longer text, split at sentence/punctuation boundaries and call multiple times.\",\n        \"type\": \"string\"\n      },\n      \"voice\": {\n        \"default\": \"Cherry\",\n        \"description\": \"Voice name. System voices include: Cherry (young female, energetic), Serena (female, professional), Ethan (male, standard), Chelsie (female, warm), and 40+ others. See DashScope docs for full list.\",\n        \"type\": \"string\"\n      },\n      \"language_type\": {\n        \"default\": \"Auto\",\n        \"description\": \"Language for synthesis. Options: Chinese, English, Japanese, Korean, French, German, Spanish, Russian, Portuguese, Auto. Specifying language significantly improves quality. Default: Auto.\",\n        \"type\": \"string\"\n      },\n      \"output_dir\": {\n        \"description\": \"Directory to save the audio file. If provided, downloads the audio to this directory. If omitted, returns the audio URL only (valid 24h).\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"text\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 401
         },
         {
           "name": "wan_s2v",
@@ -4045,7 +4162,9 @@
           },
           "sourcePath": "src/capabilities/video-edit/qwen_mm_plugins_video_edit/tools/wan_s2v.py",
           "sourceLine": 189,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-edit/qwen_mm_plugins_video_edit/tools/wan_s2v.py#L189"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-edit/qwen_mm_plugins_video_edit/tools/wan_s2v.py#L189",
+          "definitionText": "{\n  \"name\": \"wan_s2v\",\n  \"description\": \"Digital human lip-sync video generation using Wan2.2-S2V. Takes a portrait image + audio and generates a talking-head video with lip sync. Two actions: (1) detect — check if an image is suitable for digital human generation (sync and billed per successful request, regardless of detection result); (2) generate — submit image + audio to create lip-sync video (async, billed). Always run detect first before generate. Supports real humans (portrait/half-body/full-body) and cartoon characters. Audio max 20s, image must be single person, front-facing, clear.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"action\": {\n        \"description\": \"Action to perform. detect: check if image meets requirements (sync and billed per successful request; always run first). generate: create lip-sync video from image + audio (async, billed, 5-10 min).\",\n        \"enum\": [\n          \"detect\",\n          \"generate\"\n        ],\n        \"type\": \"string\"\n      },\n      \"image_url\": {\n        \"description\": \"Public URL of the portrait image. Requirements: single person, front-facing, clear, JPG/JPEG/PNG/BMP/WEBP, resolution 400-7000px per side. Supports: portrait, half-body, full-body, cartoon characters.\",\n        \"type\": \"string\"\n      },\n      \"audio_url\": {\n        \"description\": \"Public URL of the audio file. Required for 'generate' action only. Requirements: WAV or MP3 format, < 15MB, < 20 seconds, must contain clear human voice, remove background noise/music.\",\n        \"type\": \"string\"\n      },\n      \"resolution\": {\n        \"default\": \"480P\",\n        \"description\": \"Output video resolution. Options: '480P' (faster, cheaper) or '720P'. Default: '480P'.\",\n        \"enum\": [\n          \"480P\",\n          \"720P\"\n        ],\n        \"type\": \"string\"\n      },\n      \"poll_interval\": {\n        \"default\": 15,\n        \"description\": \"Polling interval in seconds for async generation task. Min 5, recommended 15. Default: 15.\",\n        \"type\": \"integer\"\n      },\n      \"poll_timeout\": {\n        \"default\": 700,\n        \"description\": \"Max time in seconds to wait for generation to complete. Typical generation time: 5-10 minutes. Default: 700.\",\n        \"type\": \"integer\"\n      },\n      \"output_dir\": {\n        \"description\": \"Directory to save the generated video. If provided, downloads video to this directory. If omitted, returns the video URL only (valid 24h).\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"action\",\n      \"image_url\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 695
         },
         {
           "name": "wan_t2v",
@@ -4111,7 +4230,9 @@
           },
           "sourcePath": "src/capabilities/video-edit/qwen_mm_plugins_video_edit/tools/wan_t2v.py",
           "sourceLine": 121,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-edit/qwen_mm_plugins_video_edit/tools/wan_t2v.py#L121"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/video-edit/qwen_mm_plugins_video_edit/tools/wan_t2v.py#L121",
+          "definitionText": "{\n  \"name\": \"wan_t2v\",\n  \"description\": \"Video generation using Wan models (wan2.7 series). Supports multiple generation modes: (1) text_to_video — generate video from text prompt only (wan2.7-t2v); (2) first_frame — generate video from a first-frame image + text prompt (wan2.7-i2v); (3) first_last_frame — generate video from first-frame + last-frame images + text prompt (wan2.7-i2v). Synchronous call via DashScope SDK — blocks until video is ready. Typical generation time: 30s-3min depending on duration and resolution.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"mode\": {\n        \"default\": \"text_to_video\",\n        \"description\": \"Generation mode. text_to_video: pure text prompt → video (wan2.7-t2v). first_frame: image + text prompt → video starting from that image (wan2.7-i2v). first_last_frame: two images + text prompt → video interpolating between them (wan2.7-i2v).\",\n        \"enum\": [\n          \"text_to_video\",\n          \"first_frame\",\n          \"first_last_frame\"\n        ],\n        \"type\": \"string\"\n      },\n      \"prompt\": {\n        \"description\": \"Video description prompt. Use cinematic language: camera movements (pan, zoom, tracking), temporal dynamics (gradually, suddenly, slowly), style keywords (cinematic, documentary, vintage). Avoid: multi-person interactions, complex gestures, text content. Required for all modes.\",\n        \"type\": \"string\"\n      },\n      \"first_frame_url\": {\n        \"description\": \"URL of the first frame image. Required for first_frame and first_last_frame modes. Must be a publicly accessible HTTP/HTTPS URL.\",\n        \"type\": \"string\"\n      },\n      \"last_frame_url\": {\n        \"description\": \"URL of the last frame image. Required for first_last_frame mode only. Must be a publicly accessible HTTP/HTTPS URL.\",\n        \"type\": \"string\"\n      },\n      \"size\": {\n        \"default\": \"1280*720\",\n        \"description\": \"Video size preset. For text_to_video this selects the output size; for image-to-video it selects only the resolution tier, while aspect ratio and exact dimensions follow the first frame. Options: '1280*720' (16:9 landscape), '720*1280' (9:16 portrait), '960*960' (square), and '1920*1080' (full HD). The legacy '1024*1024' value is accepted and maps to Wan 2.7's 960*960 output. Default: '1280*720'.\",\n        \"type\": \"string\"\n      },\n      \"duration\": {\n        \"default\": 5,\n        \"description\": \"Video duration in seconds. Wan 2.7 accepts 2-15 seconds. Default: 5. Cost scales linearly with duration.\",\n        \"type\": \"integer\"\n      },\n      \"negative_prompt\": {\n        \"default\": \"\",\n        \"description\": \"Things to avoid in the video. Example: 'blurry, low quality, distorted faces, watermark'. Default: empty.\",\n        \"type\": \"string\"\n      },\n      \"prompt_extend\": {\n        \"default\": true,\n        \"description\": \"Enable intelligent prompt rewriting for better video results. Default: true.\",\n        \"type\": \"boolean\"\n      },\n      \"seed\": {\n        \"default\": 12345,\n        \"description\": \"Random seed for reproducibility [0, 2147483647]. Fix seed to compare prompt variations. Default: 12345.\",\n        \"type\": \"integer\"\n      },\n      \"output_dir\": {\n        \"description\": \"Directory to save the generated video. If provided, downloads video to this directory. If omitted, returns the video URL only (valid 24h).\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"prompt\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 966
         }
       ],
       "kind": "Skill + MCP",
@@ -4143,7 +4264,12 @@
         "url": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/",
         "path": "src/capabilities/video-edit"
       },
-      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/video-edit/usage.md"
+      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/video-edit/usage.md",
+      "tokenEstimate": {
+        "skillFull": 3618,
+        "skillMetadata": 213,
+        "toolsTotal": 4475
+      }
     },
     {
       "name": "qwen-mm-plugins-blender",
@@ -4208,7 +4334,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/download_polyhaven_asset.py",
           "sourceLine": 29,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/download_polyhaven_asset.py#L29"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/download_polyhaven_asset.py#L29",
+          "definitionText": "{\n  \"name\": \"download_polyhaven_asset\",\n  \"description\": \"Download and import a Polyhaven asset into Blender. Returns a message indicating success or failure.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"asset_id\": {\n        \"description\": \"The ID of the asset to download.\",\n        \"type\": \"string\"\n      },\n      \"asset_type\": {\n        \"description\": \"The type of asset (hdris, textures, models).\",\n        \"type\": \"string\"\n      },\n      \"resolution\": {\n        \"default\": \"1k\",\n        \"description\": \"The resolution to download (e.g., 1k, 2k, 4k).\",\n        \"type\": \"string\"\n      },\n      \"file_format\": {\n        \"description\": \"Optional file format (e.g., hdr, exr for HDRIs; jpg, png for textures; gltf, fbx for models).\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"asset_id\",\n      \"asset_type\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 262
         },
         {
           "name": "download_sketchfab_model",
@@ -4232,7 +4360,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/download_sketchfab_model.py",
           "sourceLine": 43,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/download_sketchfab_model.py#L43"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/download_sketchfab_model.py#L43",
+          "definitionText": "{\n  \"name\": \"download_sketchfab_model\",\n  \"description\": \"Download and import a Sketchfab model by its UID. The model will be scaled so its largest dimension equals target_size.\\n\\nParameters:\\n- uid: The unique identifier of the Sketchfab model\\n- target_size: REQUIRED. The target size in Blender units/meters for the largest dimension. You must specify the desired size for the model. Examples:\\n  - Chair: target_size=1.0 (1 meter tall)\\n  - Table: target_size=0.75 (75cm tall)\\n  - Car: target_size=4.5 (4.5 meters long)\\n  - Person: target_size=1.7 (1.7 meters tall)\\n  - Small object (cup, phone): target_size=0.1 to 0.3\\n\\nReturns a message with import details including object names, dimensions, and bounding box. The model must be downloadable and you must have proper access rights.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"uid\": {\n        \"description\": \"The unique identifier of the Sketchfab model.\",\n        \"type\": \"string\"\n      },\n      \"target_size\": {\n        \"description\": \"REQUIRED. The target size in Blender units/meters for the largest dimension. You must specify the desired size for the model. Examples: Chair=1.0 (1 meter tall), Table=0.75 (75cm tall), Car=4.5 (4.5 meters long), Person=1.7 (1.7 meters tall), Small object (cup, phone)=0.1 to 0.3.\",\n        \"type\": \"number\"\n      }\n    },\n    \"required\": [\n      \"uid\",\n      \"target_size\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 407
         },
         {
           "name": "execute_blender_code",
@@ -4251,7 +4381,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/execute_blender_code.py",
           "sourceLine": 25,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/execute_blender_code.py#L25"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/execute_blender_code.py#L25",
+          "definitionText": "{\n  \"name\": \"execute_blender_code\",\n  \"description\": \"Execute arbitrary Python code in the running Blender (bpy). This is the PRIMARY tool for modeling: create/edit geometry, modifiers, materials, lighting, cameras, and rendering. Make sure to do it step-by-step by breaking complex work into smaller chunks.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"code\": {\n        \"description\": \"The Python code to execute inside Blender (the `bpy` module is available).\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"code\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 153
         },
         {
           "name": "generate_hunyuan3d_model",
@@ -4271,7 +4403,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/generate_hunyuan3d_model.py",
           "sourceLine": 37,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/generate_hunyuan3d_model.py#L37"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/generate_hunyuan3d_model.py#L37",
+          "definitionText": "{\n  \"name\": \"generate_hunyuan3d_model\",\n  \"description\": \"Generate 3D asset using Hunyuan3D by providing either text description, image reference, or both for the desired asset, and import the asset into Blender. The 3D asset has built-in materials. Parameters: text_prompt (optional) a short description of the desired model in English/Chinese; input_image_url (optional) the local or remote url of the input image, accepts None if only using text prompt. When successful, returns a JSON with job_id (format: \\\"job_xxx\\\") indicating the task is in progress; when the job completes, the status will change to \\\"DONE\\\" indicating the model has been imported; returns error message if the operation fails.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"text_prompt\": {\n        \"description\": \"(Optional) A short description of the desired model in English/Chinese.\",\n        \"type\": \"string\"\n      },\n      \"input_image_url\": {\n        \"description\": \"(Optional) The local or remote url of the input image. Accepts None if only using text prompt.\",\n        \"type\": \"string\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 273
         },
         {
           "name": "generate_hyper3d_model_via_images",
@@ -4304,7 +4438,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/generate_hyper3d_model_via_images.py",
           "sourceLine": 68,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/generate_hyper3d_model_via_images.py#L68"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/generate_hyper3d_model_via_images.py#L68",
+          "definitionText": "{\n  \"name\": \"generate_hyper3d_model_via_images\",\n  \"description\": \"Generate 3D asset using Hyper3D by giving images of the wanted asset, and import the generated asset into Blender. The 3D asset has built-in materials. The generated model has a normalized size, so re-scaling after generation can be useful. Only one of {input_image_paths, input_image_urls} should be given at a time, depending on the Hyper3D Rodin's current mode.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"input_image_paths\": {\n        \"description\": \"The **absolute** paths of input images. Even if only one image is provided, wrap it into a list. Required if Hyper3D Rodin in MAIN_SITE mode.\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"type\": \"array\"\n      },\n      \"input_image_urls\": {\n        \"description\": \"The URLs of input images. Even if only one image is provided, wrap it into a list. Required if Hyper3D Rodin in FAL_AI mode.\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"type\": \"array\"\n      },\n      \"bbox_condition\": {\n        \"description\": \"Optional. If given, it has to be a list of floats of length 3. Controls the ratio between [Length, Width, Height] of the model.\",\n        \"items\": {\n          \"type\": \"number\"\n        },\n        \"type\": \"array\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 360
         },
         {
           "name": "generate_hyper3d_model_via_text",
@@ -4330,7 +4466,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/generate_hyper3d_model_via_text.py",
           "sourceLine": 42,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/generate_hyper3d_model_via_text.py#L42"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/generate_hyper3d_model_via_text.py#L42",
+          "definitionText": "{\n  \"name\": \"generate_hyper3d_model_via_text\",\n  \"description\": \"Generate 3D asset using Hyper3D by giving description of the desired asset, and import the asset into Blender. The 3D asset has built-in materials. The generated model has a normalized size, so re-scaling after generation can be useful.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"text_prompt\": {\n        \"description\": \"A short description of the desired model in **English**.\",\n        \"type\": \"string\"\n      },\n      \"bbox_condition\": {\n        \"description\": \"Optional. If given, it has to be a list of floats of length 3. Controls the ratio between [Length, Width, Height] of the model.\",\n        \"items\": {\n          \"type\": \"number\"\n        },\n        \"type\": \"array\"\n      }\n    },\n    \"required\": [\n      \"text_prompt\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 227
         },
         {
           "name": "get_hunyuan3d_status",
@@ -4341,7 +4479,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/get_hunyuan3d_status.py",
           "sourceLine": 24,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/get_hunyuan3d_status.py#L24"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/get_hunyuan3d_status.py#L24",
+          "definitionText": "{\n  \"name\": \"get_hunyuan3d_status\",\n  \"description\": \"Check if Hunyuan3D integration is enabled in Blender. Returns a message indicating whether Hunyuan3D features are available.\",\n  \"inputSchema\": {\n    \"properties\": {},\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 74
         },
         {
           "name": "get_hyper3d_status",
@@ -4352,7 +4492,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/get_hyper3d_status.py",
           "sourceLine": 24,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/get_hyper3d_status.py#L24"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/get_hyper3d_status.py#L24",
+          "definitionText": "{\n  \"name\": \"get_hyper3d_status\",\n  \"description\": \"Check if Hyper3D Rodin integration is enabled in Blender. Returns a message indicating whether Hyper3D Rodin features are available.\",\n  \"inputSchema\": {\n    \"properties\": {},\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 72
         },
         {
           "name": "get_object_info",
@@ -4371,7 +4513,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/get_object_info.py",
           "sourceLine": 21,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/get_object_info.py#L21"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/get_object_info.py#L21",
+          "definitionText": "{\n  \"name\": \"get_object_info\",\n  \"description\": \"Get detailed information about a specific object in the Blender scene.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"object_name\": {\n        \"description\": \"The name of the object to get information about.\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"object_name\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 107
         },
         {
           "name": "get_polyhaven_categories",
@@ -4388,7 +4532,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/get_polyhaven_categories.py",
           "sourceLine": 24,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/get_polyhaven_categories.py#L24"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/get_polyhaven_categories.py#L24",
+          "definitionText": "{\n  \"name\": \"get_polyhaven_categories\",\n  \"description\": \"Get a list of categories for a specific asset type on Polyhaven.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"asset_type\": {\n        \"default\": \"hdris\",\n        \"description\": \"The type of asset to get categories for (hdris, textures, models, all).\",\n        \"type\": \"string\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 113
         },
         {
           "name": "get_polyhaven_status",
@@ -4399,7 +4545,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/get_polyhaven_status.py",
           "sourceLine": 24,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/get_polyhaven_status.py#L24"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/get_polyhaven_status.py#L24",
+          "definitionText": "{\n  \"name\": \"get_polyhaven_status\",\n  \"description\": \"Check if PolyHaven integration is enabled in Blender. Returns a message indicating whether PolyHaven features are available.\",\n  \"inputSchema\": {\n    \"properties\": {},\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 67
         },
         {
           "name": "get_scene_info",
@@ -4410,7 +4558,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/get_scene_info.py",
           "sourceLine": 22,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/get_scene_info.py#L22"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/get_scene_info.py#L22",
+          "definitionText": "{\n  \"name\": \"get_scene_info\",\n  \"description\": \"Get detailed information about the current Blender scene (objects, materials, etc.).\",\n  \"inputSchema\": {\n    \"properties\": {},\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 59
         },
         {
           "name": "get_sketchfab_model_preview",
@@ -4429,7 +4579,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/get_sketchfab_model_preview.py",
           "sourceLine": 29,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/get_sketchfab_model_preview.py#L29"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/get_sketchfab_model_preview.py#L29",
+          "definitionText": "{\n  \"name\": \"get_sketchfab_model_preview\",\n  \"description\": \"Get a preview thumbnail of a Sketchfab model by its UID. Use this to visually confirm a model before downloading.\\n\\nParameters:\\n- uid: The unique identifier of the Sketchfab model (obtained from search_sketchfab_models)\\n\\nReturns the model's thumbnail as an Image for visual confirmation.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"uid\": {\n        \"description\": \"The unique identifier of the Sketchfab model (obtained from search_sketchfab_models).\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"uid\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 168
         },
         {
           "name": "get_sketchfab_status",
@@ -4440,7 +4592,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/get_sketchfab_status.py",
           "sourceLine": 24,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/get_sketchfab_status.py#L24"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/get_sketchfab_status.py#L24",
+          "definitionText": "{\n  \"name\": \"get_sketchfab_status\",\n  \"description\": \"Check if Sketchfab integration is enabled in Blender. Returns a message indicating whether Sketchfab features are available.\",\n  \"inputSchema\": {\n    \"properties\": {},\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 66
         },
         {
           "name": "get_viewport_screenshot",
@@ -4457,7 +4611,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/get_viewport_screenshot.py",
           "sourceLine": 28,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/get_viewport_screenshot.py#L28"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/get_viewport_screenshot.py#L28",
+          "definitionText": "{\n  \"name\": \"get_viewport_screenshot\",\n  \"description\": \"Capture a screenshot of the current Blender 3D viewport. Use it to visually verify the scene BEFORE making changes and AFTER executing code or importing assets.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"max_size\": {\n        \"default\": 1000,\n        \"description\": \"Maximum size in pixels for the largest dimension.\",\n        \"type\": \"integer\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 122
         },
         {
           "name": "import_generated_asset",
@@ -4484,7 +4640,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/import_generated_asset.py",
           "sourceLine": 33,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/import_generated_asset.py#L33"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/import_generated_asset.py#L33",
+          "definitionText": "{\n  \"name\": \"import_generated_asset\",\n  \"description\": \"Import the asset generated by Hyper3D Rodin after the generation task is completed. Only give one of {task_uuid, request_id} based on the Hyper3D Rodin Mode. Returns whether the asset has been imported successfully.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"name\": {\n        \"description\": \"The name of the object in scene.\",\n        \"type\": \"string\"\n      },\n      \"task_uuid\": {\n        \"description\": \"For Hyper3D Rodin mode MAIN_SITE: the task_uuid given in the generate model step.\",\n        \"type\": \"string\"\n      },\n      \"request_id\": {\n        \"description\": \"For Hyper3D Rodin mode FAL_AI: the request_id given in the generate model step.\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"name\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 227
         },
         {
           "name": "import_generated_asset_hunyuan",
@@ -4508,7 +4666,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/import_generated_asset_hunyuan.py",
           "sourceLine": 26,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/import_generated_asset_hunyuan.py#L26"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/import_generated_asset_hunyuan.py#L26",
+          "definitionText": "{\n  \"name\": \"import_generated_asset_hunyuan\",\n  \"description\": \"Import the asset generated by Hunyuan3D after the generation task is completed. Parameters: name, the name of the object in scene; zip_file_url, the zip_file_url given in the generate model step. Returns whether the asset has been imported successfully.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"name\": {\n        \"description\": \"The name of the object in scene.\",\n        \"type\": \"string\"\n      },\n      \"zip_file_url\": {\n        \"description\": \"The zip_file_url given in the generate model step.\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"name\",\n      \"zip_file_url\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 190
         },
         {
           "name": "poll_hunyuan_job_status",
@@ -4524,7 +4684,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/poll_hunyuan_job_status.py",
           "sourceLine": 31,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/poll_hunyuan_job_status.py#L31"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/poll_hunyuan_job_status.py#L31",
+          "definitionText": "{\n  \"name\": \"poll_hunyuan_job_status\",\n  \"description\": \"Check if the Hunyuan3D generation task is completed. Parameters: job_id, the job_id given in the generate model step. Returns the generation task status; the task is done if status is \\\"DONE\\\" and in progress if status is \\\"RUN\\\". If status is \\\"DONE\\\", the response includes a field named ResultFile3Ds that contains the generated ZIP file path of the 3D model in OBJ format. This is a polling API, so only proceed once the status is finally determined (\\\"DONE\\\" or some failed state).\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"job_id\": {\n        \"description\": \"The job_id given in the generate model step.\",\n        \"type\": \"string\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 195
         },
         {
           "name": "poll_rodin_job_status",
@@ -4544,7 +4706,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/poll_rodin_job_status.py",
           "sourceLine": 35,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/poll_rodin_job_status.py#L35"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/poll_rodin_job_status.py#L35",
+          "definitionText": "{\n  \"name\": \"poll_rodin_job_status\",\n  \"description\": \"Check if the Hyper3D Rodin generation task is completed. For MAIN_SITE mode, pass subscription_key: returns a list of status, done when all are \\\"Done\\\" (\\\"Failed\\\" means the generation failed). For FAL_AI mode, pass request_id: returns the generation task status, done when \\\"COMPLETED\\\" and in progress when \\\"IN_PROGRESS\\\". This is a polling API, so only proceed once the status is finally determined.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"subscription_key\": {\n        \"description\": \"For Hyper3D Rodin mode MAIN_SITE: the subscription_key given in the generate model step.\",\n        \"type\": \"string\"\n      },\n      \"request_id\": {\n        \"description\": \"For Hyper3D Rodin mode FAL_AI: the request_id given in the generate model step.\",\n        \"type\": \"string\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 229
         },
         {
           "name": "search_polyhaven_assets",
@@ -4565,7 +4729,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/search_polyhaven_assets.py",
           "sourceLine": 31,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/search_polyhaven_assets.py#L31"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/search_polyhaven_assets.py#L31",
+          "definitionText": "{\n  \"name\": \"search_polyhaven_assets\",\n  \"description\": \"Search for assets on Polyhaven with optional filtering. Returns a list of matching assets with basic information.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"asset_type\": {\n        \"default\": \"all\",\n        \"description\": \"Type of assets to search for (hdris, textures, models, all).\",\n        \"type\": \"string\"\n      },\n      \"categories\": {\n        \"description\": \"Optional comma-separated list of categories to filter by.\",\n        \"type\": \"string\"\n      }\n    },\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 149
         },
         {
           "name": "search_sketchfab_models",
@@ -4598,7 +4764,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/search_sketchfab_models.py",
           "sourceLine": 32,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/search_sketchfab_models.py#L32"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/search_sketchfab_models.py#L32",
+          "definitionText": "{\n  \"name\": \"search_sketchfab_models\",\n  \"description\": \"Search for models on Sketchfab with optional filtering.\\n\\nParameters:\\n- query: Text to search for\\n- categories: Optional comma-separated list of categories\\n- count: Maximum number of results to return (default 20)\\n- downloadable: Whether to include only downloadable models (default True)\\n\\nReturns a formatted list of matching models.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"query\": {\n        \"description\": \"Text to search for.\",\n        \"type\": \"string\"\n      },\n      \"categories\": {\n        \"description\": \"Optional comma-separated list of categories.\",\n        \"type\": \"string\"\n      },\n      \"count\": {\n        \"default\": 20,\n        \"description\": \"Maximum number of results to return (default 20).\",\n        \"type\": \"integer\"\n      },\n      \"downloadable\": {\n        \"default\": true,\n        \"description\": \"Whether to include only downloadable models (default True).\",\n        \"type\": \"boolean\"\n      }\n    },\n    \"required\": [\n      \"query\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 279
         },
         {
           "name": "set_texture",
@@ -4622,7 +4790,9 @@
           },
           "sourcePath": "src/capabilities/blender/qwen_mm_plugins_blender/tools/set_texture.py",
           "sourceLine": 24,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/set_texture.py#L24"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/blender/qwen_mm_plugins_blender/tools/set_texture.py#L24",
+          "definitionText": "{\n  \"name\": \"set_texture\",\n  \"description\": \"Apply a previously downloaded Polyhaven texture to an object. Returns a message indicating success or failure.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"object_name\": {\n        \"description\": \"Name of the object to apply the texture to.\",\n        \"type\": \"string\"\n      },\n      \"texture_id\": {\n        \"description\": \"ID of the Polyhaven texture to apply (must be downloaded first).\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"object_name\",\n      \"texture_id\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 158
         }
       ],
       "kind": "Skill + MCP",
@@ -4653,7 +4823,12 @@
         "url": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/",
         "path": "src/capabilities/blender"
       },
-      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/blender/usage.md"
+      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/blender/usage.md",
+      "tokenEstimate": {
+        "skillFull": 1794,
+        "skillMetadata": 107,
+        "toolsTotal": 3957
+      }
     },
     {
       "name": "qwen-mm-plugins-freecad",
@@ -4714,7 +4889,9 @@
           },
           "sourcePath": "src/capabilities/freecad/qwen_mm_plugins_freecad/tools/create_document.py",
           "sourceLine": 24,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/create_document.py#L24"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/create_document.py#L24",
+          "definitionText": "{\n  \"name\": \"create_document\",\n  \"description\": \"Create a new document in FreeCAD. Returns a message indicating the success or failure of the document creation.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"name\": {\n        \"description\": \"The name of the document to create.\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"name\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 111
         },
         {
           "name": "create_object",
@@ -4752,7 +4929,9 @@
           },
           "sourcePath": "src/capabilities/freecad/qwen_mm_plugins_freecad/tools/create_object.py",
           "sourceLine": 141,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/create_object.py#L141"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/create_object.py#L141",
+          "definitionText": "{\n  \"name\": \"create_object\",\n  \"description\": \"Create a new object in FreeCAD.\\nObject type starts with \\\"Part::\\\" or \\\"Draft::\\\" or \\\"PartDesign::\\\" or \\\"Fem::\\\".\\n\\nArgs:\\n    doc_name: The name of the document to create the object in.\\n    obj_type: The type of the object to create (e.g. 'Part::Box', 'Part::Cylinder', 'Draft::Circle', 'PartDesign::Body', etc.).\\n    obj_name: The name of the object to create.\\n    obj_properties: The properties of the object to create.\\n\\nReturns:\\n    A message indicating the success or failure of the object creation and a screenshot of the object.\\n\\nExamples:\\n    If you want to create a cylinder with a height of 30 and a radius of 10, you can use the following data.\\n    ```json\\n    {\\n        \\\"doc_name\\\": \\\"MyCylinder\\\",\\n        \\\"obj_name\\\": \\\"Cylinder\\\",\\n        \\\"obj_type\\\": \\\"Part::Cylinder\\\",\\n        \\\"obj_properties\\\": {\\n            \\\"Height\\\": 30,\\n            \\\"Radius\\\": 10,\\n            \\\"Placement\\\": {\\n                \\\"Base\\\": {\\n                    \\\"x\\\": 10,\\n                    \\\"y\\\": 10,\\n                    \\\"z\\\": 0\\n                },\\n                \\\"Rotation\\\": {\\n                    \\\"Axis\\\": {\\n                        \\\"x\\\": 0,\\n                        \\\"y\\\": 0,\\n                        \\\"z\\\": 1\\n                    },\\n                    \\\"Angle\\\": 45\\n                }\\n            },\\n            \\\"ViewObject\\\": {\\n                \\\"ShapeColor\\\": [0.5, 0.5, 0.5, 1.0]\\n            }\\n        }\\n    }\\n    ```\\n\\n    If you want to create a circle with a radius of 10, you can use the following data.\\n    ```json\\n    {\\n        \\\"doc_name\\\": \\\"MyCircle\\\",\\n        \\\"obj_name\\\": \\\"Circle\\\",\\n        \\\"obj_type\\\": \\\"Draft::Circle\\\",\\n    }\\n    ```\\n\\n    If you want to create a FEM analysis, you can use the following data.\\n    ```json\\n    {\\n        \\\"doc_name\\\": \\\"MyFEMAnalysis\\\",\\n        \\\"obj_name\\\": \\\"FemAnalysis\\\",\\n        \\\"obj_type\\\": \\\"Fem::AnalysisPython\\\",\\n    }\\n    ```\\n\\n    If you want to create a FEM constraint, you can use the following data.\\n    ```json\\n    {\\n        \\\"doc_name\\\": \\\"MyFEMConstraint\\\",\\n        \\\"obj_name\\\": \\\"FemConstraint\\\",\\n        \\\"obj_type\\\": \\\"Fem::ConstraintFixed\\\",\\n        \\\"analysis_name\\\": \\\"MyFEMAnalysis\\\",\\n        \\\"obj_properties\\\": {\\n            \\\"References\\\": [\\n                {\\n                    \\\"object_name\\\": \\\"MyObject\\\",\\n                    \\\"face\\\": \\\"Face1\\\"\\n                }\\n            ]\\n        }\\n    }\\n    ```\\n\\n    If you want to create a FEM mechanical material, you can use the following data.\\n    ```json\\n    {\\n        \\\"doc_name\\\": \\\"MyFEMAnalysis\\\",\\n        \\\"obj_name\\\": \\\"FemMechanicalMaterial\\\",\\n        \\\"obj_type\\\": \\\"Fem::MaterialCommon\\\",\\n        \\\"analysis_name\\\": \\\"MyFEMAnalysis\\\",\\n        \\\"obj_properties\\\": {\\n            \\\"Material\\\": {\\n                \\\"Name\\\": \\\"MyMaterial\\\",\\n                \\\"Density\\\": \\\"7900 kg/m^3\\\",\\n                \\\"YoungModulus\\\": \\\"210 GPa\\\",\\n                \\\"PoissonRatio\\\": 0.3\\n            }\\n        }\\n    }\\n    ```\\n\\n    If you want to create a FEM mesh, you can use the following data.\\n    The `Shape` property is required (legacy `Part` is also accepted).\\n    On FreeCAD 1.x the size limits are `CharacteristicLengthMax/Min`;\\n    the legacy `ElementSizeMax/Min` keys are also accepted.\\n    ```json\\n    {\\n        \\\"doc_name\\\": \\\"MyFEMMesh\\\",\\n        \\\"obj_name\\\": \\\"FemMesh\\\",\\n        \\\"obj_type\\\": \\\"Fem::FemMeshGmsh\\\",\\n        \\\"analysis_name\\\": \\\"MyFEMAnalysis\\\",\\n        \\\"obj_properties\\\": {\\n            \\\"Shape\\\": \\\"MyObject\\\",\\n            \\\"CharacteristicLengthMax\\\": 10,\\n            \\\"CharacteristicLengthMin\\\": 0.1\\n        }\\n    }\\n    ```\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"doc_name\": {\n        \"description\": \"The name of the document to create the object in.\",\n        \"type\": \"string\"\n      },\n      \"obj_type\": {\n        \"description\": \"The type of the object to create (e.g. 'Part::Box', 'Part::Cylinder', 'Draft::Circle', 'PartDesign::Body', etc.).\",\n        \"type\": \"string\"\n      },\n      \"obj_name\": {\n        \"description\": \"The name of the object to create.\",\n        \"type\": \"string\"\n      },\n      \"analysis_name\": {\n        \"description\": \"The name of the FEM analysis to add the object to (for Fem:: objects).\",\n        \"type\": \"string\"\n      },\n      \"obj_properties\": {\n        \"additionalProperties\": true,\n        \"description\": \"The properties of the object to create.\",\n        \"type\": \"object\"\n      }\n    },\n    \"required\": [\n      \"doc_name\",\n      \"obj_type\",\n      \"obj_name\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 1270
         },
         {
           "name": "delete_object",
@@ -4776,7 +4955,9 @@
           },
           "sourcePath": "src/capabilities/freecad/qwen_mm_plugins_freecad/tools/delete_object.py",
           "sourceLine": 29,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/delete_object.py#L29"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/delete_object.py#L29",
+          "definitionText": "{\n  \"name\": \"delete_object\",\n  \"description\": \"Delete an object in FreeCAD.\\n\\nArgs:\\n    doc_name: The name of the document to delete the object from.\\n    obj_name: The name of the object to delete.\\n\\nReturns:\\n    A message indicating the success or failure of the object deletion and a screenshot of the object.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"doc_name\": {\n        \"description\": \"The name of the document to delete the object from.\",\n        \"type\": \"string\"\n      },\n      \"obj_name\": {\n        \"description\": \"The name of the object to delete.\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"doc_name\",\n      \"obj_name\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 197
         },
         {
           "name": "edit_object",
@@ -4806,7 +4987,9 @@
           },
           "sourcePath": "src/capabilities/freecad/qwen_mm_plugins_freecad/tools/edit_object.py",
           "sourceLine": 32,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/edit_object.py#L32"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/edit_object.py#L32",
+          "definitionText": "{\n  \"name\": \"edit_object\",\n  \"description\": \"Edit an object in FreeCAD.\\nThis tool is used when the `create_object` tool cannot handle the object creation.\\n\\nArgs:\\n    doc_name: The name of the document to edit the object in.\\n    obj_name: The name of the object to edit.\\n    obj_properties: The properties of the object to edit.\\n\\nReturns:\\n    A message indicating the success or failure of the object editing and a screenshot of the object.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"doc_name\": {\n        \"description\": \"The name of the document to edit the object in.\",\n        \"type\": \"string\"\n      },\n      \"obj_name\": {\n        \"description\": \"The name of the object to edit.\",\n        \"type\": \"string\"\n      },\n      \"obj_properties\": {\n        \"additionalProperties\": true,\n        \"description\": \"The properties of the object to edit.\",\n        \"type\": \"object\"\n      }\n    },\n    \"required\": [\n      \"doc_name\",\n      \"obj_name\",\n      \"obj_properties\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 274
         },
         {
           "name": "execute_code",
@@ -4825,7 +5008,9 @@
           },
           "sourcePath": "src/capabilities/freecad/qwen_mm_plugins_freecad/tools/execute_code.py",
           "sourceLine": 26,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/execute_code.py#L26"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/execute_code.py#L26",
+          "definitionText": "{\n  \"name\": \"execute_code\",\n  \"description\": \"Execute arbitrary Python code in the running FreeCAD, on the GUI thread. This is the safe default for FreeCAD automation that touches documents, document objects, FreeCADGui, the active view, selection, recompute, or save. Returns the output and (unless disabled) a screenshot of the active view.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"code\": {\n        \"description\": \"The Python code to execute inside FreeCAD (FreeCAD, Part, etc. are available).\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"code\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 164
         },
         {
           "name": "execute_code_async",
@@ -4844,7 +5029,9 @@
           },
           "sourcePath": "src/capabilities/freecad/qwen_mm_plugins_freecad/tools/execute_code_async.py",
           "sourceLine": 39,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/execute_code_async.py#L39"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/execute_code_async.py#L39",
+          "definitionText": "{\n  \"name\": \"execute_code_async\",\n  \"description\": \"Execute Python code in FreeCAD without waiting for completion. Use this ONLY for long-running background computations that do NOT touch the FreeCAD GUI or mutate the FreeCAD document tree directly. This tool runs the submitted code in a background thread and returns immediately. Because it does not run on FreeCAD's main GUI thread, the code must NOT call FreeCADGui APIs, manipulate the active view or selection, create or edit document objects, change object properties, call doc.recompute(), or save documents. For code that touches FreeCAD documents, document objects, FreeCADGui, the active view, selection, recompute, or save operations, use execute_code instead — execute_code runs on the FreeCAD GUI thread and is the safe default for normal FreeCAD automation. Use execute_code_async only for background-safe work such as long-running pure OCCT geometry calculations (e.g. fuse/cut/loft on already-fetched shapes) or other CPU-bound computations that do not interact with the document or GUI. Typical usage pattern: (1) Fetch shapes into local variables first (via execute_code on the GUI thread). (2) Store intermediate results in a module-level Python variable (not in the FreeCAD document) so execute_code can read them later. (3) Run the heavy computation via execute_code_async. (4) After the expected computation time has elapsed, apply results to the document via execute_code (which runs on the GUI thread).\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"code\": {\n        \"description\": \"Background-safe Python code to execute.\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"code\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 381
         },
         {
           "name": "get_object",
@@ -4868,7 +5055,9 @@
           },
           "sourcePath": "src/capabilities/freecad/qwen_mm_plugins_freecad/tools/get_object.py",
           "sourceLine": 25,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/get_object.py#L25"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/get_object.py#L25",
+          "definitionText": "{\n  \"name\": \"get_object\",\n  \"description\": \"Get an object from a document. You can use this tool to get the properties of an object to see what you can check or edit. Returns the object and a screenshot of the object.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"doc_name\": {\n        \"description\": \"The name of the document to get the object from.\",\n        \"type\": \"string\"\n      },\n      \"obj_name\": {\n        \"description\": \"The name of the object to get.\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"doc_name\",\n      \"obj_name\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 171
         },
         {
           "name": "get_objects",
@@ -4887,7 +5076,9 @@
           },
           "sourcePath": "src/capabilities/freecad/qwen_mm_plugins_freecad/tools/get_objects.py",
           "sourceLine": 25,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/get_objects.py#L25"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/get_objects.py#L25",
+          "definitionText": "{\n  \"name\": \"get_objects\",\n  \"description\": \"Get all objects in a document. You can use this tool to get the objects in a document to see what you can check or edit. Returns a list of objects in the document and a screenshot of the document.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"doc_name\": {\n        \"description\": \"The name of the document to get the objects from.\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"doc_name\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 138
         },
         {
           "name": "get_parts_list",
@@ -4898,7 +5089,9 @@
           },
           "sourcePath": "src/capabilities/freecad/qwen_mm_plugins_freecad/tools/get_parts_list.py",
           "sourceLine": 21,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/get_parts_list.py#L21"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/get_parts_list.py#L21",
+          "definitionText": "{\n  \"name\": \"get_parts_list\",\n  \"description\": \"Get the list of parts in the parts library addon.\",\n  \"inputSchema\": {\n    \"properties\": {},\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 54
         },
         {
           "name": "get_view",
@@ -4940,7 +5133,9 @@
           },
           "sourcePath": "src/capabilities/freecad/qwen_mm_plugins_freecad/tools/get_view.py",
           "sourceLine": 28,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/get_view.py#L28"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/get_view.py#L28",
+          "definitionText": "{\n  \"name\": \"get_view\",\n  \"description\": \"Get a screenshot of the FreeCAD active view from a named standard angle.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"view_name\": {\n        \"description\": \"The standard view angle to capture.\",\n        \"enum\": [\n          \"Isometric\",\n          \"Front\",\n          \"Top\",\n          \"Right\",\n          \"Back\",\n          \"Left\",\n          \"Bottom\",\n          \"Dimetric\",\n          \"Trimetric\"\n        ],\n        \"type\": \"string\"\n      },\n      \"width\": {\n        \"description\": \"Screenshot width in px (default: viewport width).\",\n        \"type\": \"integer\"\n      },\n      \"height\": {\n        \"description\": \"Screenshot height in px (default: viewport height).\",\n        \"type\": \"integer\"\n      },\n      \"focus_object\": {\n        \"description\": \"Name of an object to focus on (default: fit all objects in view).\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"view_name\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 272
         },
         {
           "name": "insert_part_from_library",
@@ -4959,7 +5154,9 @@
           },
           "sourcePath": "src/capabilities/freecad/qwen_mm_plugins_freecad/tools/insert_part_from_library.py",
           "sourceLine": 24,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/insert_part_from_library.py#L24"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/insert_part_from_library.py#L24",
+          "definitionText": "{\n  \"name\": \"insert_part_from_library\",\n  \"description\": \"Insert a part from the parts library addon. Returns a message indicating the success or failure of the part insertion and a screenshot of the object.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"relative_path\": {\n        \"description\": \"The relative path of the part to insert.\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"relative_path\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 123
         },
         {
           "name": "list_documents",
@@ -4970,7 +5167,9 @@
           },
           "sourcePath": "src/capabilities/freecad/qwen_mm_plugins_freecad/tools/list_documents.py",
           "sourceLine": 21,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/list_documents.py#L21"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/list_documents.py#L21",
+          "definitionText": "{\n  \"name\": \"list_documents\",\n  \"description\": \"Get the list of open documents in FreeCAD. Returns a list of document names.\",\n  \"inputSchema\": {\n    \"properties\": {},\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 59
         },
         {
           "name": "reload_document",
@@ -4989,7 +5188,9 @@
           },
           "sourcePath": "src/capabilities/freecad/qwen_mm_plugins_freecad/tools/reload_document.py",
           "sourceLine": 29,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/reload_document.py#L29"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/reload_document.py#L29",
+          "definitionText": "{\n  \"name\": \"reload_document\",\n  \"description\": \"Close and re-open a document to pick up external file changes. Use this AFTER the document's .FCStd file has been modified by something outside of FreeCAD's GUI process — for example, a headless `freecadcmd` script that edited and saved the file. The open GUI document is otherwise unaware of on-disk changes; this tool closes the stale in-memory copy and reopens the file from disk so the GUI shows current geometry.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"doc_name\": {\n        \"description\": \"The name of the open document to reload. Must match the name shown by list_documents.\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\": [\n      \"doc_name\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 193
         },
         {
           "name": "run_fem_analysis",
@@ -5018,7 +5219,9 @@
           },
           "sourcePath": "src/capabilities/freecad/qwen_mm_plugins_freecad/tools/run_fem_analysis.py",
           "sourceLine": 39,
-          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/run_fem_analysis.py#L39"
+          "sourceUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/src/capabilities/freecad/qwen_mm_plugins_freecad/tools/run_fem_analysis.py#L39",
+          "definitionText": "{\n  \"name\": \"run_fem_analysis\",\n  \"description\": \"Run the CalculiX solver on an existing Fem::FemAnalysis container and return summary results.\\n\\nPrerequisites in the document:\\n- A Part-derived solid (e.g. Part::Box, PartDesign::Body) acting as the geometry.\\n- A Fem::AnalysisPython container created via `create_object`.\\n- A Fem::MaterialCommon assigned to the geometry, added to the analysis.\\n- A Fem::FemMeshGmsh referencing the geometry, added to the analysis (the mesh is generated automatically when created via `create_object`).\\n- At least one Fem::ConstraintFixed and one Fem::ConstraintForce (or ConstraintPressure) bound to faces of the geometry, added to the analysis.\\n\\nA SolverCcxTools is auto-created if the analysis has none.\\n\\nThe solver runs synchronously on the FreeCAD GUI thread and blocks all other RPC calls for its duration; do not fan out parallel requests.\\n\\nReturns max von Mises stress (MPa), max/min displacement (mm), node count, and the working directory CalculiX wrote to. On failure, returns the prerequisite-check or solver error along with the working directory for triage.\",\n  \"inputSchema\": {\n    \"properties\": {\n      \"doc_name\": {\n        \"description\": \"Name of the FreeCAD document.\",\n        \"type\": \"string\"\n      },\n      \"analysis_name\": {\n        \"description\": \"Name of the Fem::AnalysisPython object.\",\n        \"type\": \"string\"\n      },\n      \"timeout\": {\n        \"default\": 600,\n        \"description\": \"Seconds to wait for the solver (default 600).\",\n        \"type\": \"integer\"\n      }\n    },\n    \"required\": [\n      \"doc_name\",\n      \"analysis_name\"\n    ],\n    \"type\": \"object\"\n  }\n}",
+          "tokenCount": 424
         }
       ],
       "kind": "Skill + MCP",
@@ -5049,7 +5252,12 @@
         "url": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/",
         "path": "src/capabilities/freecad"
       },
-      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/freecad/usage.md"
+      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/freecad/usage.md",
+      "tokenEstimate": {
+        "skillFull": 1266,
+        "skillMetadata": 99,
+        "toolsTotal": 3831
+      }
     },
     {
       "name": "qwen-mm-plugins-edu-agent",
@@ -5950,7 +6158,22 @@
         "url": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/",
         "path": "src/capabilities/edu-agent"
       },
-      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/edu-agent/usage.md"
+      "cookbookUrl": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/82008629c47c385d073801d6cabac05ce8284e78/cookbooks/edu-agent/usage.md",
+      "tokenEstimate": {
+        "skillFull": 18842,
+        "skillMetadata": 210,
+        "toolsTotal": 0
+      }
     }
-  ]
+  ],
+  "tokenizer": {
+    "label": "Qwen3.5",
+    "modelId": "Qwen/Qwen3.5-9B",
+    "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+    "sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+    "engineVersion": "0.23.2",
+    "sourceUrl": "https://huggingface.co/Qwen/Qwen3.5-9B/blob/c202236235762e1c871ad0ccb60c8ee5ba337b9a/tokenizer.json",
+    "method": "mcp-json-pretty-v1",
+    "addSpecialTokens": false
+  }
 }

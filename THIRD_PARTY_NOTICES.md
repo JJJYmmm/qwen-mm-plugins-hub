@@ -12,6 +12,10 @@ The three-column documentation shell also references [doc-builder's development 
 
 Plugin descriptions, Skill Markdown and tool definitions are generated from [QwenLM/Qwen-MM-Plugins](https://github.com/QwenLM/Qwen-MM-Plugins), licensed under Apache 2.0. Each displayed source link records the exact source commit. Third-party integrations retain the notices in their upstream capability directories.
 
+## Qwen3.5 tokenizer
+
+Build-time token estimates use the official [Qwen/Qwen3.5-9B tokenizer](https://huggingface.co/Qwen/Qwen3.5-9B/blob/c202236235762e1c871ad0ccb60c8ee5ba337b9a/tokenizer.json) with the [Hugging Face Tokenizers](https://github.com/huggingface/tokenizers) library. Exact source and engine versions are recorded in `tokenizer.config.json`. The tokenizer asset remains in an ignored build cache and is not redistributed in the website's static assets. Refer to the upstream repositories for their licenses and notices.
+
 ## Fonts and UI libraries
 
 Source Sans 3 and IBM Plex Mono are provided through Google Fonts under the SIL Open Font License. Font assets are bundled at build time. Lucide icons use the ISC license; React, Base UI, and shadcn components retain their package licenses. This project does not use Hugging Face logos or imply affiliation.

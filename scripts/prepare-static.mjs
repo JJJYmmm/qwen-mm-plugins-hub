@@ -58,11 +58,24 @@ for (const file of [
     if (!html.includes('id="skill"'))
       throw new Error(`Skill permalink target missing: ${file}`);
     const current = plugins.find((p) => file === `plugins/${p.id}/index.html`);
+    if (
+      !html.includes('id="tokens"') ||
+      !html.includes('Full SKILL.md') ||
+      !html.includes('All tool definitions') ||
+      !html.includes(current.tokenEstimate.skillFull.toLocaleString('en-US')) ||
+      !html.includes(current.tokenEstimate.toolsTotal.toLocaleString('en-US'))
+    )
+      throw new Error(`Token estimates missing or incorrect: ${file}`);
     const cookbookButton = html.match(
       /<a\b[^>]*class="cookbook-button"[^>]*>/,
     )?.[0];
     if (!cookbookButton?.includes(`href="${current.cookbookUrl}"`))
       throw new Error(`Prominent Cookbook link missing or incorrect: ${file}`);
+  } else {
+    for (const plugin of plugins) {
+      if (!html.includes(`href="${prefix}/plugins/${plugin.id}/#tokens"`))
+        throw new Error(`Token estimate card link missing: ${plugin.id}`);
+    }
   }
   for (const [, url] of html.matchAll(
     /(?:src|href)="([^"?#]+\.(?:js|css|woff2))"/g,
@@ -74,5 +87,5 @@ for (const file of [
   }
 }
 console.log(
-  `Verified ${plugins.length + 1} static pages, documentation navigation, search destinations, and script, style, and font assets.`,
+  `Verified ${plugins.length + 1} static pages, documentation navigation, token estimates, search destinations, and script, style, and font assets.`,
 );

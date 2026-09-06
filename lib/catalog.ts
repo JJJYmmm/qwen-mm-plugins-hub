@@ -17,7 +17,21 @@ export type Tool = {
   inputSchema: Schema;
   sourceUrl: string;
   sourcePath: string;
+  definitionText: string;
+  tokenCount: number;
 };
+export type TokenizerInfo = {
+  label: string;
+  modelId: string;
+  revision: string;
+  sourceUrl: string;
+  method: string;
+  engineVersion: string;
+};
+
+export function formatTokens(value: number): string {
+  return value.toLocaleString('en-US');
+}
 export type SkillFile = { path: string; sourceUrl: string };
 export type SkillDirectory = {
   name: string;
@@ -106,6 +120,11 @@ export type PluginSummary = {
   channel: string;
   toolCount: number;
   toolNames: string[];
+  tokenEstimate: {
+    skillFull: number;
+    skillMetadata: number;
+    toolsTotal: number;
+  };
   source: {
     url: string;
     path: string;
