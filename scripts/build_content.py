@@ -22,6 +22,7 @@ import yaml
 from .token_estimates import annotate_catalog
 
 ROOT = Path(__file__).resolve().parents[1]
+SOURCE_REF = json.loads((ROOT / "source.config.json").read_text())["ref"]
 REPOSITORY = "https://github.com/QwenLM/Qwen-MM-Plugins"
 HUB_REPOSITORY = "https://github.com/JJJYmmm/qwen-mm-plugins-hub"
 DEFAULT_CONTRIBUTORS = ["QwenLM"]
@@ -143,7 +144,9 @@ def worker(source: Path, cap: str) -> dict:
 
 
 def build_content(
-    source: Path, cookbook_root: Path = ROOT / "content/cookbooks"
+    source: Path,
+    cookbook_root: Path = ROOT / "content/cookbooks",
+    source_ref: str = SOURCE_REF,
 ) -> tuple[dict, dict]:
     release_catalog = json.loads((source / "plugin-versions.json").read_text())
     versions = release_catalog["plugins"]
@@ -210,13 +213,15 @@ def build_content(
                     "version": release_version,
                     "tag": release_tag,
                     "url": REPOSITORY + "/tree/" + release_tag,
-                },
+                }
+                if source_ref == "main"
+                else None,
                 "title": info.get("title", cap.replace("-", " ").title()),
                 "category": info.get("category", "Other"),
                 "tags": list(dict.fromkeys(tag.strip().lower() for tag in tags)),
                 "contributors": list(contributors),
                 "order": info.get("order", 99),
-                "channel": "Main",
+                "channel": source_ref,
                 "source": {
                     "repository": REPOSITORY,
                     "commit": sha,
@@ -260,7 +265,7 @@ def build_content(
     }, cookbooks
 
 
-def build_docs(source: Path) -> dict:
+def build_docs(source: Path, source_ref: str = SOURCE_REF) -> dict:
     """Publish committed English Markdown without creating a second authored copy."""
     sha = git(source, "rev-parse", "HEAD")
     paths = git(source, "ls-tree", "-rz", "--name-only", sha, "--", "docs/en/")
@@ -291,7 +296,7 @@ def build_docs(source: Path) -> dict:
         )
     if not any(page["slug"] == "installation" for page in pages):
         raise ValueError("Missing documentation entry: docs/en/installation.md")
-    return {"repository": REPOSITORY, "commit": sha, "pages": pages}
+    return {"repository": REPOSITORY, "ref": source_ref, "commit": sha, "pages": pages}
 
 
 def main() -> None:
@@ -302,6 +307,12 @@ def main() -> None:
     if args.worker:
         print(json.dumps(worker(args.source.resolve(), args.worker)))
         return
+    if git(args.source, "rev-parse", "HEAD") != git(
+        args.source, "rev-parse", f"refs/heads/{SOURCE_REF}"
+    ):
+        raise ValueError(
+            f"Source checkout must match the configured branch: {SOURCE_REF}"
+        )
     check_cases(ROOT / "public/cases")
     catalog, cookbooks = build_content(args.source.resolve())
     catalog = annotate_catalog(catalog)

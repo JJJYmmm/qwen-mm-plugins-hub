@@ -474,7 +474,7 @@ export function PluginDetail({
                     <div className="install-content">
                       <h2>Installation</h2>
                       <p>
-                        Run the installer, then select your agent and{' '}
+                        Install the stable release, then select your agent and{' '}
                         <strong>{p.id}</strong>.
                       </p>
                       <div className="install-command">
@@ -497,29 +497,28 @@ export function PluginDetail({
                             <a
                               href={`${p.source.repository}/commit/${p.source.commit}`}
                             >
-                              main @ {p.source.commit.slice(0, 7)}
+                              {p.channel} @ {p.source.commit.slice(0, 7)}
                             </a>
                           </span>
                         </p>
                         <details>
                           <summary>Version details</summary>
                           <p>
-                            The installer uses a release tag; this page follows
-                            main and may include unreleased changes. This
-                            snapshot declares plugin v{p.version}
-                            {p.release && (
-                              <>
-                                {' '}
-                                and selects{' '}
-                                <a href={p.release.url}>
-                                  <code>{p.release.tag}</code>
-                                </a>
-                              </>
-                            )}
-                            . Plugin versions are independent of the Python
-                            package version; later installer snapshots may
-                            select newer releases.
+                            This page follows {p.channel}, plugin v{p.version}.
+                            The installer uses published releases, which may
+                            differ.
                           </p>
+                          {!p.release && (
+                            <p>
+                              To try this snapshot, check out commit{' '}
+                              <code>{p.source.commit.slice(0, 7)}</code> in a
+                              dedicated clone and follow the{' '}
+                              <Link href="/docs/local-development/">
+                                local development guide
+                              </Link>
+                              .
+                            </p>
+                          )}
                         </details>
                       </section>
                       <Link className="documentation-link" href="/docs/">
@@ -643,7 +642,7 @@ export function PluginDetail({
                       <a
                         href={`${p.source.repository}/commit/${p.source.commit}`}
                       >
-                        main @ {p.source.commit.slice(0, 7)}
+                        {p.channel} @ {p.source.commit.slice(0, 7)}
                       </a>
                     </dd>
                   </div>

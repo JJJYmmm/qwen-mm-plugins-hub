@@ -12,6 +12,9 @@ import {
 const catalog = JSON.parse(
   readFileSync(new URL('../data/catalog.json', import.meta.url), 'utf8'),
 );
+const source = JSON.parse(
+  readFileSync(new URL('../source.config.json', import.meta.url), 'utf8'),
+);
 const plugins = catalog.plugins.map((p) => ({
   ...p,
   toolCount: p.tools.length,
@@ -69,13 +72,15 @@ test('Skill file hierarchy preserves nested files and immutable source links', (
   );
 });
 
-test('release metadata is distinct from the main snapshot, and requirements retain install hints', () => {
+test('development snapshots do not advertise unreleased tags, and requirements retain install hints', () => {
   for (const p of plugins) {
-    assert.equal(
-      p.release.tag,
-      `qwen-mm-plugins-${p.id}-v${p.release.version}`,
-    );
-    assert(p.release.url.endsWith(`/tree/${p.release.tag}`));
+    if (source.ref === 'main') {
+      assert.equal(
+        p.release.tag,
+        `qwen-mm-plugins-${p.id}-v${p.release.version}`,
+      );
+      assert(p.release.url.endsWith(`/tree/${p.release.tag}`));
+    } else assert.equal(p.release, null);
     for (const requirement of p.requirements) {
       assert(requirement.label && requirement.tools.length && requirement.hint);
     }
@@ -91,7 +96,7 @@ test('all records use one public upstream snapshot and have a complete Skill', (
   assert.equal(new Set(plugins.map((p) => p.id)).size, plugins.length);
   assert(!plugins.some((p) => p.id === 'example'));
   for (const p of plugins) {
-    assert.equal(p.channel, 'Main');
+    assert.equal(p.channel, source.ref);
     assert(p.skill.raw.startsWith('---\n'));
     assert(p.skill.markdown.length > 50);
     assert(p.skill.sourceUrl.includes(p.source.commit));

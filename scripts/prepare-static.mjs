@@ -14,6 +14,9 @@ const { plugins, contributors } = JSON.parse(
 );
 const cookbooks = JSON.parse(await readFile('data/cookbooks.json', 'utf8'));
 const docs = JSON.parse(await readFile('data/docs.json', 'utf8'));
+const source = JSON.parse(await readFile('source.config.json', 'utf8'));
+if (docs.ref !== source.ref || plugins.some((p) => p.channel !== source.ref))
+  throw new Error('Generated content must match the configured source branch');
 const documentationRoute = (page) =>
   page.slug === 'installation' ? 'docs' : `docs/${page.slug}`;
 // Vinext's trailingSlash export currently redirects its internal RSC requests.
@@ -62,6 +65,20 @@ for (const file of [
   const html = await readFile(path.join(root, file), 'utf8');
   if (html.includes('id="__next_error__"'))
     throw new Error(`Error page exported: ${file}`);
+  if (!html.includes(`<span>${source.ref}</span>`))
+    throw new Error(`Source branch badge missing: ${file}`);
+  if (source.ref !== 'main') {
+    for (const p of plugins) {
+      if (
+        html.includes(
+          `href="${p.source.repository}/tree/qwen-mm-plugins-${p.id}-v${p.version}"`,
+        )
+      )
+        throw new Error(
+          `Branch preview links to a prepared release tag: ${file}`,
+        );
+    }
+  }
   if (!html.includes(`action="${prefix}/"`))
     throw new Error(`Documentation search has the wrong destination: ${file}`);
   const mainNav = html.match(
@@ -265,8 +282,8 @@ for (const file of [
     if (!toc?.includes('href="#documentation-content"'))
       throw new Error(`Documentation outline missing: ${file}`);
     if (
-      /href="https:\/\/github\.com\/QwenLM\/Qwen-MM-Plugins\/blob\/main\/docs\/en\//.test(
-        html,
+      ['main', docs.ref].some((ref) =>
+        html.includes(`href="${docs.repository}/blob/${ref}/docs/en/`),
       )
     )
       throw new Error(

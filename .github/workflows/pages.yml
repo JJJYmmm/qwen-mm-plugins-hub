@@ -19,11 +19,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Read the public upstream main branch
+      - name: Read content source
+        id: content-source
+        run: |
+          content_ref=$(node -p 'require("./source.config.json").ref')
+          echo "ref=$content_ref" >> "$GITHUB_OUTPUT"
+      - name: Read the configured upstream branch
         uses: actions/checkout@v4
         with:
           repository: QwenLM/Qwen-MM-Plugins
-          ref: main
+          ref: ${{ steps.content-source.outputs.ref }}
           path: .sources/upstream
           persist-credentials: false
       - uses: actions/setup-python@v5
@@ -35,7 +40,7 @@ jobs:
           cache: npm
       - name: Install catalog export dependencies
         run: pip install -e '.sources/upstream[omni-memory]' -r scripts/requirements-export.txt
-      - name: Build plugin catalog, cookbooks, and token estimates
+      - name: Build plugin catalog, cookbooks, docs, and token estimates
         run: python -m scripts.build_content --source .sources/upstream
       - name: Verify content build and token estimates offline
         run: python -m unittest discover -s tests -p 'test_*.py'

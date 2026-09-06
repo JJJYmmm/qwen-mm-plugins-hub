@@ -117,6 +117,7 @@ class ContentBuildTests(unittest.TestCase):
         docs = build_docs(self.source)
         catalog, _ = build_content(self.source, self.books)
         self.assertEqual(docs["commit"], catalog["plugins"][0]["source"]["commit"])
+        self.assertEqual(docs["ref"], catalog["plugins"][0]["channel"])
         self.assertEqual(
             [page["slug"] for page in docs["pages"]], ["installation", "new-guide"]
         )
@@ -126,6 +127,22 @@ class ContentBuildTests(unittest.TestCase):
             f"{docs['repository']}/blob/{docs['commit']}/docs/en/installation.md",
         )
         self.assertEqual(docs["pages"][1]["title"], "New guide")
+
+    def test_branch_previews_do_not_advertise_prepared_release_tags(self):
+        self.plugin("new-plugin")
+        self.commit(["new-plugin"])
+        self.write(self.books / "new-plugin/usage.md", "# Cookbook\n")
+        for ref in ("main", "support_hub"):
+            with self.subTest(ref=ref):
+                catalog, _ = build_content(self.source, self.books, source_ref=ref)
+                plugin = catalog["plugins"][0]
+                self.assertEqual(plugin["channel"], ref)
+                if ref == "main":
+                    self.assertEqual(
+                        plugin["release"]["tag"], "qwen-mm-plugins-new-plugin-v1.0.0"
+                    )
+                else:
+                    self.assertIsNone(plugin["release"])
 
     def test_docs_fail_on_missing_entry_or_duplicate_routes(self):
         self.write(self.source / "docs/en/new_guide.md", "# New guide\n")

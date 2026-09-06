@@ -1,6 +1,7 @@
 import Link from '@/components/static-link';
 import Image from 'next/image';
 import { ArrowUpRight, CodeXml, Search, BookOpen } from 'lucide-react';
+import source from '@/source.config.json';
 
 export function SiteHeader({
   section = 'plugins',
@@ -60,7 +61,7 @@ export function SiteHeader({
       <div className="documentation-bar">
         <BookOpen size={16} />
         <Link href="/docs/">Qwen MM Plugins documentation</Link>
-        <span>main</span>
+        <span>{source.ref}</span>
       </div>
     </header>
   );

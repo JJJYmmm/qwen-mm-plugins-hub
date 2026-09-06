@@ -20,8 +20,10 @@ const books = JSON.parse(
 
 test('English docs and plugin references share a source commit', () => {
   assert(docs.pages.length >= 7);
-  for (const plugin of catalog.plugins)
+  for (const plugin of catalog.plugins) {
     assert.equal(plugin.source.commit, docs.commit);
+    assert.equal(plugin.channel, docs.ref);
+  }
   for (const page of docs.pages) {
     assert(page.path.startsWith('docs/en/'));
     assert.equal(
@@ -71,6 +73,16 @@ test('relative and GitHub English doc links stay local with anchors and base pat
       ),
       base + '/docs/configuration/',
     );
+    assert.equal(
+      resolve(`${docs.repository}/blob/${docs.ref}/docs/en/configuration.md`),
+      base + '/docs/configuration/',
+    );
+    if (docs.pages.some((page) => page.slug === 'hub')) {
+      assert.equal(
+        resolve('hub.md#author-descriptions-once'),
+        base + '/docs/hub/#author-descriptions-once',
+      );
+    }
   }
 });
 

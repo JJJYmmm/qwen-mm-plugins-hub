@@ -7,7 +7,7 @@ A searchable plugin directory with contributor/tag filters, Skill previews, actu
 ## Add a plugin in two places
 
 1. **Qwen-MM-Plugins:** add the capability using its normal packaging convention, including its entry in `plugin-versions.json`, Skill, manifests, and MCP tools where applicable. Document every tool in its handler's Google-style docstring. The framework derives both the real MCP schema and Hub descriptions from it; no website-specific tool definition is needed.
-2. **This Hub:** add `content/cookbooks/<cap>/usage.md` and any case files under `public/cases/<cap>/<case>/`. Commit and push to Hub main. GitHub Actions discovers plugins from upstream main, generates content and token estimates, validates the site, and deploys GitHub Pages.
+2. **This Hub:** add `content/cookbooks/<cap>/usage.md` and any case files under `public/cases/<cap>/<case>/`. Commit and push to Hub main. GitHub Actions discovers plugins from the configured upstream branch, generates content and token estimates, validates the site, and deploys GitHub Pages.
 
 There is no plugin registration table or media checksum inventory to update. Generated files in `data/` are build output; do not edit them manually. A missing cookbook stops the build and names the file to add.
 
@@ -72,7 +72,9 @@ data/catalog.json + data/cookbooks.json + data/docs.json
 npm run build → dist/client → GitHub Pages
 ```
 
-Production always reads **remote upstream main**, not a mix of branches. Every Skill/tool source link pins the same commit. Cookbook source links point to this Hub. The plugin repository's `support_hub` branch contains the unified docstring convention; it must reach upstream main before production reflects those source changes.
+The content branch is selected once in **`source.config.json`**, currently `support_hub`. Both the content builder and GitHub Actions use that setting. Skills, tools, and English docs come from one snapshot; every source link pins that commit. Cookbook source links point to this Hub. To return to upstream main after merging the prepared changes, set `ref` to `main` and rebuild.
+
+Branch documentation is not a release. The installation command continues to use the stable `main/install.sh`; development snapshots do not advertise prepared, unpublished tags as installer releases. For matching source tests, use a dedicated checkout at the documented commit and the upstream local-development workflow. Publishing the Hub does not merge branches or publish plugin tags.
 
 The exporter imports registries but never invokes handlers, startup hooks, or MCP servers. It ignores local Qwen configuration and exports an explicit set of public fields. Capability imports must keep optional heavy dependencies lazy, as required by the plugin repository.
 
@@ -99,7 +101,7 @@ npm run dev
 npm run build
 ```
 
-The committed generated data supports frontend-only development without Python. To rebuild production content locally, use a clean, updated checkout of upstream main as `--source`. To test unpublished plugin changes, point it at that checkout; do not publish its generated data as a main snapshot.
+The committed generated data supports frontend-only development without Python. To rebuild production content locally, use a clean, updated checkout of the branch in `source.config.json` as `--source`. The exporter verifies that HEAD matches that branch. A development snapshot is labeled with its actual branch, never as main.
 
 Tests cover automatic plugin and documentation discovery, optional cookbook metadata, media paths, Skill hierarchy, tool definitions and token estimates. The static build checks all generated routes, documentation and cookbook anchors, media previews, and exported asset links. The postbuild directory indexes let detail URLs work without an application server.
 
@@ -109,7 +111,7 @@ GitHub Actions runs on Hub main pushes and manual workflow dispatch. To refresh 
 
 Skill previews show the first 50 source lines, with full expansion and copy. The file tree includes tracked Skill files and immutable source links.
 
-Main documentation snapshots and immutable plugin release tags are distinct. The installation view shows both; source changes require the normal plugin release process to reach tag-pinned installs.
+Documentation snapshots and immutable plugin release tags are distinct. Source changes require the normal plugin release process to reach tag-pinned installs.
 
 Token estimates use the official Qwen3.5-9B tokenizer, with its revision, SHA-256 and engine version pinned in `tokenizer.config.json`. They count the full original SKILL.md and each displayed `{name, description, inputSchema}` JSON definition separately. Tool totals sum those definitions; Skill metadata is shown separately. Cookbooks, bundled reference files, tool results, chat wrappers, conversation and media tokens are excluded. These are content estimates, not always-loaded context or billing totals. The tokenizer is a verified build-time cache, not shipped to visitors.
 

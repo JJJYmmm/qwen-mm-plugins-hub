@@ -7,6 +7,7 @@ export type DocumentationPage = {
 };
 export type Documentation = {
   repository: string;
+  ref: string;
   commit: string;
   pages: DocumentationPage[];
 };
@@ -34,7 +35,7 @@ export function documentationUrl(
     const [kind, ref, ...segments] = path.slice(prefix.length).split('/');
     if (
       !['blob', 'tree'].includes(kind) ||
-      !['main', docs.commit].includes(ref)
+      !['main', docs.ref, docs.commit].includes(ref)
     )
       return url;
     path = '/' + segments.join('/');
@@ -59,6 +60,7 @@ const navigation = [
     slugs: [
       'local-development',
       'how-to-add-new-capability',
+      'hub',
       'testing',
       'releasing',
     ],
